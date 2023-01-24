@@ -1,0 +1,297 @@
+:root {
+  --orange: #f05d23;
+  --beige: #ffefd6;
+  --dune: #d2b6a3;
+  --earth: #a47c6f;
+  --brown: #493d08;
+}
+
+/* Fonts */
+
+@font-face {
+  font-family: "GrandCru-RegularS";
+  font-weight: normal;
+
+  src: url("../fonts/GrandCruRegularS.otf");
+}
+
+@font-face {
+  font-family: "GrandCru-BoldS";
+  font-weight: bold;
+
+  src: url("../fonts/GrandCruBoldS.otf");
+}
+
+@font-face {
+  font-family: "Proclamate Heavy";
+  font-weight: bold;
+
+  src: url("../fonts/ProclamateHeavy.ttf");
+}
+
+* {
+  font-family: "GrandCru-RegularS";
+
+  color: var(--brown);
+
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 18px;
+
+  overflow: scroll;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
+
+body {
+  background: var(--beige);
+}
+
+/* Headings */
+
+.d1 {
+  font-family: "Proclamate Heavy";
+  font-size: 11.667rem;
+}
+
+.d2 {
+  font-family: "Proclamate Heavy";
+  font-size: 9.333rem;
+}
+
+.d3 {
+  font-family: "Proclamate Heavy";
+  font-size: 7.444rem;
+}
+
+.h1 {
+  font-size: 2.444rem;
+}
+
+.h2 {
+  font-size: 1.944rem;
+}
+
+.h3 {
+  font-size: 1.556rem;
+}
+
+.h4 {
+  font-size: 1.278rem;
+}
+
+.h5 {
+  font-size: 1rem;
+}
+
+.h6 {
+  font-size: 0.778rem;
+}
+
+/* #region Header */
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin: 2rem 8vw;
+}
+
+.header .brand {
+  /*border: 2px solid green;*/
+
+  font-family: "Proclamate Heavy";
+  font-size: 1.278rem;
+
+  cursor: pointer;
+}
+
+.header .links {
+  display: flex;
+
+  gap: 8vw;
+
+  transform: translateX(0%);
+}
+
+.header .links .additional-links {
+  display: none;
+}
+
+.header .actions {
+  display: flex;
+  align-items: center;
+
+  gap: 2rem;
+}
+
+.header .toggle {
+  display: none;
+}
+
+/* Tablet */
+
+@media (max-width: 72em) {
+}
+
+/* Mobile */
+
+@media (max-width: 64em) {
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    margin: 2rem 2rem;
+  }
+
+  .header .brand {
+    z-index: 55;
+  }
+
+  .header .links {
+    position: fixed;
+    inset: 0 0 0 0%;
+
+    background: var(--orange);
+
+    flex-direction: column;
+
+    padding: 8rem 2rem;
+
+    gap: 2rem;
+
+    transform: translateX(100%);
+  }
+
+  .header .links[data-visible="true"] ~ .toggle svg {
+    fill: var(--brown);
+  }
+
+  .header .links[data-visible="true"] ~ .toggle:hover svg {
+    fill: var(--beige);
+  }
+
+  .header .links a:hover {
+    color: var(--beige);
+  }
+
+  .header .links .additional-links {
+    display: flex;
+    flex-direction: column;
+
+    gap: 2rem;
+  }
+
+  .header .links .additional-links .seperator svg {
+    fill: var(--brown);
+  }
+
+  .header .links .additional-links .seperator div {
+    background: var(--brown);
+  }
+
+  .header .actions {
+    display: none;
+  }
+
+  .header .toggle {
+    z-index: 9999;
+
+    display: revert;
+  }
+}
+
+/* #endregion */
+
+/* #region Buttons */
+
+.orange-button {
+  background-color: var(--orange);
+
+  padding: 12px 24px;
+
+  border-style: none;
+  border-radius: 16px;
+
+  font-size: 1rem;
+  font-family: "GrandCru-BoldS";
+
+  transition: 0.2s ease;
+}
+
+.orange-button:hover {
+  color: var(--orange);
+  background-color: var(--brown);
+
+  cursor: pointer;
+}
+
+.icon-button {
+  border: transparent none;
+  background: none;
+}
+
+.icon-button svg {
+  display: block;
+  fill: var(--brown);
+
+  transition: 0.2s ease;
+}
+
+.icon-button:hover svg {
+  fill: var(--orange);
+
+  cursor: pointer;
+}
+
+a {
+  display: block;
+
+  font-size: 1rem;
+  font-family: "GrandCru-BoldS";
+
+  transition: 0.2s ease;
+}
+
+a:hover {
+  color: var(--orange);
+
+  cursor: pointer;
+}
+
+/* #endregion */
+
+/* #region Miscellaneous  */
+
+.seperator {
+  display: flex;
+  justify-content: center;
+
+  position: relative;
+}
+
+.seperator svg {
+  display: block;
+}
+
+.seperator .line {
+  position: absolute;
+
+  top: calc(50% - 1px);
+
+  width: 100%;
+  height: 1px;
+
+  background: var(--dune);
+}
+
+/* #endregion */
