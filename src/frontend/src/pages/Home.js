@@ -10,11 +10,8 @@ import home from "../assets/css/home.css";
 import { gsap } from "gsap";
 
 // Components
-import { ReactComponent as Snake } from "../assets/img/snake.svg";
-import { ReactComponent as MaskedSnake } from "../assets/img/masked-snake.svg";
-import { ReactComponent as Subtitle } from "../assets/img/subtitle.svg";
 import { ReactComponent as Curve } from "../assets/img/curve.svg";
-import { ReactComponent as Styles } from "../assets/img/styles.svg";
+import { ReactComponent as Logo } from "../assets/img/logo.svg";
 
 // #endregion
 
@@ -32,14 +29,15 @@ const Home = () => {
     }
     // Else Play Animation
     loaded.current = true;
-    gsap.from(".logo .char", {
-      y: 100,
+
+    /*
+    gsap.from(".logo .title div", {
+      y: 200,
       x: 0,
-      opacity: 0,
       stagger: 0.05,
-      duration: 1,
+      duration: 0.75,
       delay: 0.5,
-      ease: "power3.out",
+      ease: "power4.out",
     });
 
     gsap.to(".logo .snake", {
@@ -48,12 +46,12 @@ const Home = () => {
       delay: 1,
       ease: "power3.out",
     });
+    */
 
     gsap.from(".logo .subtitle", {
-      y: -25,
-      opacity: 0,
-      duration: 1,
-      delay: 1.5,
+      y: -10,
+      duration: 0.75,
+      delay: 1.25,
       ease: "power3.out",
     });
   }, []);
@@ -61,35 +59,17 @@ const Home = () => {
   return (
     <div className="home">
       <div className="logo">
-        <Snake />
-        <div className="title">
-          <div>b</div>
-          <div>e</div>
-          <div>a</div>
+        <div className="container">
+          <Logo />
         </div>
-        <div className="title">
-          <div>t</div>
-          <div>a</div>
-          <div>t</div>
-          <div>t</div>
-          <div>o</div>
-          <div>o</div>
-          <div>s</div>
-        </div>
-        <MaskedSnake />
-        <div className="subtitle"></div>
       </div>
 
       <div className="styles">
-        <div className="curve">
-          <Curve />
+        <div className="curve"></div>
+        <div className="title">
+          <div className="container"></div>
         </div>
-        <div className="container">
-          <div className="title">
-            <Styles />
-          </div>
-          <div className="images"></div>
-        </div>
+        <div className="images"></div>
       </div>
     </div>
   );

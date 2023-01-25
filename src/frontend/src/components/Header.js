@@ -10,8 +10,8 @@ import { useState } from "react";
 import global from "../assets/css/global.css";
 
 // Components
-import UserIcon from "./UserIcon";
-import HamburgerIcon from "./HamburgerIcon";
+import { ReactComponent as Hamburger } from "../assets/img/hamburger.svg";
+import { ReactComponent as User } from "../assets/img/user.svg";
 import Seperator from "./Seperator";
 
 // #endregion
@@ -67,12 +67,12 @@ const Header = () => {
       </div>
       <div className="actions">
         <button className="icon-button">
-          <UserIcon />
+          <User />
         </button>
         <button className="orange-button">book now</button>
       </div>
       <button className="toggle icon-button" onClick={handleClick}>
-        <HamburgerIcon />
+        <Hamburger />
       </button>
     </div>
   );
