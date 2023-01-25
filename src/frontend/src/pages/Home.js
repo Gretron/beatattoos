@@ -48,8 +48,8 @@ const Home = () => {
     });
     */
 
-    gsap.from(".logo .subtitle", {
-      y: -10,
+    gsap.from(".logo .subtitle text", {
+      y: -100,
       duration: 0.75,
       delay: 1.25,
       ease: "power3.out",

@@ -45,16 +45,18 @@
   overflow-y: scroll;
 }
 
-.logo .container svg {
+.logo svg {
   position: absolute;
 }
 
 .logo .subtitle {
-  clip-path: polygon(0 595px, 800px 600px, 100% 100%, 0 100%);
+  clip-path: polygon(0 595px, 733px 595px, 733px 619px, 0 619px);
 }
 
 .logo .subtitle text {
-  transform: translateY();
+  font-family: "GrandCru-BoldS";
+  
+  fill: var(--earth);
 }
 
 /* Mobile */
