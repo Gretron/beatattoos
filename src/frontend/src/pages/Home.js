@@ -12,6 +12,7 @@ import { gsap } from "gsap";
 // Components
 import { ReactComponent as Curve } from "../assets/img/curve.svg";
 import { ReactComponent as Logo } from "../assets/img/logo.svg";
+import { ReactComponent as Realism } from "../assets/img/realism.svg";
 
 // #endregion
 
@@ -30,8 +31,7 @@ const Home = () => {
     // Else Play Animation
     loaded.current = true;
 
-    /*
-    gsap.from(".logo .title div", {
+    gsap.from(".logo .title text", {
       y: 200,
       x: 0,
       stagger: 0.05,
@@ -46,7 +46,6 @@ const Home = () => {
       delay: 1,
       ease: "power3.out",
     });
-    */
 
     gsap.from(".logo .subtitle text", {
       y: -100,
@@ -65,11 +64,15 @@ const Home = () => {
       </div>
 
       <div className="styles">
-        <div className="curve"></div>
+        <div className="curve">
+          <Curve />
+        </div>
         <div className="title">
           <div className="container"></div>
         </div>
-        <div className="images"></div>
+        <div className="images">
+          <Realism />
+        </div>
       </div>
     </div>
   );
