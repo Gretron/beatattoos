@@ -8,6 +8,7 @@ import home from "../assets/css/home.css";
 
 // Modules
 import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 // Components
 import { ReactComponent as Curve } from "../assets/img/curve.svg";
@@ -31,6 +32,8 @@ const Home = () => {
     // Else Play Animation
     loaded.current = true;
 
+    gsap.registerPlugin(ScrollTrigger);
+
     gsap.from(".logo .title text", {
       y: 200,
       x: 0,
@@ -52,6 +55,36 @@ const Home = () => {
       duration: 0.75,
       delay: 1.25,
       ease: "power3.out",
+    });
+
+    gsap.fromTo(
+      ".styles .title .letter:not(:last-child)",
+      {
+        letterSpacing: "min(8rem, 10vw)",
+      },
+      {
+        scrollTrigger: {
+          trigger: ".styles .title",
+          pin: ".styles .title",
+          start: "top middle",
+          end: "bottom middle",
+          scrub: 1,
+        },
+        letterSpacing: "min(0.2rem, 1vw)",
+      }
+    );
+
+    gsap.to(".styles .title .letter", {
+      scrollTrigger: {
+        trigger: ".styles .title",
+        start: "middle top",
+        end: "bottom +=10px",
+        markers: true,
+        scrub: true,
+      },
+      fontFamily: "Proclamate Heavy",
+      textTransform: "lowercase",
+      stagger: 100,
     });
   }, []);
 

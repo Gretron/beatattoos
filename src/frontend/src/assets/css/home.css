@@ -107,6 +107,8 @@
   justify-content: center;
   align-items: center;
 
+  z-index: -1;
+
   height: 100vh;
 }
 
@@ -115,41 +117,45 @@
   text-align: center;
 }
 
-.styles .title .container .letter {
+.styles .title .letter:not(:last-child) {
+  letter-spacing: min(8rem, 10vw);
 }
 
-.styles .title .container .letter:not(:last-child) {
-  letter-spacing: min(8rem, 8vw);
-}
-
-.styles .title .container .letter:nth-child(1) {
+.styles .title .letter:nth-child(1) {
   font-family: "Stencilitis";
-  font-size: min(112px, 100vw);
+  font-size: min(112px, 10.5vw);
 }
 
-.styles .title .container .letter:nth-child(2) {
+.styles .title .letter:nth-child(2) {
   font-family: "Tostada";
-  font-size: 103px;
+  font-size: min(103px, 10vw);
 }
 
-.styles .title .container .letter:nth-child(3) {
+.styles .title .letter:nth-child(3) {
   font-family: "Air Americana DEMO";
-  font-size: 96px;
+  font-size: min(96px, 9.25vw);;
 }
 
-.styles .title .container .letter:nth-child(4) {
+.styles .title .letter:nth-child(4) {
   font-family: "Verve";
-  font-size: 103px;
+  font-size: min(103px, 10vw);
 }
 
-.styles .title .container .letter:nth-child(5) {
+.styles .title .letter:nth-child(5) {
   font-family: "Dita Sweet";
-  font-size: 108px;
+  font-size: min(108px, 10.5vw);
 }
 
-.styles .title .container .letter:nth-child(6) {
+.styles .title .letter:nth-child(6) {
   font-family: "Die Nasty";
-  font-size: 100px;
+  font-size: min(100px, 10vw);
+}
+
+.styles .images {
+  background: var(--orange);
+
+  width: 100%;
+  height: 100vh;
 }
 
 /* #endregion */
