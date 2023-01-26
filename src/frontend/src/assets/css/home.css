@@ -50,7 +50,7 @@
 /* #region Logo */
 
 .logo {
-  width: 80%;
+  width: 80%; /* Horizontal Padding */
   height: calc(100vh - 128px);
 
   margin: 0 auto;
@@ -65,9 +65,9 @@
 
   z-index: -1;
 
-  height: 80%;
-  max-height: 619px;
+  height: 80%;  /* Vertical Padding */
   width: 100%;
+  max-width: 733px;
   aspect-ratio: 733 / 619;
 }
 

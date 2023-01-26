@@ -70,9 +70,7 @@ const Home = () => {
         <div className="title">
           <div className="container"></div>
         </div>
-        <div className="images">
-          <Realism />
-        </div>
+        <div className="images"></div>
       </div>
     </div>
   );
