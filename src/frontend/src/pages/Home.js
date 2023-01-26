@@ -68,7 +68,14 @@ const Home = () => {
           <Curve />
         </div>
         <div className="title">
-          <div className="container"></div>
+          <div className="container">
+            <span className="letter">S</span>
+            <span className="letter">T</span>
+            <span className="letter">Y</span>
+            <span className="letter">L</span>
+            <span className="letter">E</span>
+            <span className="letter">S</span>
+          </div>
         </div>
         <div className="images"></div>
       </div>

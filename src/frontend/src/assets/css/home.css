@@ -50,30 +50,25 @@
 /* #region Logo */
 
 .logo {
-  width: 80%; /* Horizontal Padding */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
   height: calc(100vh - 128px);
 
   margin: 0 auto;
 }
 
 .logo .container {
-  position: relative;
-
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
   z-index: -1;
 
-  height: 80%;  /* Vertical Padding */
-  width: 100%;
-  max-width: 733px;
+  width: min(733px, 80%); /* Horizontal Padding */
+  height: 80%; /* Vertical Padding */
   aspect-ratio: 733 / 619;
 }
 
 .logo svg {
-  position: absolute;
-
   width: 100%;
   height: 100%;
 }
@@ -108,17 +103,53 @@
 .styles .title {
   background: var(--orange);
 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   height: 100vh;
 }
 
-.styles .texty {
-  transform: translateY(50%);
+.styles .title .container {
+  width: 100%;
+  text-align: center;
 }
 
-.styles .images {
-  background: var(--orange);
+.styles .title .container .letter {
+}
 
-  height: 100vh;
+.styles .title .container .letter:not(:last-child) {
+  letter-spacing: min(8rem, 8vw);
+}
+
+.styles .title .container .letter:nth-child(1) {
+  font-family: "Stencilitis";
+  font-size: min(112px, 100vw);
+}
+
+.styles .title .container .letter:nth-child(2) {
+  font-family: "Tostada";
+  font-size: 103px;
+}
+
+.styles .title .container .letter:nth-child(3) {
+  font-family: "Air Americana DEMO";
+  font-size: 96px;
+}
+
+.styles .title .container .letter:nth-child(4) {
+  font-family: "Verve";
+  font-size: 103px;
+}
+
+.styles .title .container .letter:nth-child(5) {
+  font-family: "Dita Sweet";
+  font-size: 108px;
+}
+
+.styles .title .container .letter:nth-child(6) {
+  font-family: "Die Nasty";
+  font-size: 100px;
 }
 
 /* #endregion */
