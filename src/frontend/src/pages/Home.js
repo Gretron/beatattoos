@@ -34,7 +34,7 @@ const Home = () => {
 
     gsap.registerPlugin(ScrollTrigger);
 
-    gsap.from(".logo .title text", {
+    gsap.from(".logo__title text", {
       y: 200,
       x: 0,
       stagger: 0.05,
@@ -43,14 +43,14 @@ const Home = () => {
       ease: "power4.out",
     });
 
-    gsap.to(".logo .snake", {
+    gsap.to(".logo__snake", {
       opacity: 1,
       duration: 0.75,
       delay: 1,
       ease: "power3.out",
     });
 
-    gsap.from(".logo .subtitle text", {
+    gsap.from(".logo__subtitle text", {
       y: -100,
       duration: 0.75,
       delay: 1.25,
@@ -114,6 +114,16 @@ const Home = () => {
     <div className="home">
       <div className="logo">
         <Logo />
+      </div>
+      <div className="styles">
+        <div className="styles__curve">
+          <div className="curve__top">
+            <div></div>
+          </div>
+          <div className="curve__bottom">
+            <div></div>
+          </div>
+        </div>
       </div>
       {/* 
       <div className="styles">

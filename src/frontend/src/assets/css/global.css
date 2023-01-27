@@ -115,8 +115,6 @@ body {
 }
 
 .header .brand {
-  /*border: 2px solid green;*/
-
   font-family: "Proclamate Heavy";
   font-size: 1.278rem;
 
@@ -178,8 +176,7 @@ body {
     flex-direction: column;
 
     padding: 8rem 2rem;
-
-    gap: 4vh;
+    gap: 2rem;
 
     transform: translateX(100%);
   }

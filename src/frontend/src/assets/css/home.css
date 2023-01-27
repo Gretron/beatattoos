@@ -56,25 +56,23 @@
   height: calc(100vh - 128px);
 
   overflow: hidden;
-
-  margin: 0 auto;
 }
 
-.logo svg {
-  width: min(733px, 80vw);
-  height: min(619px, calc(80vh - 128px));
+.logo__image {
+  width: min(800px, 80vw);
+  height: calc(80vh - 128px);
   aspect-ratio: 733 / 619;
 }
 
-.logo .snake {
+.logo__snake {
   opacity: 0;
 }
 
-.logo .title text {
+.logo__title text {
   font-family: "Proclamate Heavy";
 }
 
-.logo .subtitle text {
+.logo__subtitle text {
   font-family: "GrandCru-BoldS";
 
   fill: var(--earth);
@@ -85,7 +83,7 @@
     height: 100vh;
   }
 
-  .logo svg {
+  .logo__image {
     height: min(619px, 80vh);
   }
 }
@@ -94,22 +92,42 @@
 
 /* #region Styles Title */
 
-.styles .curve svg {
-  display: block;
-
+.styles__curve {
   width: 100%;
-  height: auto;
-
-  fill: var(--orange);
+  height: 256px;
 }
 
-.styles .curve:last-child svg {
-  transform: scale(-1, -1);
+.styles__curve div {
+  height: 50%;
+}
+
+.curve__top {
+  background: var(--orange);
+}
+
+.curve__top div {
+  background: var(--beige);
+
+  height: 100%;
+
+  border-radius: 0 0 min(128px, 10vw) 0;
+}
+
+.curve__bottom div {
+  height: 100%;
+
+  border-radius: 0 0 min(128px, 10vw) 0;
+}
+
+.styles__curve :nth-child(2) {
+  background: red;
+
+  width: min(128px, 10vw);
+
+  border-radius: min(128px, 10vw) 0 0 0;
 }
 
 .styles .title {
-  background: var(--orange);
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -185,5 +203,3 @@
 }
 
 /* #endregion */
-
-/* Mobile */
