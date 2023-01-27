@@ -57,6 +57,7 @@ const Home = () => {
       ease: "power3.out",
     });
 
+    /*
     gsap.fromTo(
       ".styles .title .letter:not(:last-child)",
       {
@@ -106,6 +107,7 @@ const Home = () => {
       markers: true,
       scrub: true,
     });
+    */
   }, []);
 
   return (
@@ -113,7 +115,7 @@ const Home = () => {
       <div className="logo">
         <Logo />
       </div>
-
+      {/* 
       <div className="styles">
         <div className="curve">
           <Curve />
@@ -135,6 +137,7 @@ const Home = () => {
           <Curve />
         </div>
       </div>
+      */}
     </div>
   );
 };
