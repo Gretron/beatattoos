@@ -78,22 +78,40 @@ const Home = () => {
       scrollTrigger: {
         trigger: ".styles .title",
         start: "middle top",
-        end: "bottom +=10px",
+        end: "bottom top",
         markers: true,
         scrub: true,
       },
       fontFamily: "Proclamate Heavy",
       textTransform: "lowercase",
-      stagger: 100,
+      stagger: {
+        from: "random",
+        amount: 1,
+      },
+    });
+
+    let tl = gsap.timeline();
+
+    tl.to(".styles .realism-text", {
+      y: 200,
+      duration: 30,
+    });
+
+    ScrollTrigger.create({
+      animation: tl,
+      trigger: ".styles .images",
+      pin: ".styles .images",
+      start: "middle top",
+      end: "bottom top",
+      markers: true,
+      scrub: true,
     });
   }, []);
 
   return (
     <div className="home">
       <div className="logo">
-        <div className="container">
-          <Logo />
-        </div>
+        <Logo />
       </div>
 
       <div className="styles">
@@ -110,7 +128,12 @@ const Home = () => {
             <span className="letter">S</span>
           </div>
         </div>
-        <div className="images"></div>
+        <div className="images">
+          <Realism />
+        </div>
+        <div className="curve">
+          <Curve />
+        </div>
       </div>
     </div>
   );

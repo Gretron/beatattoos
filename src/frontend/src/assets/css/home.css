@@ -43,8 +43,6 @@
 .home {
   width: 100%;
   height: auto;
-
-  overflow-y: scroll;
 }
 
 /* #region Logo */
@@ -57,20 +55,15 @@
   width: 100%;
   height: calc(100vh - 128px);
 
+  overflow: hidden;
+
   margin: 0 auto;
 }
 
-.logo .container {
-  z-index: -1;
-
-  width: min(733px, 80%); /* Horizontal Padding */
-  height: 80%; /* Vertical Padding */
-  aspect-ratio: 733 / 619;
-}
-
 .logo svg {
-  width: 100%;
-  height: 100%;
+  width: min(733px, 80vw);
+  height: min(619px, calc(80vh - 128px));
+  aspect-ratio: 733 / 619;
 }
 
 .logo .snake {
@@ -87,6 +80,16 @@
   fill: var(--earth);
 }
 
+@media (max-width: 64em) {
+  .logo {
+    height: 100vh;
+  }
+
+  .logo svg {
+    height: min(619px, 80vh);
+  }
+}
+
 /* #endregion */
 
 /* #region Styles Title */
@@ -98,6 +101,10 @@
   height: auto;
 
   fill: var(--orange);
+}
+
+.styles .curve:last-child svg {
+  transform: scale(-1, -1);
 }
 
 .styles .title {
@@ -133,7 +140,7 @@
 
 .styles .title .letter:nth-child(3) {
   font-family: "Air Americana DEMO";
-  font-size: min(96px, 9.25vw);;
+  font-size: min(96px, 9.25vw);
 }
 
 .styles .title .letter:nth-child(4) {
@@ -154,16 +161,29 @@
 .styles .images {
   background: var(--orange);
 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   width: 100%;
   height: 100vh;
+}
+
+.styles .images svg {
+  width: min(1346px, 90vw);
+  height: auto;
+  aspect-ratio: 1346 / 642;
+
+  transform: perspective(1px);
+}
+
+.styles .images text {
+  font-family: "Proclamate Heavy";
+}
+
+.styles .images .realism-text {
 }
 
 /* #endregion */
 
 /* Mobile */
-
-@media (max-width: 64em) {
-  .logo {
-    height: 100vh;
-  }
-}
