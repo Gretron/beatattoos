@@ -90,44 +90,24 @@
 
 /* #endregion */
 
-/* #region Styles Title */
+/* #region Styles */
 
 .styles__curve {
+  display: block;
+
   width: 100%;
-  height: 256px;
+  height: auto;
+
+  fill: var(--orange);
 }
 
-.styles__curve div {
-  height: 50%;
+.styles__curve:last-child {
+  transform: translateY(-1px) scale(-1, -1);
 }
 
-.curve__top {
+.styles__title {
   background: var(--orange);
-}
 
-.curve__top div {
-  background: var(--beige);
-
-  height: 100%;
-
-  border-radius: 0 0 min(128px, 10vw) 0;
-}
-
-.curve__bottom div {
-  height: 100%;
-
-  border-radius: 0 0 min(128px, 10vw) 0;
-}
-
-.styles__curve :nth-child(2) {
-  background: red;
-
-  width: min(128px, 10vw);
-
-  border-radius: min(128px, 10vw) 0 0 0;
-}
-
-.styles .title {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -137,46 +117,46 @@
   height: 100vh;
 }
 
-.styles .title .container {
+.styles__title .container {
   width: 100%;
   text-align: center;
 }
 
-.styles .title .letter:not(:last-child) {
+.styles__title .letter:not(:last-child) {
   letter-spacing: min(8rem, 10vw);
 }
 
-.styles .title .letter:nth-child(1) {
+.styles__title .letter:nth-child(1) {
   font-family: "Stencilitis";
   font-size: min(112px, 10.5vw);
 }
 
-.styles .title .letter:nth-child(2) {
+.styles__title .letter:nth-child(2) {
   font-family: "Tostada";
   font-size: min(103px, 10vw);
 }
 
-.styles .title .letter:nth-child(3) {
+.styles__title .letter:nth-child(3) {
   font-family: "Air Americana DEMO";
   font-size: min(96px, 9.25vw);
 }
 
-.styles .title .letter:nth-child(4) {
+.styles__title .letter:nth-child(4) {
   font-family: "Verve";
   font-size: min(103px, 10vw);
 }
 
-.styles .title .letter:nth-child(5) {
+.styles__title .letter:nth-child(5) {
   font-family: "Dita Sweet";
   font-size: min(108px, 10.5vw);
 }
 
-.styles .title .letter:nth-child(6) {
+.styles__title .letter:nth-child(6) {
   font-family: "Die Nasty";
   font-size: min(100px, 10vw);
 }
 
-.styles .images {
+.styles__images {
   background: var(--orange);
 
   display: flex;
@@ -187,7 +167,7 @@
   height: 100vh;
 }
 
-.styles .images svg {
+.styles__images svg {
   width: min(1346px, 90vw);
   height: auto;
   aspect-ratio: 1346 / 642;
@@ -195,11 +175,45 @@
   transform: perspective(1px);
 }
 
-.styles .images text {
+.styles__images text {
   font-family: "Proclamate Heavy";
 }
 
-.styles .images .realism-text {
+/* #endregion */
+
+/* #region Coverups */
+
+.coverups {
+  display: flex;
+  justify-content: center;
+
+  height: 100vh; /* Temporary (Auto After) */
+
+  text-align: center;
+}
+
+.coverups__container {
+  width: min(832px, 90vw);
+}
+
+.coverups__title {
+  margin-top: 4rem;
+
+  white-space: nowrap;
+
+  font-size: min(9.333rem, 20vw);
+}
+
+/* #endregion */
+
+/* #region Types */
+
+.types {
+  height: 100vh; /* Temporary (Auto After) */
+}
+
+.types .seperator svg {
+  fill: var(--dune);
 }
 
 /* #endregion */

@@ -11,9 +11,10 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 // Components
+import Seperator from "../components/Seperator";
 import { ReactComponent as Curve } from "../assets/img/curve.svg";
 import { ReactComponent as Logo } from "../assets/img/logo.svg";
-import { ReactComponent as Realism } from "../assets/img/realism.svg";
+import { ReactComponent as Styles } from "../assets/img/styles.svg";
 
 // #endregion
 
@@ -57,16 +58,15 @@ const Home = () => {
       ease: "power3.out",
     });
 
-    /*
     gsap.fromTo(
-      ".styles .title .letter:not(:last-child)",
+      ".styles__title .letter:not(:last-child)",
       {
         letterSpacing: "min(8rem, 10vw)",
       },
       {
         scrollTrigger: {
-          trigger: ".styles .title",
-          pin: ".styles .title",
+          trigger: ".styles__title",
+          pin: ".styles__title",
           start: "top middle",
           end: "bottom middle",
           scrub: 1,
@@ -75,9 +75,9 @@ const Home = () => {
       }
     );
 
-    gsap.to(".styles .title .letter", {
+    gsap.to(".styles__title .letter", {
       scrollTrigger: {
-        trigger: ".styles .title",
+        trigger: ".styles__title",
         start: "middle top",
         end: "bottom top",
         markers: true,
@@ -93,21 +93,21 @@ const Home = () => {
 
     let tl = gsap.timeline();
 
-    tl.to(".styles .realism-text", {
+    tl.to(".styles__images .realism-text", {
       y: 200,
       duration: 30,
     });
 
     ScrollTrigger.create({
       animation: tl,
-      trigger: ".styles .images",
-      pin: ".styles .images",
+      trigger: ".styles__images",
+      pin: ".styles__images",
       start: "middle top",
       end: "bottom top",
+      snap: [0.3, 0.6],
       markers: true,
       scrub: true,
     });
-    */
   }, []);
 
   return (
@@ -115,23 +115,11 @@ const Home = () => {
       <div className="logo">
         <Logo />
       </div>
+
       <div className="styles">
-        <div className="styles__curve">
-          <div className="curve__top">
-            <div></div>
-          </div>
-          <div className="curve__bottom">
-            <div></div>
-          </div>
-        </div>
-      </div>
-      {/* 
-      <div className="styles">
-        <div className="curve">
-          <Curve />
-        </div>
-        <div className="title">
-          <div className="container">
+        <Curve />
+        <div className="styles__title">
+          <div className="styles__title__container">
             <span className="letter">S</span>
             <span className="letter">T</span>
             <span className="letter">Y</span>
@@ -140,14 +128,41 @@ const Home = () => {
             <span className="letter">S</span>
           </div>
         </div>
-        <div className="images">
-          <Realism />
+        <div className="styles__images">
+          <Styles />
         </div>
-        <div className="curve">
-          <Curve />
+        <Curve />
+      </div>
+
+      <div className="coverups">
+        <div className="coverups__container">
+          <div className="coverups__title d2">cover-ups</div>
+          <p className="coverups__subtitle">
+            looking to cover up a tattoo? you’ve come to the right place. turn a
+            poor decision into a work of art.
+          </p>
+          <input type="range" id="" />
         </div>
       </div>
-      */}
+
+      <div className="types">
+        <div className="types__card">
+          <div className="types__card__title d3">flashes</div>
+          <p className="types__card__subtitle">
+            select from a collection of pre-constructed tattoo designs.
+          </p>
+          {/* SVG Image Goes Here */}
+        </div>
+        <Seperator />
+        <div className="types__card">
+          <div className="types__card__title d3">customs</div>
+          <p className="types__card__subtitle">
+            looking for a design that is more <strong>you</strong>? let’s create
+            something together.
+          </p>
+          {/* SVG Image Goes Here */}
+        </div>
+      </div>
     </div>
   );
 };
