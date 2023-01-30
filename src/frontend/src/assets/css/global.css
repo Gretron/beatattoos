@@ -171,6 +171,8 @@ a {
   font-size: 1rem;
   font-family: "GrandCru-BoldS";
 
+  text-decoration: none;
+
   transition: 0.2s ease;
 }
 
@@ -211,6 +213,19 @@ a:hover {
 
 .header .links .additional-links {
   display: none;
+}
+
+.header .active--link {
+  color: var(--orange);
+}
+
+.header .active--button {
+  color: var(--orange);
+  background: var(--brown);
+}
+
+.header .active--icon svg {
+  fill: var(--orange);
 }
 
 .header .actions {
@@ -281,6 +296,10 @@ a:hover {
     background: var(--brown);
   }
 
+  .header .active--link {
+    color: var(--beige);
+  }
+
   .header .actions {
     display: none;
   }
@@ -296,10 +315,11 @@ a:hover {
 
 /* #region Footer */
 
-.footer {
-}
-
 .footer__curve {
+  position: relative;
+
+  z-index: -1;
+
   transform: translateY(1px) scaleX(-1);
 }
 
@@ -340,6 +360,10 @@ a:hover {
 }
 
 .footer__link:hover {
+  color: var(--beige);
+}
+
+.footer .active--link {
   color: var(--beige);
 }
 

@@ -5,6 +5,7 @@ import { gsap } from "gsap";
 
 // Hooks
 import { useState } from "react";
+import { useLocation, Link } from "react-router-dom";
 
 // Styles
 import global from "../assets/css/global.css";
@@ -52,24 +53,67 @@ const Header = () => {
     });
   };
 
+  // Page Location
+  const location = useLocation();
+
   return (
     <div className="header">
       <div className="brand">beatattoos</div>
       <div className="links" data-visible={isMenuVisible}>
-        <a>home</a>
-        <a>portfolio</a>
-        <a>about</a>
+        <Link to="/">
+          <a className={location.pathname == "/" ? "active--link" : ""}>home</a>
+        </Link>
+        <Link to="/portfolio">
+          <a
+            className={location.pathname == "/portfolio" ? "active--link" : ""}
+          >
+            portfolio
+          </a>
+        </Link>
+        <Link to="/about">
+          <a className={location.pathname == "/about" ? "active--link" : ""}>
+            about
+          </a>
+        </Link>
         <div className="additional-links">
           <Seperator />
-          <a>account</a>
-          <a>book now</a>
+          <Link to="/account">
+            <a
+              className={location.pathname == "/account" ? "active--link" : ""}
+            >
+              account
+            </a>
+          </Link>
+          <Link to="/book">
+            <a className={location.pathname == "/book" ? "active--link" : ""}>
+              book now
+            </a>
+          </Link>
         </div>
       </div>
       <div className="actions">
-        <button className="icon--button">
-          <User />
-        </button>
-        <button className="orange--button">book now</button>
+        <Link to="/account">
+          <button
+            className={
+              location.pathname == "/account"
+                ? "active--icon icon--button"
+                : "icon--button"
+            }
+          >
+            <User />
+          </button>
+        </Link>
+        <Link to="/book">
+          <button
+            className={
+              location.pathname == "/book"
+                ? "active--button orange--button"
+                : "orange--button"
+            }
+          >
+            book now
+          </button>
+        </Link>
       </div>
       <button className="toggle icon--button" onClick={handleClick}>
         <Hamburger />
