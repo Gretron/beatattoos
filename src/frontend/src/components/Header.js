@@ -66,12 +66,12 @@ const Header = () => {
         </div>
       </div>
       <div className="actions">
-        <button className="icon-button">
+        <button className="icon--button">
           <User />
         </button>
-        <button className="orange-button">book now</button>
+        <button className="orange--button">book now</button>
       </div>
-      <button className="toggle icon-button" onClick={handleClick}>
+      <button className="toggle icon--button" onClick={handleClick}>
         <Hamburger />
       </button>
     </div>

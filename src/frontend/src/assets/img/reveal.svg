@@ -1,0 +1,37 @@
+<svg class="coverups__reveal" width="800" height="456" viewBox="0 0 800 456" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+<path d="M64 0.5H799.5V392C799.5 427.07 771.07 455.5 736 455.5H0.5V64C0.5 28.9299 28.9299 0.5 64 0.5Z" stroke="#493D08"/>
+
+<mask id="mask0_114_479" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="32" y="32" width="736" height="392">
+<path d="M32 64C32 46.3269 46.3269 32 64 32H768V392C768 409.673 753.673 424 736 424H32V64Z" fill="#D9D9D9"/>
+</mask>
+
+<g mask="url(#mask0_114_479)">
+
+<rect x="32" y="32" width="736" height="392" fill="url(#reveal-pattern1)"/>
+
+<g mask="url(#reveal__mask)">
+<rect x="32" y="32" width="736" height="392" fill="url(#reveal-pattern0)" />
+</g>
+
+</g>
+
+<mask id="reveal__mask" style="mask-type:alpha">
+<g x="32" y="0" width="736" height="100%">
+<rect id="reveal__rect" x="0" y="0" width="50%" height="100%" fill="#000000"/>
+</g>
+</mask>
+
+<defs>
+<pattern id="reveal-pattern0" patternContentUnits="objectBoundingBox" preserveAspectRatio="meet" width="1" height="1">
+<use xlink:href="#reveal0" transform="matrix(0.000925926 0 0 0.00173847 0 -0.438776)" />
+</pattern>
+<pattern id="reveal-pattern1" patternContentUnits="objectBoundingBox" preserveAspectRatio="meet" width="1" height="1">
+<use xlink:href="#reveal1" transform="matrix(0.000925926 0 0 0.00173847 0 -0.438776)" />
+</pattern>
+
+<image id="reveal0" width="1080" height="1080" href="reveal0.png"/>
+<image id="reveal1" width="1080" height="1080" href="reveal1.png"/>
+</defs>
+
+</svg>

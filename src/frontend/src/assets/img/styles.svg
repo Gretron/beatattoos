@@ -3,51 +3,116 @@
 <!-- Border -->
 <path d="M1 65C1 29.6538 29.6538 1 65 1H1281V577C1281 612.346 1252.35 641 1217 641H1V65Z" stroke="#493D08"/>
 
-<!-- Image 1 -->
+<!-- Image Masks -->
 <mask id="mask0_114_329" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="865" y="33" width="384" height="576">
 <path d="M865 65C865 47.3269 879.327 33 897 33H1249V577C1249 594.673 1234.67 609 1217 609H865V65Z" fill="#D9D9D9"/>
 </mask>
 
-<g mask="url(#mask0_114_329)">
-<rect x="787" y="33" width="576" height="576" fill="url(#pattern0)"/>
-</g>
-
-<!-- Image 2 -->
 <mask id="mask1_114_329" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="449" y="33" width="384" height="576">
 <path d="M449 65C449 47.3269 463.327 33 481 33H833V577C833 594.673 818.673 609 801 609H449V65Z" fill="#D9D9D9"/>
 </mask>
+
+<mask id="mask2_114_329" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="33" y="33" width="384" height="576">
+<path d="M33 65C33 47.3269 47.3269 33 65 33H417V577C417 594.673 402.673 609 385 609H33V65Z" fill="#D9D9D9"/>
+</mask>
+
+<!-- Back Realism Text -->
+<g mask="url(#realism__mask)">
+<text class="realism-text" fill="#493D08" xml:space="preserve" style="white-space: pre" font-family="Proclamate Heavy" font-size="212" font-weight="900" letter-spacing="0em" x="310" y="200.36">realism</text>
+</g>
+
+<!-- Back Old School Text -->
+<g mask="url(#old-school__mask)">
+<text class="old-school-text" fill="#493D08"  xml:space="preserve" style="white-space: pre" font-family="Proclamate Heavy" font-size="212" font-weight="900" letter-spacing="0em" x="211" y="360.36">old school</text>
+</g>
+
+<!-- Back Fine Line Text -->
+<g mask="url(#fine-line__mask)">
+<text class="fine-line-text" fill="#493D08" xml:space="preserve" style="white-space: pre" font-family="Proclamate Heavy" font-size="212" font-weight="900" letter-spacing="0em" x="281" y="560.36">fine line</text>
+</g>
+
+<!-- Image Set 1 -->
+<g mask="url(#mask0_114_329)">
+<rect x="787" y="33" width="576" height="576" fill="url(#pattern0)"/>
+</g>
 
 <g mask="url(#mask1_114_329)">
 <rect x="326" y="33" width="576" height="576" fill="url(#pattern1)"/>
 </g>
 
-<!-- Image 3 -->
-<mask id="mask2_114_329" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="33" y="33" width="384" height="576">
-<path d="M33 65C33 47.3269 47.3269 33 65 33H417V577C417 594.673 402.673 609 385 609H33V65Z" fill="#D9D9D9"/>
-</mask>
+<g mask="url(#mask2_114_329)">
+<rect x="-20" y="33" width="576" height="576" fill="url(#pattern2)"/>
+</g>
+
+<!-- Image Set 2 -->
+<g mask="url(#mask0_114_329)">
+<rect class="old-school-image" x="787" y="33" width="576" height="576" fill="url(#pattern3)"/>
+</g>
+
+<g mask="url(#mask1_114_329)">
+<rect class="old-school-image" x="326" y="33" width="576" height="576" fill="url(#pattern4)"/>
+</g>
 
 <g mask="url(#mask2_114_329)">
-<path d="M-38 36C-38 34.3431 -36.6569 33 -35 33H535C536.657 33 538 34.3431 538 36V606C538 607.657 536.657 609 535 609H-35C-36.6569 609 -38 607.657 -38 606V36Z" fill="url(#pattern2)"/>
+<rect class="old-school-image" x="-20" y="33" width="576" height="576" fill="url(#pattern5)"/>
 </g>
 
-<!-- Back Realism Text -->
-<g mask="url(#front-realism-mask)">
-<text class="realism-text" fill="#493D08" xml:space="preserve" style="white-space: pre" font-family="Proclamate Heavy" font-size="212" font-weight="900" letter-spacing="0em" x="310" y="200.36">realism</text>
+<!-- Image Set 3 -->
+<g mask="url(#mask0_114_329)">
+<rect class="fine-line-image" x="787" y="33" width="576" height="576" fill="url(#pattern6)"/>
 </g>
 
+<g mask="url(#mask1_114_329)">
+<rect class="fine-line-image" x="326" y="33" width="576" height="576" fill="url(#pattern7)"/>
+</g>
+
+<g mask="url(#mask2_114_329)">
+<rect class="fine-line-image" x="-40" y="33" width="576" height="576" fill="url(#pattern8)"/>
+</g>
+
+<!-- Front Realism Text -->
 <mask id="mask3_114_329" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="33" y="33" width="1216" height="576">
 <path fill-rule="evenodd" clip-rule="evenodd" d="M33 65C33 47.3269 47.3269 33 65 33H417V577C417 594.673 402.673 609 385 609H33V65ZM449 33H833V609H449V33ZM1217 33C1234.67 33 1249 47.3269 1249 65V577C1249 594.673 1234.67 609 1217 609H865V33H1217Z" fill="#D9D9D9"/>
 </mask>
 
-<!-- Front Realism Text -->
 <g mask="url(#mask3_114_329)">
-<g mask="url(#front-realism-mask)">
+<g mask="url(#realism__mask)">
 <text class="realism-text" fill="#FFEFD6" xml:space="preserve" style="white-space: pre" font-family="Proclamate Heavy" font-size="212" font-weight="900" letter-spacing="0em" x="310" y="200.36">realism</text>
 </g>
 </g>
 
-<mask id="front-realism-mask" style="mask-type:alpha" maskUnits="userSpaceOnUse">
+<mask id="realism__mask" style="mask-type:alpha" maskUnits="userSpaceOnUse">
 <rect x="0" y="32" width="100%" height="172" fill="black" />
+</mask>
+
+<!-- Front Old School Text -->
+<mask id="mask4_114_329" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="33" y="33" width="1216" height="576">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M33 65C33 47.3269 47.3269 33 65 33H417V577C417 594.673 402.673 609 385 609H33V65ZM449 33H833V609H449V33ZM1217 33C1234.67 33 1249 47.3269 1249 65V577C1249 594.673 1234.67 609 1217 609H865V33H1217Z" fill="#D9D9D9"/>
+</mask>
+
+<g mask="url(#mask4_114_329)">
+<g mask="url(#old-school__mask)">
+<text class="old-school-text" fill="#FFEFD6" xml:space="preserve" style="white-space: pre" font-family="Proclamate Heavy" font-size="212" font-weight="900" letter-spacing="0em" x="211" y="360.36">old school</text>
+</g>
+</g>
+
+<mask id="old-school__mask" style="mask-type:alpha" maskUnits="userSpaceOnUse">
+<rect x="0" y="200" width="100%" height="210" fill="black" />
+</mask>
+
+<!-- Front Fine Line Text -->
+<mask id="mask3_114_329" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="33" y="33" width="1216" height="576">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M33 65C33 47.3269 47.3269 33 65 33H417V577C417 594.673 402.673 609 385 609H33V65ZM449 33H833V609H449V33ZM1217 33C1234.67 33 1249 47.3269 1249 65V577C1249 594.673 1234.67 609 1217 609H865V33H1217Z" fill="#D9D9D9"/>
+</mask>
+
+<g mask="url(#mask3_114_329)">
+<g mask="url(#fine-line__mask)">
+<text class="fine-line-text" fill="#FFEFD6" xml:space="preserve" style="white-space: pre" font-family="Proclamate Heavy" font-size="212" font-weight="900" letter-spacing="0em" x="281" y="560.36">fine line</text>
+</g>
+</g>
+
+<mask id="fine-line__mask" style="mask-type:alpha" maskUnits="userSpaceOnUse">
+<rect x="0" y="398" width="100%" height="210" fill="black" />
 </mask>
 
 <defs>
@@ -61,15 +126,35 @@
 <use xlink:href="#image2_114_329" transform="scale(0.000694444)"/>
 </pattern>
 
+<pattern id="pattern3" patternContentUnits="objectBoundingBox" width="1" height="1">
+<use xlink:href="#image3_114_329" transform="scale(0.000694444)"/>
+</pattern>
+<pattern id="pattern4" patternContentUnits="objectBoundingBox" width="1" height="1">
+<use xlink:href="#image4_114_329" transform="scale(0.000694444)"/>
+</pattern>
+<pattern id="pattern5" patternContentUnits="objectBoundingBox" width="1" height="1">
+<use xlink:href="#image5_114_329" transform="scale(0.000694444)"/>
+</pattern>
+
+<pattern id="pattern6" patternContentUnits="objectBoundingBox" width="1" height="1">
+<use xlink:href="#image6_114_329" transform="scale(0.000694444)"/>
+</pattern>
+<pattern id="pattern7" patternContentUnits="objectBoundingBox" width="1" height="1">
+<use xlink:href="#image7_114_329" transform="scale(0.000694444)"/>
+</pattern>
+<pattern id="pattern8" patternContentUnits="objectBoundingBox" width="1" height="1">
+<use xlink:href="#image8_114_329" transform="scale(0.000694444)"/>
+</pattern>
+
 <!-- Fine Line Images -->
-<image width="1440" height="1440" href="tattoo8.jpg"/>
-<image width="1440" height="1440" href="tattoo7.jpg"/>
-<image width="1440" height="1440" href="tattoo6.jpg"/>
+<image id="image6_114_329" width="1440" height="1440" href="tattoo6.jpg"/>
+<image id="image7_114_329" width="1440" height="1440" href="tattoo7.jpg"/>
+<image id="image8_114_329" width="1440" height="1440" href="tattoo8.jpg"/>
 
 <!-- Old School Images -->
-<image width="1440" height="1440" href="tattoo5.jpg"/>
-<image width="1440" height="1440" href="tattoo4.jpg"/>
-<image width="1440" height="1440" href="tattoo3.jpg"/>
+<image id="image3_114_329" width="1440" height="1440" href="tattoo3.jpg"/>
+<image id="image4_114_329" width="1440" height="1440" href="tattoo4.jpg"/>
+<image id="image5_114_329" width="1440" height="1440" href="tattoo5.jpg"/>
 
 <!-- Realism Images -->
 <image id="image0_114_329" width="1440" height="1440" href="tattoo2.jpg"/>

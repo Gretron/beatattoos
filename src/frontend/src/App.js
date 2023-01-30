@@ -3,6 +3,7 @@ import { ReactDOM } from "react";
 
 // Components
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 // Pages
 import Home from "./pages/Home";
@@ -12,6 +13,7 @@ function App() {
     <div className="App">
       <Header />
       <Home />
+      <Footer />
     </div>
   );
 }

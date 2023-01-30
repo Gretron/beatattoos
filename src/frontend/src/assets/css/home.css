@@ -93,12 +93,8 @@
 /* #region Styles */
 
 .styles__curve {
-  display: block;
-
-  width: 100%;
-  height: auto;
-
-  fill: var(--orange);
+  position: relative;
+  z-index: -1;
 }
 
 .styles__curve:last-child {
@@ -163,13 +159,15 @@
   justify-content: center;
   align-items: center;
 
+  z-index: -1;
+
   width: 100%;
   height: 100vh;
 }
 
 .styles__images svg {
   width: min(1346px, 90vw);
-  height: auto;
+  height: 80vh;
   aspect-ratio: 1346 / 642;
 
   transform: perspective(1px);
@@ -187,7 +185,9 @@
   display: flex;
   justify-content: center;
 
-  height: 100vh; /* Temporary (Auto After) */
+  height: auto;
+
+  margin: 8rem 0;
 
   text-align: center;
 }
@@ -197,11 +197,26 @@
 }
 
 .coverups__title {
-  margin-top: 4rem;
-
   white-space: nowrap;
 
   font-size: min(9.333rem, 20vw);
+
+  margin-bottom: 1rem;
+}
+
+.coverups__subtitle {
+  color: var(--earth);
+
+  margin-bottom: 2rem;
+}
+
+.coverups__reveal {
+  width: calc(100% - 32px);
+  height: auto;
+
+  margin-bottom: 1rem;
+
+  transform: perspective(1px);
 }
 
 /* #endregion */
@@ -209,11 +224,100 @@
 /* #region Types */
 
 .types {
-  height: 100vh; /* Temporary (Auto After) */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  margin-bottom: 4rem;
+}
+
+.types__container {
+  display: flex;
+  flex-direction: row;
+
+  width: min(1280px, 90vw);
+  height: auto;
+
+  margin-bottom: 2rem;
+
+  gap: 2rem;
+}
+
+.types__card {
+  width: 50%;
+
+  text-align: center;
+}
+
+.types__card__title {
+  font-size: min(7.444rem, 10vw);
+}
+
+.types__card__subtitle {
+  color: var(--earth);
+
+  margin: 1rem auto 2rem auto;
+
+  max-width: 80%;
+}
+
+.types__card__subtitle strong {
+  color: var(--earth);
+}
+
+.types__card:nth-child(1) svg {
+  width: 80%;
+  height: auto;
+}
+
+.types__card:nth-child(3) svg {
+  width: 60%;
+  height: auto;
+
+  margin-top: min(4rem, 4vw);
+}
+
+.types .seperator {
+  margin: 4rem 0;
 }
 
 .types .seperator svg {
   fill: var(--dune);
+}
+
+.types .seperator__horizontal-line {
+  display: none;
+}
+
+@media (max-width: 64em) {
+  .types__container {
+    flex-direction: column;
+
+    gap: 2rem;
+
+    margin-bottom: 4rem;
+  }
+
+  .types__card {
+    width: 100%;
+  }
+
+  .types .seperator {
+    margin: 0 4rem;
+  }
+
+  .types__card__title {
+    font-size: min(7.444rem, 20vw);
+  }
+
+  .types .seperator__horizontal-line {
+    display: revert;
+  }
+
+  .types .seperator__vertical-line {
+    display: none;
+  }
 }
 
 /* #endregion */

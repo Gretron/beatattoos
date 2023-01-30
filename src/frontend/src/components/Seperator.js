@@ -7,7 +7,8 @@ const HamburgerIcon = () => {
   return (
     <div className="seperator">
       <Star />
-      <div className="line"></div>
+      <div className="seperator__horizontal-line"></div>
+      <div className="seperator__vertical-line"></div>
     </div>
   );
 };

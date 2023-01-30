@@ -12,9 +12,13 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 // Components
 import Seperator from "../components/Seperator";
+import Slider from "../components/Slider";
 import { ReactComponent as Curve } from "../assets/img/curve.svg";
 import { ReactComponent as Logo } from "../assets/img/logo.svg";
 import { ReactComponent as Styles } from "../assets/img/styles.svg";
+import { ReactComponent as Reveal } from "../assets/img/reveal.svg";
+import { ReactComponent as Flashes } from "../assets/img/flashes.svg";
+import { ReactComponent as Customs } from "../assets/img/customs.svg";
 
 // #endregion
 
@@ -23,6 +27,10 @@ import { ReactComponent as Styles } from "../assets/img/styles.svg";
  */
 const Home = () => {
   const loaded = useRef(false);
+
+  const revealCallback = (value) => {
+    document.querySelector("#reveal__rect").setAttribute("width", `${value}%`);
+  };
 
   useEffect(() => {
     // If Component Already Loaded...
@@ -35,6 +43,7 @@ const Home = () => {
 
     gsap.registerPlugin(ScrollTrigger);
 
+    // Logo Animations
     gsap.from(".logo__title text", {
       y: 200,
       x: 0,
@@ -58,6 +67,7 @@ const Home = () => {
       ease: "power3.out",
     });
 
+    // Styles Title Animations
     gsap.fromTo(
       ".styles__title .letter:not(:last-child)",
       {
@@ -80,7 +90,6 @@ const Home = () => {
         trigger: ".styles__title",
         start: "middle top",
         end: "bottom top",
-        markers: true,
         scrub: true,
       },
       fontFamily: "Proclamate Heavy",
@@ -91,12 +100,64 @@ const Home = () => {
       },
     });
 
+    // Styles Images Animations
     let tl = gsap.timeline();
 
-    tl.to(".styles__images .realism-text", {
-      y: 200,
-      duration: 30,
-    });
+    tl.to(
+      ".styles__images .realism-text",
+      {
+        y: 200,
+        duration: 10,
+      },
+      "5"
+    );
+
+    tl.from(
+      ".styles__images .old-school-text",
+      {
+        y: -210,
+        duration: 10,
+      },
+      "<"
+    );
+
+    tl.from(
+      ".styles__images .old-school-image",
+      {
+        y: -600,
+        stagger: 3,
+        duration: 10,
+      },
+      "<"
+    );
+
+    tl.to(
+      ".styles__images .old-school-text",
+      {
+        y: 210,
+        duration: 10,
+      },
+      ">+=5"
+    );
+
+    tl.from(
+      ".styles__images .fine-line-text",
+      {
+        y: -210,
+        duration: 10,
+      },
+      "<"
+    );
+
+    tl.from(
+      ".styles__images .fine-line-image",
+      {
+        y: -600,
+        stagger: 3,
+        duration: 10,
+      },
+      "<"
+    );
 
     ScrollTrigger.create({
       animation: tl,
@@ -104,8 +165,7 @@ const Home = () => {
       pin: ".styles__images",
       start: "middle top",
       end: "bottom top",
-      snap: [0.3, 0.6],
-      markers: true,
+      snap: [0.5, 1],
       scrub: true,
     });
   }, []);
@@ -117,7 +177,9 @@ const Home = () => {
       </div>
 
       <div className="styles">
-        <Curve />
+        <div className="styles__curve">
+          <Curve />
+        </div>
         <div className="styles__title">
           <div className="styles__title__container">
             <span className="letter">S</span>
@@ -131,7 +193,9 @@ const Home = () => {
         <div className="styles__images">
           <Styles />
         </div>
-        <Curve />
+        <div className="styles__curve">
+          <Curve />
+        </div>
       </div>
 
       <div className="coverups">
@@ -141,27 +205,37 @@ const Home = () => {
             looking to cover up a tattoo? you’ve come to the right place. turn a
             poor decision into a work of art.
           </p>
-          <input type="range" id="" />
+          <Reveal />
+          <Slider
+            min={0}
+            max={100}
+            labelOne={"original"}
+            labelTwo={"covered"}
+            callback={revealCallback}
+          />
         </div>
       </div>
 
       <div className="types">
-        <div className="types__card">
-          <div className="types__card__title d3">flashes</div>
-          <p className="types__card__subtitle">
-            select from a collection of pre-constructed tattoo designs.
-          </p>
-          {/* SVG Image Goes Here */}
+        <div className="types__container">
+          <div className="types__card">
+            <div className="types__card__title d3">flashes</div>
+            <p className="types__card__subtitle">
+              select from a collection of pre-constructed tattoo designs.
+            </p>
+            <Flashes />
+          </div>
+          <Seperator />
+          <div className="types__card">
+            <div className="types__card__title d3">customs</div>
+            <p className="types__card__subtitle">
+              looking for a design that is more <strong>you</strong>? let’s
+              create something together.
+            </p>
+            <Customs />
+          </div>
         </div>
-        <Seperator />
-        <div className="types__card">
-          <div className="types__card__title d3">customs</div>
-          <p className="types__card__subtitle">
-            looking for a design that is more <strong>you</strong>? let’s create
-            something together.
-          </p>
-          {/* SVG Image Goes Here */}
-        </div>
+        <button className="outline--button">book now</button>
       </div>
     </div>
   );
