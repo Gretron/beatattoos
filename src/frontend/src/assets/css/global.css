@@ -4,6 +4,15 @@
   --dune: #d2b6a3;
   --earth: #a47c6f;
   --brown: #493d08;
+  --d1: 11.667rem;
+  --d2: 9.333rem;
+  --d3: 7.444rem;
+  --h1: 2.444rem;
+  --h2: 1.944rem;
+  --h3: 1.556rem;
+  --h4: 1.278rem;
+  --h5: 1rem;
+  --h6: 0.778rem;
 }
 
 /* Fonts */
@@ -264,7 +273,7 @@ a:hover {
     flex-direction: column;
 
     padding: 8rem 2rem;
-    gap: 2rem;
+    gap: 4vh;
 
     transform: translateX(100%);
   }
