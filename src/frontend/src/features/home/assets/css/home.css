@@ -92,6 +92,10 @@
 
 /* #region Styles */
 
+.styles {
+  margin-bottom: 16rem;
+}
+
 .styles__curve {
   position: relative;
   z-index: -1;
@@ -187,7 +191,7 @@
 
   height: auto;
 
-  margin: 8rem 0;
+  margin-bottom: 16rem;
 
   text-align: center;
 }
@@ -229,7 +233,7 @@
   align-items: center;
   flex-direction: column;
 
-  margin-bottom: 4rem;
+  margin-bottom: 16rem;
 }
 
 .types__container {
