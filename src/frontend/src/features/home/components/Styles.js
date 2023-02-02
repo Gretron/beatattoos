@@ -5,7 +5,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 // Hooks
-import { useEffect, useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 
 // Images
 import { ReactComponent as StylesVector } from "../assets/img/styles.svg";
@@ -19,12 +19,24 @@ import { ReactComponent as Curve } from "../../../assets/img/curve.svg";
 const Styles = () => {
   const loaded = useRef(false);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     // If Component Already Loaded...
     if (loaded.current) {
       // Skip
-      return;
+      return () => {
+        let sts = [
+          ScrollTrigger.getById("styles-title-spacing"),
+          ScrollTrigger.getById("styles-title-font"),
+          ScrollTrigger.getById("styles-images"),
+        ];
+
+        if (sts)
+          sts.forEach((st) => {
+            st.kill();
+          });
+      };
     }
+
     // Else Play Animation
     loaded.current = true;
 
@@ -38,6 +50,7 @@ const Styles = () => {
       },
       {
         scrollTrigger: {
+          id: "styles-title-spacing",
           trigger: ".styles__title",
           pin: ".styles__title",
           start: "top middle",
@@ -50,6 +63,7 @@ const Styles = () => {
 
     gsap.to(".styles__title .letter", {
       scrollTrigger: {
+        id: "styles-title-font",
         trigger: ".styles__title",
         start: "middle top",
         end: "bottom top",
@@ -123,6 +137,7 @@ const Styles = () => {
     );
 
     ScrollTrigger.create({
+      id: "styles-images",
       animation: tl,
       trigger: ".styles__images",
       pin: ".styles__images",
