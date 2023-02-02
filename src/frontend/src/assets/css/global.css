@@ -200,9 +200,13 @@ a:hover {
   align-items: center;
   justify-content: space-between;
 
-  height: 128px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
 
-  margin: 0 8vw;
+  width: calc(100% - 16vw);
+  height: 128px;
 }
 
 .header .brand {
@@ -254,7 +258,9 @@ a:hover {
     top: 0;
     left: 0;
     right: 0;
+    transform: revert;
 
+    width: revert;
     height: 0;
 
     margin: 3rem 2rem;
