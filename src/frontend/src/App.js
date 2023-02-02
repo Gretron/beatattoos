@@ -40,8 +40,8 @@ function App() {
     gsap.registerPlugin(ScrollSmoother);
 
     const sm = ScrollSmoother.create({
-      wrapper: ".root",
-      content: ".App",
+      wrapper: ".wrapper",
+      content: ".content",
       smooth: 1,
       smoothTouch: 0.1,
       effects: true,
@@ -52,11 +52,15 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Header />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/portfolio" element={<Portfolio />} />
-        </Routes>
-        <Footer />
+        <div className="wrapper">
+          <div className="content">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/portfolio" element={<Portfolio />} />
+            </Routes>
+            <Footer />
+          </div>
+        </div>
       </BrowserRouter>
     </div>
   );
