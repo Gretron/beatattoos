@@ -27,59 +27,19 @@ const Footer = () => {
         </div>
         <div className="footer__section">
           <Link to="/">
-            <a
-              className={
-                location.pathname == "/"
-                  ? "active--link footer__link"
-                  : "footer__link"
-              }
-            >
-              home
-            </a>
+            <a className="footer__link">home</a>
           </Link>
           <Link to="/portfolio">
-            <a
-              className={
-                location.pathname == "/portfolio"
-                  ? "active--link footer__link"
-                  : "footer__link"
-              }
-            >
-              portfolio
-            </a>
+            <a className="footer__link">portfolio</a>
           </Link>
           <Link to="/about">
-            <a
-              className={
-                location.pathname == "/about"
-                  ? "active--link footer__link"
-                  : "footer__link"
-              }
-            >
-              about
-            </a>
+            <a className="footer__link">about</a>
           </Link>
           <Link to="/account">
-            <a
-              className={
-                location.pathname == "/account"
-                  ? "active--link footer__link"
-                  : "footer__link"
-              }
-            >
-              account
-            </a>
+            <a className="footer__link">account</a>
           </Link>
           <Link to="/book">
-            <a
-              className={
-                location.pathname == "/book"
-                  ? "active--link footer__link"
-                  : "footer__link"
-              }
-            >
-              book now
-            </a>
+            <a className="footer__link">book now</a>
           </Link>
         </div>
         <div className="footer__section">
