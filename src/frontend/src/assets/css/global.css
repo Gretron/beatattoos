@@ -220,8 +220,6 @@ a:hover {
   display: flex;
 
   gap: 8vw;
-
-  transform: translateX(0%);
 }
 
 .header .links .additional-links {
@@ -258,7 +256,7 @@ a:hover {
     top: 0;
     left: 0;
     right: 0;
-    transform: revert;
+    transform: unset;
 
     width: revert;
     height: 0;
