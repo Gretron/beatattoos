@@ -41,7 +41,7 @@ const Portfolio = () => {
     // Portfolio Animations
     let tl = gsap.timeline();
 
-    // Timeline Transition
+    // #region Transition to 2020
 
     tl.to(".timeline__gun", {
       left: "33.3%",
@@ -57,10 +57,17 @@ const Portfolio = () => {
       "<"
     );
 
-    // #region Image Set 0-1 Transitions
+    tl.to(
+      ".gallery__label._0",
+      {
+        y: "101%",
+        duration: 5,
+      },
+      "<"
+    );
 
     tl.to(
-      ":is(.gallery__image)._0",
+      ".gallery__image._0",
       {
         x: "-101%",
         duration: 5,
@@ -69,7 +76,7 @@ const Portfolio = () => {
     );
 
     tl.to(
-      ":is(.gallery__image)._1",
+      ".gallery__image._1",
       {
         y: "-101%",
         duration: 5,
@@ -78,7 +85,7 @@ const Portfolio = () => {
     );
 
     tl.to(
-      ":is(.gallery__image)._2",
+      ".gallery__image._2",
       {
         x: "101%",
         duration: 5,
@@ -87,7 +94,7 @@ const Portfolio = () => {
     );
 
     tl.to(
-      ":is(.gallery__image)._3",
+      ".gallery__image._3",
       {
         y: "101%",
         duration: 5,
@@ -96,7 +103,7 @@ const Portfolio = () => {
     );
 
     tl.to(
-      ":is(.gallery__image)._4",
+      ".gallery__image._4",
       {
         y: "101%",
         duration: 5,
@@ -105,16 +112,25 @@ const Portfolio = () => {
     );
 
     tl.from(
-      ":is(.gallery__image)._5",
+      ".gallery__label._1",
       {
-        x: "-101%",
+        y: "-101%",
         duration: 5,
       },
       ">"
     );
 
     tl.from(
-      ":is(.gallery__image)._6",
+      ".gallery__image._5",
+      {
+        x: "-101%",
+        duration: 5,
+      },
+      "<"
+    );
+
+    tl.from(
+      ".gallery__image._6",
       {
         y: "-101%",
         duration: 5,
@@ -123,7 +139,7 @@ const Portfolio = () => {
     );
 
     tl.from(
-      ":is(.gallery__image)._7",
+      ".gallery__image._7",
       {
         x: "101%",
         duration: 5,
@@ -132,7 +148,7 @@ const Portfolio = () => {
     );
 
     tl.from(
-      ":is(.gallery__image)._8",
+      ".gallery__image._8",
       {
         y: "101%",
         duration: 5,
@@ -141,17 +157,13 @@ const Portfolio = () => {
     );
 
     tl.from(
-      ":is(.gallery__image)._9",
+      ".gallery__image._9",
       {
         y: "101%",
         duration: 5,
       },
       "<"
     );
-
-    // #endregion
-
-    // Checkpoint 1
 
     tl.set(
       ".star-1",
@@ -168,6 +180,10 @@ const Portfolio = () => {
       },
       "<"
     );
+
+    // #endregion
+
+    // #region Transition to 2021
 
     tl.to(
       ".timeline__gun",
@@ -187,10 +203,17 @@ const Portfolio = () => {
       "<"
     );
 
-    // #region Image Set 1-2 Transitions
+    tl.to(
+      ".gallery__label._1",
+      {
+        y: "101%",
+        duration: 5,
+      },
+      "<"
+    );
 
     tl.to(
-      ":is(.gallery__image)._5",
+      ".gallery__image._5",
       {
         x: "-101%",
         duration: 5,
@@ -199,7 +222,7 @@ const Portfolio = () => {
     );
 
     tl.to(
-      ":is(.gallery__image)._6",
+      ".gallery__image._6",
       {
         y: "-101%",
         duration: 5,
@@ -208,7 +231,7 @@ const Portfolio = () => {
     );
 
     tl.to(
-      ":is(.gallery__image)._7",
+      ".gallery__image._7",
       {
         x: "101%",
         duration: 5,
@@ -217,7 +240,7 @@ const Portfolio = () => {
     );
 
     tl.to(
-      ":is(.gallery__image)._8",
+      ".gallery__image._8",
       {
         y: "101%",
         duration: 5,
@@ -226,7 +249,7 @@ const Portfolio = () => {
     );
 
     tl.to(
-      ":is(.gallery__image)._9",
+      ".gallery__image._9",
       {
         y: "101%",
         duration: 5,
@@ -235,16 +258,25 @@ const Portfolio = () => {
     );
 
     tl.from(
-      ":is(.gallery__image)._10",
+      ".gallery__label._2",
       {
-        x: "-101%",
+        y: "-101%",
         duration: 5,
       },
       ">"
     );
 
     tl.from(
-      ":is(.gallery__image)._11",
+      ".gallery__image._10",
+      {
+        x: "-101%",
+        duration: 5,
+      },
+      "<"
+    );
+
+    tl.from(
+      ".gallery__image._11",
       {
         y: "-101%",
         duration: 5,
@@ -253,16 +285,7 @@ const Portfolio = () => {
     );
 
     tl.from(
-      ":is(.gallery__image)._12",
-      {
-        x: "101%",
-        duration: 5,
-      },
-      "<"
-    );
-
-    tl.from(
-      ":is(.gallery__image)._13",
+      ".gallery__image._12",
       {
         y: "101%",
         duration: 5,
@@ -271,7 +294,7 @@ const Portfolio = () => {
     );
 
     tl.from(
-      ":is(.gallery__image)._14",
+      ".gallery__image._13",
       {
         y: "101%",
         duration: 5,
@@ -279,7 +302,14 @@ const Portfolio = () => {
       "<"
     );
 
-    // #endregion
+    tl.from(
+      ".gallery__image._14",
+      {
+        y: "101%",
+        duration: 5,
+      },
+      "<"
+    );
 
     tl.set(
       ".star-2",
@@ -296,6 +326,10 @@ const Portfolio = () => {
       },
       "<"
     );
+
+    // #endregion
+
+    // #region Transition to 2022
 
     tl.to(
       ".timeline__gun",
@@ -315,10 +349,17 @@ const Portfolio = () => {
       "<"
     );
 
-    // #region Image Set 1-2 Transitions
+    tl.to(
+      ".gallery__label._2",
+      {
+        y: "101%",
+        duration: 5,
+      },
+      "<"
+    );
 
     tl.to(
-      ":is(.gallery__image)._10",
+      ".gallery__image._10",
       {
         x: "-101%",
         duration: 5,
@@ -327,7 +368,7 @@ const Portfolio = () => {
     );
 
     tl.to(
-      ":is(.gallery__image)._11",
+      ".gallery__image._11",
       {
         y: "-101%",
         duration: 5,
@@ -336,16 +377,7 @@ const Portfolio = () => {
     );
 
     tl.to(
-      ":is(.gallery__image)._12",
-      {
-        x: "101%",
-        duration: 5,
-      },
-      "<"
-    );
-
-    tl.to(
-      ":is(.gallery__image)._13",
+      ".gallery__image._12",
       {
         y: "101%",
         duration: 5,
@@ -354,7 +386,16 @@ const Portfolio = () => {
     );
 
     tl.to(
-      ":is(.gallery__image)._14",
+      ".gallery__image._13",
+      {
+        y: "101%",
+        duration: 5,
+      },
+      "<"
+    );
+
+    tl.to(
+      ".gallery__image._14",
       {
         y: "101%",
         duration: 5,
@@ -363,16 +404,25 @@ const Portfolio = () => {
     );
 
     tl.from(
-      ":is(.gallery__image)._15",
+      ".gallery__label._3",
       {
-        x: "-101%",
+        y: "-101%",
         duration: 5,
       },
       ">"
     );
 
     tl.from(
-      ":is(.gallery__image)._16",
+      ".gallery__image._15",
+      {
+        x: "-101%",
+        duration: 5,
+      },
+      "<"
+    );
+
+    tl.from(
+      ".gallery__image._16",
       {
         y: "-101%",
         duration: 5,
@@ -381,7 +431,7 @@ const Portfolio = () => {
     );
 
     tl.from(
-      ":is(.gallery__image)._17",
+      ".gallery__image._17",
       {
         x: "101%",
         duration: 5,
@@ -390,7 +440,7 @@ const Portfolio = () => {
     );
 
     tl.from(
-      ":is(.gallery__image)._18",
+      ".gallery__image._18",
       {
         y: "101%",
         duration: 5,
@@ -399,15 +449,13 @@ const Portfolio = () => {
     );
 
     tl.from(
-      ":is(.gallery__image)._19",
+      ".gallery__image._19",
       {
         y: "101%",
         duration: 5,
       },
       "<"
     );
-
-    // #endregion
 
     tl.set(
       ".star-3",
@@ -425,6 +473,8 @@ const Portfolio = () => {
       "<"
     );
 
+    // #endregion
+
     tl.set({}, {}, "+=10");
 
     ScrollTrigger.create({
@@ -435,7 +485,6 @@ const Portfolio = () => {
       start: "top top",
       end: "+=5000 top",
       snap: [0, 0.25, 0.5, 0.99],
-      markers: true,
       scrub: true,
     });
   }, []);

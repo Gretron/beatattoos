@@ -57,7 +57,9 @@ const Gallery = () => {
           <img src={_2019_4} alt="" className="gallery__image _4" />
         </div>
       </div>
-      <div className="gallery__label _0 d1">2019</div>
+      <div className="gallery__label-container">
+        <div className="gallery__label _0 d1">2019</div>
+      </div>
 
       <div className="gallery__images _1">
         <div className="gallery__image-container _5">
@@ -76,7 +78,9 @@ const Gallery = () => {
           <img src={_2020_4} alt="" className="gallery__image _9" />
         </div>
       </div>
-      <div className="gallery__label _1 d1">2020</div>
+      <div className="gallery__label-container">
+        <div className="gallery__label _1 d1">2020</div>
+      </div>
 
       <div className="gallery__images _2">
         <div className="gallery__image-container _10">
@@ -95,7 +99,9 @@ const Gallery = () => {
           <img src={_2021_4} alt="" className="gallery__image _14" />
         </div>
       </div>
-      <div className="gallery__label _2 d1">2021</div>
+      <div className="gallery__label-container">
+        <div className="gallery__label _2 d1">2021</div>
+      </div>
 
       <div className="gallery__images _3">
         <div className="gallery__image-container _15">
@@ -114,7 +120,9 @@ const Gallery = () => {
           <img src={_2022_4} alt="" className="gallery__image _19" />
         </div>
       </div>
-      <div className="gallery__label _3 d1">2022</div>
+      <div className="gallery__label-container">
+        <div className="gallery__label _3 d1">2022</div>
+      </div>
     </div>
   );
 };
