@@ -1,15 +1,8 @@
 // #region Imports
 
-// Modules
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
 // Components
 import { ReactComponent as Star } from "../../../assets/img/star.svg";
 import { ReactComponent as Gun } from "../assets/img/gun.svg";
-
-// Hooks
-import { useLayoutEffect, useRef } from "react";
 
 // #endregion
 
@@ -25,140 +18,6 @@ const GunImage = ({ className, ...props }) => (
  * Timeline of Portfolio Page
  */
 const Timeline = () => {
-  const loaded = useRef(false);
-
-  useLayoutEffect(() => {
-    // If Component Already Loaded...
-    if (loaded.current) {
-      // Skip
-      return () => {
-        let st = ScrollTrigger.getById("timeline");
-
-        if (st) st.kill();
-      };
-    }
-
-    // Else Play Animation
-    loaded.current = true;
-
-    gsap.registerPlugin(ScrollTrigger);
-
-    // Portfolio Animations
-    let tl = gsap.timeline();
-
-    tl.to(".timeline__gun", {
-      left: "33.3%",
-      duration: "10",
-    });
-
-    tl.to(
-      ".timeline__indicator",
-      {
-        width: "33.3%",
-        duration: "10",
-      },
-      "<"
-    );
-
-    tl.set(
-      ".star-1",
-      {
-        fill: "var(--brown)",
-      },
-      ">"
-    );
-
-    tl.set(
-      ".label-1",
-      {
-        color: "var(--brown)",
-      },
-      "<"
-    );
-
-    tl.to(
-      ".timeline__gun",
-      {
-        left: "66.6%",
-        duration: "10",
-      },
-      ">=+5"
-    );
-
-    tl.to(
-      ".timeline__indicator",
-      {
-        width: "66.6%",
-        duration: "10",
-      },
-      "<"
-    );
-
-    tl.set(
-      ".star-2",
-      {
-        fill: "var(--brown)",
-      },
-      ">"
-    );
-
-    tl.set(
-      ".label-2",
-      {
-        color: "var(--brown)",
-      },
-      "<"
-    );
-
-    tl.to(
-      ".timeline__gun",
-      {
-        left: "99.9%",
-        duration: "10",
-      },
-      ">=+5"
-    );
-
-    tl.to(
-      ".timeline__indicator",
-      {
-        width: "99.9%",
-        duration: "10",
-      },
-      "<"
-    );
-
-    tl.set(
-      ".star-3",
-      {
-        fill: "var(--brown)",
-      },
-      ">"
-    );
-
-    tl.set(
-      ".label-3",
-      {
-        color: "var(--brown)",
-      },
-      "<"
-    );
-
-    tl.set({}, {}, "+=10");
-
-    ScrollTrigger.create({
-      id: "timeline",
-      animation: tl,
-      trigger: ".portfolio",
-      pin: ".portfolio",
-      start: "top top",
-      end: "+=5000 top",
-      snap: [0, 0.25, 0.5, 0.99],
-      markers: true,
-      scrub: true,
-    });
-  }, []);
-
   return (
     <div className="timeline">
       <div className="timeline__line">
