@@ -24,13 +24,17 @@
   border-radius: min(64px, 8vw, 4vh) 0 min(64px, 8vw, 4vh) 0;
 }
 
-.gallery__label {
-  color: var(--orange);
-
+.gallery__label-container {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+
+  overflow: hidden;
+}
+
+.gallery__label {
+  color: var(--orange);
 
   font-size: min(11.667rem, 16vw);
 }
@@ -59,27 +63,57 @@
   overflow: hidden;
 }
 
-:is(.gallery__image-container)._1 {
+.gallery__image-container._1 {
   grid-column: span 2;
 }
 
-:is(.gallery__image-container)._2 {
+.gallery__image-container._2 {
   grid-row: span 2;
 }
 
-:is(.gallery__image-container)._3 {
+.gallery__image-container._3 {
   grid-column: span 2;
 }
 
-:is(.gallery__image-container)._5 {
+/**/
+
+.gallery__image-container._5 {
   grid-row: span 2;
 }
 
-:is(.gallery__image-container)._6 {
+.gallery__image-container._6 {
   grid-column: span 2;
 }
 
-:is(.gallery__image-container)._9 {
+.gallery__image-container._9 {
+  grid-column: span 2;
+}
+
+/**/
+
+.gallery__image-container._12 {
+  grid-row: span 2;
+}
+
+.gallery__image-container._13 {
+  grid-row: span 2;
+}
+
+.gallery__image-container._14 {
+  grid-column: span 2;
+}
+
+/**/
+
+.gallery__image-container._15 {
+  grid-row: span 2;
+}
+
+.gallery__image-container._18 {
+  grid-row: span 2;
+}
+
+.gallery__image-container._19 {
   grid-column: span 2;
 }
 
@@ -96,32 +130,66 @@
     grid-template-rows: repeat(3, 1fr);
   }
 
-  :is(.gallery__image-container)._1 {
+  .gallery__image-container._1 {
     grid-column: span 1;
   }
 
-  :is(.gallery__image-container)._2 {
+  .gallery__image-container._2 {
     grid-column: span 2;
     grid-row: span 1;
   }
 
-  :is(.gallery__image-container)._3 {
+  .gallery__image-container._3 {
     grid-column: span 1;
   }
 
-  :is(.gallery__image-container)._5 {
+  /**/
+
+  .gallery__image-container._5 {
     grid-row: span 1;
   }
 
-  :is(.gallery__image-container)._6 {
+  .gallery__image-container._6 {
     grid-column: span 1;
   }
 
-  :is(.gallery__image-container)._7 {
+  .gallery__image-container._7 {
+    grid-column: span 1;
+  }
+
+  .gallery__image-container._9 {
     grid-column: span 2;
   }
 
-  :is(.gallery__image-container)._9 {
+  /**/
+
+  .gallery__image-container._12 {
+    grid-row: span 2;
+  }
+
+  .gallery__image-container._13 {
+    grid-row: span 1;
+  }
+
+  .gallery__image-container._14 {
+    grid-column: span 1;
+  }
+
+  /**/
+
+  .gallery__image-container._15 {
+    grid-row: span 1;
+  }
+
+  .gallery__image-container._16 {
+    grid-row: span 2;
+  }
+
+  .gallery__image-container._18 {
+    grid-row: span 1;
+  }
+
+  .gallery__image-container._19 {
     grid-column: span 1;
   }
 }
