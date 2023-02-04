@@ -60,34 +60,34 @@ const Header = () => {
     <div className="header">
       <div className="brand">beatattoos</div>
       <div className="links" data-visible={isMenuVisible}>
-        <Link to="/">
-          <a className={location.pathname == "/" ? "active--link" : ""}>home</a>
+        <Link to="/" className={location.pathname == "/" ? "active--link" : ""}>
+          home
         </Link>
-        <Link to="/portfolio">
-          <a
-            className={location.pathname == "/portfolio" ? "active--link" : ""}
-          >
-            portfolio
-          </a>
+        <Link
+          to="/portfolio"
+          className={location.pathname == "/portfolio" ? "active--link" : ""}
+        >
+          portfolio
         </Link>
-        <Link to="/about">
-          <a className={location.pathname == "/about" ? "active--link" : ""}>
-            about
-          </a>
+        <Link
+          to="/about"
+          className={location.pathname == "/about" ? "active--link" : ""}
+        >
+          about
         </Link>
         <div className="additional-links">
           <Seperator />
-          <Link to="/account">
-            <a
-              className={location.pathname == "/account" ? "active--link" : ""}
-            >
-              account
-            </a>
+          <Link
+            to="/account"
+            className={location.pathname == "/account" ? "active--link" : ""}
+          >
+            account
           </Link>
-          <Link to="/book">
-            <a className={location.pathname == "/book" ? "active--link" : ""}>
-              book now
-            </a>
+          <Link
+            to="/book"
+            className={location.pathname == "/book" ? "active--link" : ""}
+          >
+            book now
           </Link>
         </div>
       </div>
