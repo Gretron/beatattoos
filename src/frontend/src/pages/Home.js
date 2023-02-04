@@ -8,6 +8,7 @@ import Logo from "../features/home/components/Logo";
 import Styles from "../features/home/components/Styles";
 import Coverups from "../features/home/components/Coverups";
 import Types from "../features/home/components/Types";
+import ScrollToTopOnMount from "../components/ScrollToTopOnMount";
 
 // #endregion
 
@@ -17,6 +18,7 @@ import Types from "../features/home/components/Types";
 const Home = () => {
   return (
     <div className="home">
+      <ScrollToTopOnMount />
       <Logo />
       <Styles />
       <Coverups />
