@@ -1,11 +1,8 @@
 // #region Imports
 
-// Styles
-import portfolio from "../features/portfolio/assets/css/portfolio.css";
-
 // Components
-import { Gallery } from "../features/portfolio/index";
-import { Timeline } from "../features/portfolio/index";
+import { portfolio, Gallery, Timeline } from "../features/portfolio/index";
+import ScrollToTopOnMount from "../components/ScrollToTopOnMount";
 
 // Modules
 import { gsap } from "gsap";
@@ -491,6 +488,7 @@ const Portfolio = () => {
 
   return (
     <div className="portfolio">
+      <ScrollToTopOnMount />
       <Gallery />
       <Timeline />
     </div>

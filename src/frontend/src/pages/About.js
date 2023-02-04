@@ -1,8 +1,10 @@
+import { about, Bio } from "../features/about/index";
+
 /**
- * Abput Page
+ * About Page
  */
 const About = () => {
-  return <div className="about"></div>;
+  return <div className="about">hi</div>;
 };
 
 export default About;
