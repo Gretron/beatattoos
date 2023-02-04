@@ -4,6 +4,7 @@
 import React from "react";
 import { ReactDOM } from "react";
 import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
 
 // Components
@@ -28,19 +29,15 @@ function App() {
     // If Component Already Loaded...
     if (loaded.current) {
       // Skip
-      return; /*() => {
-        let st = ScrollSmoother.getById("timeline");
-
-        if (st) st.kill();
-      };*/
+      return;
     }
 
     // Else Play Animation
     loaded.current = true;
 
-    gsap.registerPlugin(ScrollSmoother);
+    gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
-    const sm = ScrollSmoother.create({
+    ScrollSmoother.create({
       wrapper: ".wrapper",
       content: ".content",
       smooth: 1,
