@@ -193,6 +193,43 @@ a:hover {
 
 /* #endregion */
 
+/* #region Fields */
+
+.field__label {
+  font-family: "GrandCru-BoldS";
+
+  margin-bottom: 8px;
+}
+
+.field__input {
+  background: transparent;
+
+  padding: 16px;
+  border: 1px solid var(--dune);
+  border-radius: 0 16px 0 16px;
+
+  font-size: var(--h5);
+
+  transition: 0.2s;
+}
+
+.field__input:focus {
+  outline: none;
+
+  border: 1px solid var(--earth);
+}
+
+.field__input::placeholder {
+  color: var(--dune);
+  opacity: 1; /* Firefox */
+}
+
+.field__input:-ms-input-placeholder {
+  color: var(--dune);
+}
+
+/* #endregion */
+
 /* #region Header */
 
 .header {
@@ -305,6 +342,10 @@ a:hover {
     fill: var(--brown);
   }
 
+  .header .links .additional-links .seperator__vertical-line {
+    display: none;
+  }
+
   .header .links .additional-links .seperator div {
     background: var(--brown);
   }
@@ -336,9 +377,13 @@ a:hover {
   transform: translateY(1px) scaleX(-1);
 }
 
-.footer__container {
+.footer__wrapper {
   background: var(--orange);
 
+  height: auto;
+}
+
+.footer__container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
 
@@ -364,8 +409,6 @@ a:hover {
 }
 
 .footer__information {
-  background: var(--orange);
-
   display: flex;
   justify-content: space-between;
 
@@ -430,6 +473,8 @@ a:hover {
 
 .seperator svg {
   display: block;
+
+  fill: var(--dune);
 }
 
 .seperator .seperator__horizontal-line {
@@ -442,6 +487,39 @@ a:hover {
 
   background: var(--dune);
 }
+
+.divider {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  position: relative;
+
+  z-index: -1;
+}
+
+.divider svg {
+  display: block;
+
+  fill: var(--dune);
+}
+
+.divider svg:nth-child(1) {
+  transform: scaleX(-1);
+}
+
+.divider__horizontal-line {
+  position: absolute;
+
+  top: calc(50% - 1px);
+
+  width: 100%;
+  height: 1px;
+
+  background: var(--dune);
+}
+
+/* #endregion */
 
 .seperator .seperator__vertical-line {
   position: absolute;
