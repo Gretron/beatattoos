@@ -11,11 +11,17 @@ import { ScrollSmoother } from "gsap/ScrollSmoother";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BookingList } from "./features/bookings/index";
+import { MessageList } from "./features/messages/index";
+import { SettingsForm } from "./features/settings/index";
 
 // Pages
 import Home from "./pages/Home";
 import Portfolio from "./pages/Portfolio";
 import About from "./pages/About";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Account from "./pages/Account";
 
 // Hooks
 import { useEffect, useRef } from "react";
@@ -53,9 +59,20 @@ function App() {
         <div className="wrapper">
           <div className="content">
             <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/portfolio" element={<Portfolio />} />
-              <Route path="/about" element={<About />} />
+              <Route index element={<Home />} />
+              <Route path="portfolio" element={<Portfolio />} />
+              <Route path="about" element={<About />} />
+              <Route
+                path="account"
+                element={true ? <Account /> : <Navigate to="/login" />}
+              >
+                <Route index element={<BookingList />} />
+                <Route path="bookings" element={<BookingList />} />
+                <Route path="messages" element={<MessageList />} />
+                <Route path="settings" element={<SettingsForm />} />
+              </Route>
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
             </Routes>
             <Footer />
           </div>
