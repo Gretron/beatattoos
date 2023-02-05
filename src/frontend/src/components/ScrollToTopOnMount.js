@@ -17,19 +17,27 @@ function ScrollToTopOnMount() {
     // Else Play Animation
     loaded.current = true;
 
+    gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+
     let sm = ScrollSmoother.get();
 
     // If Smooth Scroller Exists...
     if (sm) {
       // If Lower Than Top of Page...
-      if (sm.scrollTop() > 0) {
-        // Stop Smooth Scrolling, Go to Top, Start Smooth Scrolling
-        sm.paused(true).scrollTop(0).paused(false);
-
+      if (sm.scrollTop() > 1) {
         // Refresh Potentially Bugged ScrollTriggers
-        setTimeout(() => {
+        const refresh = () => {
+          sm.paused(false);
           ScrollTrigger.refresh();
-        }, 100);
+          ScrollTrigger.removeEventListener("scrollEnd", refresh);
+
+          /*console.log("ScrollToTop Fired.");*/
+        };
+
+        ScrollTrigger.addEventListener("scrollEnd", refresh);
+
+        // Stop Smooth Scrolling, Go to Top, Start Smooth Scrolling
+        sm.paused(true).scrollTop(1);
       }
     }
   }, []);

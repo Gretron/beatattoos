@@ -481,7 +481,7 @@ const Portfolio = () => {
       pin: ".portfolio",
       start: "top top",
       end: "+=5000 top",
-      snap: [0, 0.25, 0.5, 0.99],
+      /*snap: [0, 0.25, 0.5, 0.99],*/
       scrub: true,
     });
   }, []);

@@ -143,7 +143,7 @@ const Styles = () => {
       pin: ".styles__images",
       start: "middle top",
       end: "bottom top",
-      snap: [0.5, 1],
+      /*snap: [0, 0.5, 1],*/
       scrub: true,
     });
   }, []);
