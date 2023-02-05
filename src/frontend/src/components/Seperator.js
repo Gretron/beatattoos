@@ -1,9 +1,9 @@
 import { ReactComponent as Star } from "../assets/img/star.svg";
 
 /**
- * SVG Hamburger Icon
+ * Seperator Line
  */
-const HamburgerIcon = () => {
+const Seperator = () => {
   return (
     <div className="seperator">
       <Star />
@@ -13,4 +13,4 @@ const HamburgerIcon = () => {
   );
 };
 
-export default HamburgerIcon;
+export default Seperator;
