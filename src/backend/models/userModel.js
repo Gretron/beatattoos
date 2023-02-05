@@ -11,13 +11,24 @@ const Schema = mongoose.Schema;
 
 // Schema
 const userSchema = new Schema({
-  email: {
+  firstName: {
     type: String,
     required: true,
-    unique: true,
+  },
+  lastName: {
+    type: String,
+    required: true,
+  },
+  phoneNumber: {
+    type: String,
+    required: false,
   },
   password: {
     type: String,
+    required: true,
+  },
+  active: {
+    type: Boolean,
     required: true,
   },
 });

@@ -1,0 +1,68 @@
+.register {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    width: min(512px, 90vw);
+    height: auto;
+
+    margin: 0 auto;
+
+    padding: 8rem 0;
+}
+
+.register__title {
+  margin-bottom: 2rem;
+}
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+}
+
+.register-form__field .field__input {
+    width: calc(100% - 32px);
+}
+
+.register-form__field {
+    margin-bottom: 1rem;
+}
+
+.register-form__button {
+    padding: 16px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.register__switch {
+    color: var(--earth);
+
+    display: flex;
+    gap: 4px;
+}
+
+.login__link {
+    color: var(--orange);
+}
+
+.login__link:hover {
+    color: var(--brown);
+}
+
+.register .seperator {
+    width: 100%;
+
+    margin: 2rem 0;
+}
+
+.register .seperator__vertical-line {
+    display: none;
+}
+
+.register__external-auth {
+    width: 100%;
+
+    margin-bottom: 1rem;
+}
