@@ -22,6 +22,7 @@ import About from "./pages/About";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Account from "./pages/Account";
+import Book from "./pages/Book";
 
 // Hooks
 import { useEffect, useRef } from "react";
@@ -62,6 +63,8 @@ function App() {
               <Route index element={<Home />} />
               <Route path="portfolio" element={<Portfolio />} />
               <Route path="about" element={<About />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
               <Route
                 path="account"
                 element={true ? <Account /> : <Navigate to="/login" />}
@@ -71,8 +74,7 @@ function App() {
                 <Route path="messages" element={<MessageList />} />
                 <Route path="settings" element={<SettingsForm />} />
               </Route>
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
+              <Route path="book" element={<Book />} />
             </Routes>
             <Footer />
           </div>
