@@ -1,0 +1,17 @@
+.book {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+  
+    width: min(1024px, 90vw);
+    height: 100vh;
+  
+    padding: 8rem 0;
+    margin: 0 auto;
+  }
+
+  .book-progress {
+    display: flex;
+    justify-content: space-between;
+    flex-grow: 1;
+  }
