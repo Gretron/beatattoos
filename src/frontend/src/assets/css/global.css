@@ -512,8 +512,10 @@ a:hover {
   position: absolute;
 
   top: calc(50% - 1px);
+  left: 50%;
+  transform: translateX(-50%);
 
-  width: 100%;
+  width: 99%;
   height: 1px;
 
   background: var(--dune);
