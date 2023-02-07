@@ -1,17 +1,90 @@
 .book {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-  
-    width: min(1024px, 90vw);
-    height: 100vh;
-  
-    padding: 8rem 0;
-    margin: 0 auto;
-  }
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 2rem;
 
-  .book-progress {
-    display: flex;
-    justify-content: space-between;
-    flex-grow: 1;
-  }
+  width: min(1024px, 90vw);
+  height: 100vh;
+
+  padding: 8rem 0;
+  margin: 0 auto;
+}
+
+.book-progress {
+  display: flex;
+  justify-content: space-between;
+  flex-grow: 0;
+
+  position: relative;
+}
+
+.book-progress__line {
+  position: absolute;
+
+  top: 16px;
+  left: 50%;
+  transform: translateX(calc(-50% - 8px));
+  z-index: -1;
+
+  width: calc(100% - 48px);
+  height: 1px;
+
+  background: var(--dune);
+}
+
+.book-progress__indicator {
+  background: var(--brown);
+
+  height: 100%;
+  width: 0%;
+}
+
+.book-progress__init .book-progress__indicator {
+  transition: ease 1s;
+}
+
+.book-progress__indicator--placement {
+  width: 24.5%;
+}
+
+.book-progress__indicator--location {
+  width: 50%;
+}
+
+.book-progress__indicator--datetime {
+  width: 75%;
+}
+
+.book-progress__indicator--confirm {
+  width: 100%;
+}
+
+.book-progress__point {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.book-progress__init .book-progress__point--active .book-progress__point-icon,
+.book-progress__init .book-progress__point--active .book-progress__point-text {
+  transition-delay: 1s;
+}
+
+.book-progress__point-icon {
+  fill: var(--dune);
+
+  width: 16px;
+}
+
+.book-progress__point-text {
+  color: var(--dune);
+}
+
+.book-progress__point--active .book-progress__point-icon {
+  fill: var(--brown);
+}
+
+.book-progress__point--active .book-progress__point-text {
+  color: var(--brown);
+}
