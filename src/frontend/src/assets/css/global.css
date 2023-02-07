@@ -573,6 +573,15 @@ a:hover {
 
 .slider__range {
   font-family: "GrandCru-BoldS";
+  font-size: min(1rem, 3vw);
+}
+
+.slider__range:nth-child(1) {
+  transform: translateX(-50%);
+}
+
+.slider__range:nth-child(2) {
+  transform: translateX(50%);
 }
 
 .slider__input {
