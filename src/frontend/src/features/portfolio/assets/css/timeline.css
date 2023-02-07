@@ -1,0 +1,85 @@
+/* #region Timeline */
+
+.timeline {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  position: relative;
+  z-index: -1;
+
+  width: min(1344px, 90vw);
+  height: auto;
+
+  margin-top: min(8rem, 12vh);
+
+  --timeline-color: var(--dune);
+}
+
+.timeline__line {
+  position: absolute;
+  top: 8px;
+
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: calc(100% - 36px);
+  height: 1px;
+
+  background: var(--timeline-color);
+}
+
+.timeline__indicator {
+  background: var(--brown);
+
+  height: 100%;
+  width: 0%;
+}
+
+.timeline__point {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.timeline__star {
+  fill: var(--timeline-color);
+
+  z-index: 1;
+
+  width: 16px;
+  height: 16px;
+}
+
+.timeline__label {
+  color: var(--timeline-color);
+}
+
+.timeline__star._0 {
+  fill: var(--brown);
+}
+
+.timeline__label._0 {
+  color: var(--brown);
+}
+
+.timeline__gun-container {
+  width: calc(100% - 32px);
+
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.timeline__gun {
+  width: min(172px, 32vw);
+  height: auto;
+
+  position: absolute;
+
+  bottom: -9px;
+  left: 0%;
+}
+
+/* #endregion */

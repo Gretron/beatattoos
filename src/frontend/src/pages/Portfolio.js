@@ -17,6 +17,7 @@ import { useLayoutEffect, useRef } from "react";
  * Portfolio Page
  */
 const Portfolio = () => {
+  // Component Loaded Flag
   const loaded = useRef(false);
 
   useLayoutEffect(() => {
@@ -163,7 +164,7 @@ const Portfolio = () => {
     );
 
     tl.set(
-      ".star-1",
+      ".timeline__star._1",
       {
         fill: "var(--brown)",
       },
@@ -171,7 +172,7 @@ const Portfolio = () => {
     );
 
     tl.set(
-      ".label-1",
+      ".timeline__label._1",
       {
         color: "var(--brown)",
       },
@@ -309,7 +310,7 @@ const Portfolio = () => {
     );
 
     tl.set(
-      ".star-2",
+      ".timeline__star._2",
       {
         fill: "var(--brown)",
       },
@@ -317,7 +318,7 @@ const Portfolio = () => {
     );
 
     tl.set(
-      ".label-2",
+      ".timeline__label._2",
       {
         color: "var(--brown)",
       },
@@ -455,7 +456,7 @@ const Portfolio = () => {
     );
 
     tl.set(
-      ".star-3",
+      ".timeline__star._3",
       {
         fill: "var(--brown)",
       },
@@ -463,7 +464,7 @@ const Portfolio = () => {
     );
 
     tl.set(
-      ".label-3",
+      ".timeline__label._3",
       {
         color: "var(--brown)",
       },
@@ -472,6 +473,7 @@ const Portfolio = () => {
 
     // #endregion
 
+    // Add Gap at End
     tl.set({}, {}, "+=10");
 
     ScrollTrigger.create({

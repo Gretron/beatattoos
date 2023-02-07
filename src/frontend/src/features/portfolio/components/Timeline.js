@@ -1,15 +1,17 @@
 // #region Imports
 
+// Styles
+import styles from "../assets/css/timeline.css";
+
 // Components
-import { ReactComponent as Star } from "../../../assets/img/star.svg";
 import { ReactComponent as Gun } from "../assets/img/gun.svg";
+import TimelinePoint from "./TimelinePoint";
 
 // #endregion
 
-const StarImage = ({ className, ...props }) => (
-  <Star {...props} className={className} />
-);
-
+/**
+ * Tattoo Gun Image on Timeline
+ */
 const GunImage = ({ className, ...props }) => (
   <Gun {...props} className={className} />
 );
@@ -23,22 +25,10 @@ const Timeline = () => {
       <div className="timeline__line">
         <div className="timeline__indicator"></div>
       </div>
-      <div className="timeline__point point-0">
-        <StarImage className="timeline__star star-0" />
-        <div className="timeline__label label-0 h6">2019</div>
-      </div>
-      <div className="timeline__point point-1">
-        <StarImage className="timeline__star star-1" />
-        <div className="timeline__label label-1 h6">2020</div>
-      </div>
-      <div className="timeline__point point-2">
-        <StarImage className="timeline__star star-2" />
-        <div className="timeline__label label-2 h6">2021</div>
-      </div>
-      <div className="timeline__point point-3">
-        <StarImage className="timeline__star star-3" />
-        <div className="timeline__label label-3 h6">2022</div>
-      </div>
+      <TimelinePoint label="2019" num="0" />
+      <TimelinePoint label="2020" num="1" />
+      <TimelinePoint label="2021" num="2" />
+      <TimelinePoint label="2022" num="3" />
       <div className="timeline__gun-container">
         <GunImage className="timeline__gun" />
       </div>

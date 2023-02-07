@@ -1,5 +1,8 @@
 // #region Imports
 
+// Styles
+import styles from "../assets/css/gallery.css";
+
 // Modules
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
