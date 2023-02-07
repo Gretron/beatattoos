@@ -74,7 +74,14 @@ function App() {
                 <Route path="messages" element={<MessageList />} />
                 <Route path="settings" element={<SettingsForm />} />
               </Route>
-              <Route path="book" element={<Book />} />
+              <Route path="book" element={<Book />}>
+                <Route index element={<BookingList />} />
+                <Route path="type" element={<BookingList />} />
+                <Route path="placement" element={<BookingList />} />
+                <Route path="location" element={<BookingList />} />
+                <Route path="datetime" element={<BookingList />} />
+                <Route path="confirm" element={<BookingList />} />
+              </Route>
             </Routes>
             <Footer />
           </div>
