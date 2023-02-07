@@ -1,7 +1,7 @@
 // #region Imports
 
 // Components
-import { BookProgress } from "../features/book/index";
+import { ProgressBar } from "../features/book/index";
 import { Link, Outlet, useLocation } from "react-router-dom";
 
 // Hooks
@@ -69,7 +69,7 @@ const Book = () => {
 
   return (
     <div className="book">
-      <BookProgress {...active} />
+      <ProgressBar {...active} />
       <Outlet />
       <Link to={nextStep}>
         <button className="outline--button">next</button>

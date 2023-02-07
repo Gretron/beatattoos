@@ -15,7 +15,7 @@ const StarIcon = ({ className, ...props }) => (
 /**
  * Point on Book Progress Bar
  */
-const BookProgressPoint = ({ name, active }) => {
+const ProgressPoint = ({ name, active }) => {
   return (
     <div
       className={`book-progress__point ${
@@ -28,4 +28,4 @@ const BookProgressPoint = ({ name, active }) => {
   );
 };
 
-export default BookProgressPoint;
+export default ProgressPoint;

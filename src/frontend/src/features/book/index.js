@@ -1,4 +1,4 @@
 import bookStyles from "./assets/css/book.css";
-import BookProgress from "./components/BookProgress";
+import ProgressBar from "./components/ProgressBar";
 
-export { bookStyles, BookProgress };
+export { bookStyles, ProgressBar };
