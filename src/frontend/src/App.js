@@ -10,10 +10,20 @@ import { ScrollSmoother } from "gsap/ScrollSmoother";
 // Components
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { BookingList } from "./features/bookings/index";
-import { MessageList } from "./features/messages/index";
-import { SettingsForm } from "./features/settings/index";
+
+import { BookingList } from "./features/bookings";
+import { MessageList } from "./features/messages";
+import { SettingsForm } from "./features/settings";
+
+import {
+  SelectType,
+  FlashForm,
+  CustomForm,
+  NoteForm,
+  DescriptionForm,
+} from "./features/book";
 
 // Pages
 import Home from "./pages/Home";
@@ -45,8 +55,8 @@ function App() {
     gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
     ScrollSmoother.create({
-      wrapper: ".wrapper",
-      content: ".content",
+      wrapper: ".beatattoos__wrapper",
+      content: ".beatattoos__content",
       smooth: 1,
       smoothTouch: 0.1,
       effects: true,
@@ -57,8 +67,8 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Header />
-        <div className="wrapper">
-          <div className="content">
+        <div className="beatattoos__wrapper">
+          <div className="beatattoos__content">
             <Routes>
               <Route index element={<Home />} />
               <Route path="portfolio" element={<Portfolio />} />
@@ -75,8 +85,15 @@ function App() {
                 <Route path="settings" element={<SettingsForm />} />
               </Route>
               <Route path="book" element={<Book />}>
-                <Route index element={<BookingList />} />
-                <Route path="type" element={<BookingList />} />
+                <Route index element={<Navigate to="type" />} />
+                <Route path="type">
+                  <Route index element={<Navigate to="select" />} />
+                  <Route path="select" element={<SelectType />} />
+                  <Route path="flash" element={<FlashForm />} />
+                  <Route path="custom" element={<CustomForm />} />
+                  <Route path="note" element={<NoteForm />} />
+                  <Route path="description" element={<DescriptionForm />} />
+                </Route>
                 <Route path="placement" element={<BookingList />} />
                 <Route path="location" element={<BookingList />} />
                 <Route path="datetime" element={<BookingList />} />
