@@ -96,7 +96,8 @@ body {
   font-size: 1.278rem;
 }
 
-.h5 {
+.h5,
+.body {
   font-size: 1rem;
 }
 
@@ -154,8 +155,12 @@ body {
 .outline--button:hover {
   color: var(--brown);
   border-color: var(--brown);
-
   cursor: pointer;
+}
+
+a[disabled] .outline--button {
+  color: var(--dune);
+  border-color: var(--dune);
 }
 
 .icon--button {
@@ -191,6 +196,12 @@ a:hover {
   color: var(--orange);
 
   cursor: pointer;
+}
+
+a[disabled] {
+  cursor: not-allowed;
+  color: var(--dune);
+  pointer-events: none;
 }
 
 /* #endregion */
@@ -488,6 +499,14 @@ a:hover {
   height: 1px;
 
   background: var(--dune);
+}
+
+.seperator--horizontal .seperator__vertical-line {
+  display: none;
+}
+
+.seperator--vertical .seperator__horizontal-line {
+  display: none;
 }
 
 .divider {
