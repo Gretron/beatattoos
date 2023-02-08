@@ -2,12 +2,11 @@
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
-  gap: 2rem;
 
   width: min(1024px, 90vw);
-  height: 100vh;
+  height: auto;
 
-  padding: 8rem 0;
+  padding: 6rem 0;
   margin: 0 auto;
 }
 
@@ -87,4 +86,47 @@
 
 .book-progress__point--active .book-progress__point-text {
   color: var(--brown);
+}
+
+.book__top-navigation {
+  display: flex;
+  flex-direction: column;
+
+  margin-top: 2rem;
+}
+
+.book__previous-button {
+  color: var(--orange);
+}
+
+.book__previous-button:hover {
+  color: var(--brown);
+}
+
+.book__header-container {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+}
+
+.book__header {
+  white-space: nowrap;
+
+  font-size: min(var(--h1), 8vw);
+
+  margin-top: 1rem;
+}
+
+.book__seperator {
+  margin-bottom: 2rem;
+}
+
+.book__seperator .seperator__star {
+  width: min(32px, 8vw);
+}
+
+.book__next-button {
+  align-self: flex-end;
+
+  margin-top: 2rem;
 }

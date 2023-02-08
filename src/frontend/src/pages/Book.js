@@ -6,6 +6,7 @@ import { Link, Outlet, useLocation } from "react-router-dom";
 
 // Hooks
 import { useState, useEffect } from "react";
+import Seperator from "../components/Seperator";
 
 // #endregion
 
@@ -13,65 +14,37 @@ import { useState, useEffect } from "react";
  * Book Page
  */
 const Book = () => {
-  // Location on Site
-  const location = useLocation();
+  // Header of Book Step
+  let [header, setHeader] = useState("");
 
-  // Active Progress Points
-  const [active, setActive] = useState({
-    type: true,
-    placement: false,
-    location: false,
-    datetime: false,
-    confirm: false,
-  });
+  // Next and Previous Step for
+  let [nextStep, setNextStep] = useState("");
+  let [previousStep, setPreviousStep] = useState("");
 
-  let [nextStep, setNextStep] = useState("placement");
-
-  useEffect(() => {
-    let completeSteps;
-
-    if (location.pathname == "/book" || location.pathname == "/book/type") {
-      completeSteps = 1;
-      setNextStep("placement");
-    } else if (location.pathname == "/book/placement") {
-      completeSteps = 2;
-      setNextStep("location");
-    } else if (location.pathname == "/book/location") {
-      completeSteps = 3;
-      setNextStep("datetime");
-    } else if (location.pathname == "/book/datetime") {
-      completeSteps = 4;
-      setNextStep("confirm");
-    } else {
-      completeSteps = 5;
-    }
-
-    let count = 0;
-    let newActive = {
-      type: false,
-      placement: false,
-      location: false,
-      datetime: false,
-      confirm: false,
-    };
-
-    for (let [key, value] of Object.entries(newActive)) {
-      if (count < completeSteps) {
-        newActive[key] = true;
-      } else {
-        break;
-      }
-      count++;
-    }
-
-    setActive(newActive);
-  }, [location]);
+  useEffect(() => {}, []);
 
   return (
     <div className="book">
-      <ProgressBar {...active} />
-      <Outlet />
-      <Link to={nextStep}>
+      <ProgressBar />
+      <div className="book__top-navigation">
+        <Link
+          className="book__previous-button"
+          to={previousStep}
+          disabled={previousStep === ""}
+        >
+          ← previous
+        </Link>
+        <div className="book__header-container">
+          <div className="book__header h1">{header}</div>
+          <Seperator className="book__seperator seperator--horizontal" />
+        </div>
+      </div>
+      <Outlet context={{ setHeader, setNextStep, setPreviousStep }} />
+      <Link
+        className="book__next-button"
+        to={nextStep}
+        disabled={nextStep === ""}
+      >
         <button className="outline--button">next</button>
       </Link>
     </div>
