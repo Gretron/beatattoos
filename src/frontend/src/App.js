@@ -23,6 +23,7 @@ import {
   CustomForm,
   NoteForm,
   DescriptionForm,
+  PlacementForm,
 } from "./features/book";
 
 // Pages
@@ -94,7 +95,7 @@ function App() {
                   <Route path="note" element={<NoteForm />} />
                   <Route path="description" element={<DescriptionForm />} />
                 </Route>
-                <Route path="placement" element={<BookingList />} />
+                <Route path="placement" element={<PlacementForm />} />
                 <Route path="location" element={<BookingList />} />
                 <Route path="datetime" element={<BookingList />} />
                 <Route path="confirm" element={<BookingList />} />
