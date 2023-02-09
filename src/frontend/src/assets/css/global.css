@@ -204,6 +204,10 @@ a[disabled] {
   pointer-events: none;
 }
 
+a[disabled]:hover {
+  color: var(--dune);
+}
+
 /* #endregion */
 
 /* #region Fields */
@@ -217,11 +221,15 @@ a[disabled] {
 .field__input {
   background: transparent;
 
+  width: calc(100% - 16px * 2);
+
   padding: 16px;
   border: 1px solid var(--dune);
   border-radius: 0 16px 0 16px;
 
   font-size: var(--h5);
+
+  resize: none;
 
   transition: 0.2s;
 }
@@ -235,6 +243,8 @@ a[disabled] {
 .field__input::placeholder {
   color: var(--dune);
   opacity: 1; /* Firefox */
+
+  font-family: "GrandCru-RegularS";
 }
 
 .field__input:-ms-input-placeholder {

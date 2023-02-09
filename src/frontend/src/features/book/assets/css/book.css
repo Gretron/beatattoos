@@ -39,35 +39,10 @@
   width: 0%;
 }
 
-.book-progress__init .book-progress__indicator {
-  transition: ease 1s;
-}
-
-.book-progress__indicator--placement {
-  width: 24.5%;
-}
-
-.book-progress__indicator--location {
-  width: 50%;
-}
-
-.book-progress__indicator--datetime {
-  width: 75%;
-}
-
-.book-progress__indicator--confirm {
-  width: 100%;
-}
-
 .book-progress__point {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.book-progress__init .book-progress__point--active .book-progress__point-icon,
-.book-progress__init .book-progress__point--active .book-progress__point-text {
-  transition-delay: 1s;
 }
 
 .book-progress__point-icon {
@@ -78,14 +53,6 @@
 
 .book-progress__point-text {
   color: var(--dune);
-}
-
-.book-progress__point--active .book-progress__point-icon {
-  fill: var(--brown);
-}
-
-.book-progress__point--active .book-progress__point-text {
-  color: var(--brown);
 }
 
 .book__top-navigation {

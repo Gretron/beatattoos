@@ -5,7 +5,7 @@ const CustomForm = () => {
   let context = useOutletContext();
 
   useEffect(() => {
-    context.setHeader("select available flash");
+    context.setHeader("insert reference images");
     context.setNextStep("type/description");
     context.setPreviousStep("type/select");
   }, []);

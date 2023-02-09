@@ -14,6 +14,8 @@ import Seperator from "../components/Seperator";
  * Book Page
  */
 const Book = () => {
+  //const location = useLocation();
+
   // Header of Book Step
   let [header, setHeader] = useState("");
 
@@ -21,7 +23,12 @@ const Book = () => {
   let [nextStep, setNextStep] = useState("");
   let [previousStep, setPreviousStep] = useState("");
 
-  useEffect(() => {}, []);
+  useEffect(
+    () => {},
+    [
+      /*location*/
+    ]
+  );
 
   return (
     <div className="book">

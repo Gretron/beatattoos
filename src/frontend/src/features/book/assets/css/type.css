@@ -75,21 +75,23 @@ button[disabled] .select-type__button-subtitle {
 /* #region Flash */
 
 .flash-form {
-  --form-padding: 2rem;
+  --padding: min(1rem, 3vw);
 
   display: grid;
   gap: 1rem;
   grid-template-columns: repeat(3, 1fr);
   grid-auto-rows: 200px;
 
-  width: calc(min(100%, 90vw) - var(--form-padding) * 2);
+  width: calc(min(100%, 90vw) - var(--padding) * 4);
   height: 50vh;
 
   margin: 0 auto;
 
-  padding: var(--form-padding);
+  padding: calc(var(--padding) * 2);
   border: 1px solid var(--brown);
-  border-radius: 64px 0 64px 0;
+  border-radius: calc(var(--padding) * 4) 0 calc(var(--padding) * 4) 0;
+
+  overflow-y: scroll;
 }
 
 .flash-form__option-image {
@@ -108,54 +110,56 @@ button[disabled] .select-type__button-subtitle {
   cursor: pointer;
 }
 
+.flash-form__option {
+  position: relative;
+}
+
 .flash-form__option-input {
   display: none;
 }
 
-.flash-form__option {
-  --margin: 1rem;
+.flash-form__option-border {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(-1px, -1px);
+  z-index: -1;
 
-  position: relative;
+  width: 100%;
+  height: 100%;
+
+  border: 1px solid var(--dune);
+  border-radius: calc(var(--padding) * 2) 0 calc(var(--padding) * 2) 0;
 }
 
 .flash-form__option-label {
-  border-radius: calc(var(--margin) * 2) 0 calc(var(--margin) * 2) 0;
+  background: url("../img/flash.jpg");
+  background-size: cover;
+
+  display: block;
+
+  width: calc(100% - var(--padding) * 2);
+  height: calc(100% - var(--padding) * 2);
+
+  border-radius: var(--padding) 0 var(--padding) 0;
+  margin: var(--padding);
 }
 
-.flash-form__option-input:checked + .flash-form__option-label {
-  --margin: 1rem;
-  margin: var(--margin);
+.flash-form__option-input:checked ~ .flash-form__option-border {
+  border: 1px solid var(--orange);
+}
+
+/*
+.flash-form__option-input:checked ~ .flash-form__option-label {
   width: calc(100% - var(--margin) * 2);
   height: calc(100% - var(--margin) * 2);
 
   border-radius: 1rem 0 1rem 0;
 }
-
-.flash-form__option-input:checked ~ .flash-form__option-border {
-  position: absolute;
-  top: 0;
-  left: 0;
-  transform: translate(-1px, -1px);
-
-  width: 100%;
-  height: 100%;
-
-  border: 1px solid var(--orange);
-  border-radius: 2rem 0 2rem 0;
-}
-
-.flash-form__option-label {
-  display: block;
-
-  width: 100%;
-  height: 100%;
-
-  background: url("../img/flash.jpg");
-  background-size: cover;
-}
+*/
 
 @media (max-width: 64em) {
   .flash-form {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(1, 1fr);
   }
 }

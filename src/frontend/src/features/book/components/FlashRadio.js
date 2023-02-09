@@ -9,8 +9,8 @@ const FlashOption = ({ id, src, onChange }) => {
         value={id}
         onChange={() => onChange(id)}
       />
-      <label className="flash-form__option-label" for={id} />
       <div className="flash-form__option-border"></div>
+      <label className="flash-form__option-label" for={id} />
     </div>
   );
 };
