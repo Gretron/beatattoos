@@ -22,6 +22,7 @@ import {
   Vector3,
   Raycaster,
   Vector2,
+  MathUtils,
 } from "three";
 
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
@@ -128,11 +129,27 @@ const PlacementForm = () => {
       // calculate pointer position in normalized device coordinates
       // (-1 to +1) for both components
 
-      pointer.x = (event.clientX / container.offsetWidth) * 2 - 1;
-      pointer.y = -(event.clientY / container.offsetHeight) * 2 + 1;
+      function clamp(num, a, b) {
+        return Math.max(Math.min(num, Math.max(a, b)), Math.min(a, b));
+      }
+
+      pointer.x = MathUtils.clamp(
+        (event.clientX / container.offsetWidth) * 2 - 1,
+        -1,
+        1
+      );
+
+      pointer.y = MathUtils.clamp(
+        -(event.clientY / container.offsetHeight) * 2 + 1,
+        -1,
+        1
+      );
+
+      console.log(container.offsetWidth);
+      console.log(pointer);
     }
 
-    window.addEventListener("pointermove", onPointerMove);
+    container.addEventListener("pointermove", onPointerMove);
 
     function animate() {
       requestAnimationFrame(animate);
@@ -146,8 +163,6 @@ const PlacementForm = () => {
       for (let i = 0; i < intersects.length; i++) {
         intersects[i].object.material.color.set(0xff0000);
       }
-
-      console.log(pointer);
 
       /*
       cube.rotation.x += 0.01;
