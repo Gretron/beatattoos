@@ -109,13 +109,13 @@ const PlacementForm = () => {
     pointLight.position.set(10, 10, 10);
     scene.add(pointLight);
 
+    const container = document.getElementById("placement-canvas");
+
     const renderer = new WebGLRenderer({ alpha: true, antialias: true });
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.toneMapping = ACESFilmicToneMapping;
     renderer.outputEncoding = sRGBEncoding;
-    renderer.setSize(1200, 600);
-
-    const container = document.getElementById("placement-canvas");
+    renderer.setSize(container.clientWidth, container.clientHeight);
 
     if (container) {
       container.appendChild(renderer.domElement);
@@ -129,27 +129,27 @@ const PlacementForm = () => {
       // calculate pointer position in normalized device coordinates
       // (-1 to +1) for both components
 
-      function clamp(num, a, b) {
-        return Math.max(Math.min(num, Math.max(a, b)), Math.min(a, b));
-      }
+      var rect = event.target.getBoundingClientRect();
 
-      pointer.x = MathUtils.clamp(
-        (event.clientX / container.offsetWidth) * 2 - 1,
-        -1,
-        1
-      );
+      pointer.x = ((event.clientX - rect.left) / container.offsetWidth) * 2 - 1;
 
-      pointer.y = MathUtils.clamp(
-        -(event.clientY / container.offsetHeight) * 2 + 1,
-        -1,
-        1
-      );
+      pointer.y =
+        -((event.clientY - rect.top) / container.offsetHeight) * 2 + 1;
 
-      console.log(container.offsetWidth);
+      console.log(event.clientX - rect.left);
+      // console.log(event.clientX);
       console.log(pointer);
     }
 
     container.addEventListener("pointermove", onPointerMove);
+
+    function onWindowResize() {
+      camera.aspect = container.clientWidth / container.clientHeight;
+
+      camera.updateProjectionMatrix();
+
+      renderer.setSize(container.clientWidth, container.clientHeight);
+    }
 
     function animate() {
       requestAnimationFrame(animate);
@@ -162,6 +162,7 @@ const PlacementForm = () => {
 
       for (let i = 0; i < intersects.length; i++) {
         intersects[i].object.material.color.set(0xff0000);
+        console.log(intersects);
       }
 
       /*
