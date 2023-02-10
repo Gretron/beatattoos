@@ -19,7 +19,9 @@ const PlacementForm = () => {
   const [scene, setScene] = useState(null);
   const [camera, setCamera] = useState(null);
   const [renderer, setRenderer] = useState(null);
-  const [decal, setDecal] = useState(null);
+  const [decal, setDecal] = useState({});
+  const [decalMesh, setDecalMesh] = useState(null);
+  const model = useRef();
   const controls = useRef();
 
   let context = useOutletContext();
@@ -48,6 +50,49 @@ const PlacementForm = () => {
     );
   }
 
+  function drawDecal({ object, point, rotation, size }) {
+    console.log(object, point, rotation, size);
+
+    const decalGeometry = new DecalGeometry(
+      object,
+      point,
+      /*euler,*/
+      rotation,
+      size
+    );
+    const decalMaterial = new THREE.MeshStandardMaterial({
+      color: 0xf05d23,
+      depthTest: true,
+      depthWrite: true,
+      polygonOffset: true,
+      polygonOffsetFactor: -4,
+    });
+
+    const newDecal = new THREE.Mesh(decalGeometry, decalMaterial);
+    newDecal.receiveShadow = true;
+
+    scene.remove(decalMesh);
+    scene.add(newDecal);
+
+    setDecalMesh(newDecal);
+
+    setDecal({
+      object: object,
+      point: point,
+      rotation: rotation,
+      size: size,
+    });
+  }
+
+  function setDecalSize(w, l, d) {
+    drawDecal({
+      object: decal.object,
+      point: decal.point,
+      rotation: decal.rotation,
+      size: new THREE.Vector3(w, l, d),
+    });
+  }
+
   function Model({ ...props }) {
     const pointer = new THREE.Vector2();
 
@@ -74,29 +119,12 @@ const PlacementForm = () => {
       const euler = new THREE.Euler();
       euler.setFromRotationMatrix(rotation);
 
-      const decalGeometry = new DecalGeometry(
-        hits[0].object,
-        hits[0].point,
-        euler,
-        new THREE.Vector3(0.5, 0.5, 0.5)
-      );
-      const decalMaterial = new THREE.MeshStandardMaterial({
-        color: 0xf05d23,
-        depthTest: true,
-        depthWrite: true,
-        polygonOffset: true,
-        polygonOffsetFactor: -4,
+      drawDecal({
+        object: hits[0].object,
+        point: hits[0].point,
+        rotation: new THREE.Euler(0, 0, 0, "XYZ"),
+        size: new THREE.Vector3(1, 1, 1),
       });
-
-      const newDecal = new THREE.Mesh(decalGeometry, decalMaterial);
-      newDecal.receiveShadow = true;
-
-      scene.remove(decal);
-      scene.add(newDecal);
-
-      setDecal(newDecal);
-
-      console.log(hits);
     }
 
     const group = useRef();
@@ -105,6 +133,7 @@ const PlacementForm = () => {
     return (
       <group ref={group} {...props} dispose={null}>
         <mesh
+          ref={model}
           geometry={nodes["BaseMesh_Low_Res-Detailed_Male-Femalelwo"].geometry}
           material={props.material}
           onClick={(event) => handlePointerOver(event)}
@@ -140,11 +169,10 @@ const PlacementForm = () => {
         onCreated={({ camera, scene, gl }) => {
           setScene(scene);
           setCamera(camera);
-          camera.rotateZ(50);
           setRenderer(gl);
         }}
       >
-        <axesHelper />
+        {/*<axesHelper />*/}
         <ambientLight intensity={0.5} />
         <pointLight position={[10, 10, 10]} />
         <OrbitControls
@@ -153,8 +181,35 @@ const PlacementForm = () => {
           minPolarAngle={1.5}
           maxPolarAngle={1.5}
         />
-        <Model scale={[4, 4, 4]} material={material} />
+        <Model scale={[4, 4, 4]} position={[0, -1, 0]} material={material} />
       </Canvas>
+      <input
+        type="range"
+        min={0}
+        max={10}
+        step={0.1}
+        onChange={(event) =>
+          setDecalSize(event.target.value, decal.size.y, decal.size.z)
+        }
+      />
+      <input
+        type="range"
+        min={0}
+        max={10}
+        step={0.1}
+        onChange={(event) =>
+          setDecalSize(decal.size.x, event.target.value, decal.size.z)
+        }
+      />
+      <input
+        type="range"
+        min={0}
+        max={10}
+        step={0.1}
+        onChange={(event) =>
+          setDecalSize(decal.size.x, decal.size.y, event.target.value)
+        }
+      />
     </div>
   );
 };
