@@ -251,13 +251,14 @@ const PlacementForm = () => {
         onPointerOver={(event) => hover(true)}
         onPointerOut={(event) => hover(false)}
         onClick={(event) => {
+          // Set Orbit Control Target to Center of Decal
           controls.current.target.set(
             decalRef.current.geometry.boundingSphere.center.x,
             decalRef.current.geometry.boundingSphere.center.y,
             decalRef.current.geometry.boundingSphere.center.z
           );
+
           controls.current.update();
-          console.log(controls.current);
         }}
       >
         <meshStandardMaterial
@@ -315,6 +316,7 @@ const PlacementForm = () => {
         }}
       >
         <pointLight position={[10, 10, 10]} />
+        <pointLight position={[10, 10, -10]} />
         <ambientLight intensity={0.5} />
 
         <OrbitControls
@@ -322,9 +324,9 @@ const PlacementForm = () => {
           autoRotate={false}
           rotation={new THREE.Euler(0, 0, 5)}
           maxDistance={5}
-          minDistance={3}
-          maxAzimuthAngle={1}
-          minAzimuthAngle={2}
+          minDistance={2}
+          maxAzimuthAngle={0.3}
+          minAzimuthAngle={3}
         />
 
         {/*
