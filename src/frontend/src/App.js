@@ -95,7 +95,9 @@ function App() {
                   <Route path="note" element={<NoteForm />} />
                   <Route path="description" element={<DescriptionForm />} />
                 </Route>
-                <Route path="placement" element={<PlacementForm />} />
+                <Route path="placement" element={<PlacementForm />}>
+                  <Route path="*" />
+                </Route>
                 <Route path="location" element={<BookingList />} />
                 <Route path="datetime" element={<BookingList />} />
                 <Route path="confirm" element={<BookingList />} />

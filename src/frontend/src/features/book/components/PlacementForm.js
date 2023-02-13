@@ -2,7 +2,7 @@
 
 // Hooks
 import { useEffect, useRef, useState, Suspense, useMemo } from "react";
-import { useOutletContext } from "react-router-dom";
+import { useLocation, useOutletContext } from "react-router-dom";
 
 // Styles
 import placementStyles from "../assets/css/placement.css";
@@ -18,6 +18,9 @@ import { DecalGeometry } from "three/examples/jsm/geometries/DecalGeometry.js";
 const PlacementForm = () => {
   // Router Outlet Context
   let context = useOutletContext();
+
+  // Site Address
+  let location = useLocation();
 
   // Core Three Components
   const [renderer, setRenderer] = useState(null);
@@ -39,6 +42,7 @@ const PlacementForm = () => {
 
   // Body Part Decals
   const bodyDecal = {
+    name: "body",
     position: {
       x: 0,
       y: 1.03,
@@ -48,6 +52,7 @@ const PlacementForm = () => {
   };
 
   const rArmDecal = {
+    name: "rarm",
     position: {
       x: 2.21,
       y: 1.37388664109075326,
@@ -56,15 +61,17 @@ const PlacementForm = () => {
     scale: { x: 3.1, y: 2.2, z: 10 },
   };
 
-  const [lArmDecal, setLArmDecal] = useState({
+  const lArmDecal = {
+    name: "larm",
     position: {
       ...rArmDecal.position,
       x: -rArmDecal.position.x,
     },
     scale: rArmDecal.scale,
-  });
+  };
 
   const rLegDecal = {
+    name: "rleg",
     position: {
       x: 0.676324468407385,
       y: -1.6816877063164857,
@@ -74,6 +81,7 @@ const PlacementForm = () => {
   };
 
   const lLegDecal = {
+    name: "lleg",
     position: {
       ...rLegDecal.position,
       x: -rLegDecal.position.x,
@@ -223,6 +231,7 @@ const PlacementForm = () => {
       props.limb.position.y,
       props.limb.position.z
     );
+
     const scale = new THREE.Vector3(
       props.limb.scale.x,
       props.limb.scale.y,
@@ -239,14 +248,13 @@ const PlacementForm = () => {
     }, [model.current]);
 
     const [hovered, hover] = useState(false);
-    const [clicked, click] = useState(false);
 
     const decalRef = useRef();
-    //useHelper(decalRef, THREE.BoxHelper, "#FFFFFF");
 
     return (
       <mesh
         ref={decalRef}
+        name={props.limb.name}
         geometry={decalGeometry}
         onPointerOver={(event) => hover(true)}
         onPointerOut={(event) => hover(false)}
