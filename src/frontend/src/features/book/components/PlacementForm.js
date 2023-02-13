@@ -1,58 +1,114 @@
-import { useEffect, useRef, Suspense } from "react";
+// #region Imports
+
+// Hooks
+import { useEffect, useRef, useState, Suspense, useMemo } from "react";
 import { useOutletContext } from "react-router-dom";
 
-import { useState } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
-
-import * as THREE from "three";
-
-import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-
-import { useLoader, useThree } from "@react-three/fiber";
-import { useGLTF, OrbitControls } from "@react-three/drei";
-import { DecalGeometry } from "three/examples/jsm/geometries/DecalGeometry.js";
-
+// Styles
 import placementStyles from "../assets/css/placement.css";
 
-const PlacementForm = () => {
-  const [scene, setScene] = useState(null);
-  const [camera, setCamera] = useState(null);
-  const [renderer, setRenderer] = useState(null);
-  const [decal, setDecal] = useState({});
-  const [decalMesh, setDecalMesh] = useState(null);
-  const model = useRef();
-  const controls = useRef();
+// Three
+import * as THREE from "three";
+import { Canvas, useFrame, useLoader, useThree } from "@react-three/fiber";
+import { useGLTF, OrbitControls, useHelper } from "@react-three/drei";
+import { DecalGeometry } from "three/examples/jsm/geometries/DecalGeometry.js";
 
+// #endregion
+
+const PlacementForm = () => {
+  // Router Outlet Context
   let context = useOutletContext();
 
-  function Box(props) {
-    // This reference gives us direct access to the THREE.Mesh object
-    const ref = useRef();
-    // Hold state for hovered and clicked events
-    const [hovered, hover] = useState(false);
-    const [clicked, click] = useState(false);
-    // Subscribe this component to the render-loop, rotate the mesh every frame
-    useFrame((state, delta) => (ref.current.rotation.x += delta));
-    // Return the view, these are regular Threejs elements expressed in JSX
-    return (
-      <mesh
-        {...props}
-        ref={ref}
-        scale={clicked ? 1.5 : 1}
-        onClick={(event) => click(!clicked)}
-        onPointerOver={(event) => hover(true)}
-        onPointerOut={(event) => hover(false)}
-      >
-        <boxGeometry args={[1, 1, 1]} />
-        <meshStandardMaterial color={hovered ? "hotpink" : "orange"} />
-      </mesh>
-    );
-  }
+  // Core Three Components
+  const [renderer, setRenderer] = useState(null);
+  const [scene, setScene] = useState(null);
+  const [camera, setCamera] = useState(null);
+
+  // Camera Controls
+  const controls = useRef();
+
+  // Character Model
+  const model = useRef();
+
+  // Materials
+  const brownMaterial = new THREE.MeshStandardMaterial();
+  brownMaterial.color = new THREE.Color(0x493d08);
+
+  const orangeMaterial = new THREE.MeshBasicMaterial();
+  orangeMaterial.color = new THREE.Color(0xf05d23);
+
+  // Body Part Decals
+  const bodyDecal = {
+    position: {
+      x: 0,
+      y: 1.03,
+      z: 0.18034634277807615,
+    },
+    scale: { x: 1.265, y: 2.44, z: 1.3 },
+  };
+
+  const rArmDecal = {
+    position: {
+      x: 2.21,
+      y: 1.37388664109075326,
+      z: 0.19235529706892926,
+    },
+    scale: { x: 3.1, y: 2.2, z: 10 },
+  };
+
+  const [lArmDecal, setLArmDecal] = useState({
+    position: {
+      ...rArmDecal.position,
+      x: -rArmDecal.position.x,
+    },
+    scale: rArmDecal.scale,
+  });
+
+  const rLegDecal = {
+    position: {
+      x: 0.676324468407385,
+      y: -1.6816877063164857,
+      z: -0.031156552116070307,
+    },
+    scale: { x: 1.3, y: 2.95, z: 1.3 },
+  };
+
+  const lLegDecal = {
+    position: {
+      ...rLegDecal.position,
+      x: -rLegDecal.position.x,
+    },
+    scale: rLegDecal.scale,
+  };
+
+  // Limb Decal
+  const [selectedLimb, setSelectedLimb] = useState(null);
+
+  // Tattoo Decal
+  const [decal, setDecal] = useState({});
+  const [decalMesh, setDecalMesh] = useState(null);
+  const [box, setBox] = useState(null);
+
+  // Component Loaded Flag
+  const loaded = useRef(false);
+
+  // Initial Load
+  useEffect(() => {
+    // If Component Already Loaded...
+    if (loaded.current) {
+      // Skip
+      return;
+    }
+
+    // Else Play Animation
+    loaded.current = true;
+
+    context.setHeader("select placement of tattoo");
+    context.setNextStep("location");
+    // TODO: Load Local Store to See Previous Step
+  }, []);
 
   function drawDecal({ object, point, rotation, size }) {
-    console.log(object, point, rotation, size);
-
     const decalGeometry = new DecalGeometry(
       object,
       point,
@@ -75,13 +131,18 @@ const PlacementForm = () => {
     scene.add(newDecal);
 
     setDecalMesh(newDecal);
-
     setDecal({
       object: object,
       point: point,
       rotation: rotation,
       size: size,
     });
+
+    const newBox = new THREE.BoxHelper(newDecal, 0xffff00);
+    scene.remove(box);
+    scene.add(newBox);
+
+    setBox(newBox);
   }
 
   function setDecalSize(w, l, d) {
@@ -91,6 +152,17 @@ const PlacementForm = () => {
       rotation: decal.rotation,
       size: new THREE.Vector3(w, l, d),
     });
+  }
+
+  function setDecalPosition(x, y, z) {
+    drawDecal({
+      object: decal.object,
+      point: new THREE.Vector3(x, y, z),
+      rotation: decal.rotation,
+      size: decal.size,
+    });
+
+    console.log(decal);
   }
 
   function Model({ ...props }) {
@@ -110,6 +182,8 @@ const PlacementForm = () => {
 
       if (!hits.length) return;
 
+      console.log(hits[0]);
+
       const position = hits[0].point.clone();
       const eye = position.clone();
       eye.add(hits[0].face.normal);
@@ -127,41 +201,109 @@ const PlacementForm = () => {
       });
     }
 
-    const group = useRef();
-    const { nodes, materials } = useGLTF("/models/model.gltf");
+    const { nodes } = useGLTF("/models/model.gltf");
+
+    // onClick={(event) => handlePointerOver(event)}
 
     return (
-      <group ref={group} {...props} dispose={null}>
+      <group {...props} dispose={null}>
         <mesh
           ref={model}
           geometry={nodes["BaseMesh_Low_Res-Detailed_Male-Femalelwo"].geometry}
           material={props.material}
-          onClick={(event) => handlePointerOver(event)}
           rotation={[Math.PI / 2, 0, 0]}
         />
       </group>
     );
   }
 
-  // Component Loaded Flag
-  const loaded = useRef(false);
+  const LimbDecal = ({ ...props }) => {
+    const position = new THREE.Vector3(
+      props.limb.position.x,
+      props.limb.position.y,
+      props.limb.position.z
+    );
+    const scale = new THREE.Vector3(
+      props.limb.scale.x,
+      props.limb.scale.y,
+      props.limb.scale.z
+    );
 
-  useEffect(() => {
-    // If Component Already Loaded...
-    if (loaded.current) {
-      // Skip
-      return;
-    }
+    const decalGeometry = useMemo(() => {
+      return new DecalGeometry(
+        model.current,
+        position,
+        THREE.Euler.DEFAULT_ORDER,
+        scale
+      );
+    }, [model.current]);
 
-    // Else Play Animation
-    loaded.current = true;
+    const [hovered, hover] = useState(false);
+    const [clicked, click] = useState(false);
 
-    context.setHeader("select placement of tattoo");
-    context.setNextStep("location");
-  }, []);
+    const decalRef = useRef();
+    //useHelper(decalRef, THREE.BoxHelper, "#FFFFFF");
 
-  const material = new THREE.MeshBasicMaterial();
-  material.color = new THREE.Color(0x493d08);
+    return (
+      <mesh
+        ref={decalRef}
+        geometry={decalGeometry}
+        onPointerOver={(event) => hover(true)}
+        onPointerOut={(event) => hover(false)}
+        onClick={(event) => {
+          controls.current.target.set(
+            decalRef.current.geometry.boundingSphere.center.x,
+            decalRef.current.geometry.boundingSphere.center.y,
+            decalRef.current.geometry.boundingSphere.center.z
+          );
+          controls.current.update();
+          console.log(controls.current);
+        }}
+      >
+        <meshStandardMaterial
+          color={hovered ? 0xf05d23 : 0x493d08}
+          depthTest={true}
+          depthWrite={true}
+          polygonOffset={true}
+          polygonOffsetFactor={-4}
+        />
+      </mesh>
+    );
+  };
+
+  const TattooDecal = ({ ...props }) => {
+    const decalGeometry = useMemo(() => {
+      return new DecalGeometry(
+        props.mesh,
+        props.position,
+        THREE.Euler.DEFAULT_ORDER,
+        props.scale
+      );
+    }, [props.mesh]);
+
+    const [hovered, hover] = useState(false);
+    const [clicked, click] = useState(false);
+
+    const decalRef = useRef();
+    //useHelper(decalRef, THREE.BoxHelper, "#FFFFFF");
+
+    return (
+      <mesh
+        ref={decalRef}
+        geometry={decalGeometry}
+        onPointerOver={(event) => hover(true)}
+        onPointerOut={(event) => hover(false)}
+      >
+        <meshStandardMaterial
+          color={hovered ? 0xf05d23 : 0x493d08}
+          depthTest={true}
+          depthWrite={true}
+          polygonOffset={true}
+          polygonOffsetFactor={-4}
+        />
+      </mesh>
+    );
+  };
 
   return (
     <div id="placement-canvas" className="placement-form">
@@ -172,17 +314,37 @@ const PlacementForm = () => {
           setRenderer(gl);
         }}
       >
-        {/*<axesHelper />*/}
-        <ambientLight intensity={0.5} />
         <pointLight position={[10, 10, 10]} />
+        <ambientLight intensity={0.5} />
+
         <OrbitControls
           ref={controls}
           autoRotate={false}
-          minPolarAngle={1.5}
-          maxPolarAngle={1.5}
+          rotation={new THREE.Euler(0, 0, 5)}
+          maxDistance={5}
+          minDistance={3}
+          maxAzimuthAngle={1}
+          minAzimuthAngle={2}
         />
-        <Model scale={[4, 4, 4]} position={[0, -1, 0]} material={material} />
+
+        {/*
+          maxPolarAngle={1.5}
+          minPolarAngle={1.5}*/}
+
+        <Model material={brownMaterial} scale={3.5} />
+
+        {model.current && <LimbDecal limb={bodyDecal} />}
+
+        {model.current && <LimbDecal limb={rArmDecal} />}
+
+        {model.current && <LimbDecal limb={lArmDecal} />}
+
+        {model.current && <LimbDecal limb={rLegDecal} />}
+
+        {model.current && <LimbDecal limb={lLegDecal} />}
       </Canvas>
+
+      <label>w</label>
       <input
         type="range"
         min={0}
@@ -192,6 +354,7 @@ const PlacementForm = () => {
           setDecalSize(event.target.value, decal.size.y, decal.size.z)
         }
       />
+      <label>l</label>
       <input
         type="range"
         min={0}
@@ -201,6 +364,7 @@ const PlacementForm = () => {
           setDecalSize(decal.size.x, event.target.value, decal.size.z)
         }
       />
+      <label>d</label>
       <input
         type="range"
         min={0}
@@ -210,6 +374,58 @@ const PlacementForm = () => {
           setDecalSize(decal.size.x, decal.size.y, event.target.value)
         }
       />
+      <br />
+      <label>
+        <div>x</div>
+        <button
+          onClick={(event) =>
+            setDecalPosition(decal.point.x + 0.05, decal.point.y, decal.point.z)
+          }
+        >
+          ▲
+        </button>
+        <button
+          onClick={(event) =>
+            setDecalPosition(decal.point.x - 0.05, decal.point.y, decal.point.z)
+          }
+        >
+          ▼
+        </button>
+      </label>
+      <label>
+        <div>y</div>
+        <button
+          onClick={(event) =>
+            setDecalPosition(decal.point.x, decal.point.y + 0.05, decal.point.z)
+          }
+        >
+          ▲
+        </button>
+        <button
+          onClick={(event) =>
+            setDecalPosition(decal.point.x, decal.point.y - 0.05, decal.point.z)
+          }
+        >
+          ▼
+        </button>
+      </label>
+      <label>
+        <div>z</div>
+        <button
+          onClick={(event) =>
+            setDecalPosition(decal.point.x, decal.point.y, decal.point.z + 0.05)
+          }
+        >
+          ▲
+        </button>
+        <button
+          onClick={(event) =>
+            setDecalPosition(decal.point.x, decal.point.y, decal.point.z - 0.05)
+          }
+        >
+          ▼
+        </button>
+      </label>
     </div>
   );
 };
