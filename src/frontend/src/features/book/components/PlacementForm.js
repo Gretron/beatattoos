@@ -30,6 +30,14 @@ const PlacementForm = () => {
   // Camera Controls
   const controls = useRef();
 
+  // Orbit Point
+  const [angle, setAngle] = useState({
+    maxX: 0,
+    minX: 0,
+    maxY: 1.5,
+    minY: 1.5,
+  });
+
   // Character Model
   const model = useRef();
 
@@ -42,55 +50,65 @@ const PlacementForm = () => {
 
   // Body Part Decals
   const bodyDecal = {
-    name: "body",
     position: {
       x: 0,
       y: 1.03,
       z: 0.18034634277807615,
     },
     scale: { x: 1.265, y: 2.44, z: 1.3 },
+    angle: { maxX: Infinity, minX: 0, maxY: 1.5, minY: 1.5 },
+    distance: 3,
   };
 
   const rArmDecal = {
-    name: "rarm",
     position: {
       x: 2.21,
       y: 1.37388664109075326,
       z: 0.19235529706892926,
     },
     scale: { x: 3.1, y: 2.2, z: 10 },
+    angle: { maxX: 3.5, minX: -0.5, maxY: 6, minY: 1.5 },
+    distance: 2,
   };
 
   const lArmDecal = {
-    name: "larm",
     position: {
       ...rArmDecal.position,
       x: -rArmDecal.position.x,
     },
     scale: rArmDecal.scale,
+    angle: {
+      ...rArmDecal.angle,
+      maxX: -rArmDecal.angle.minX,
+      minX: -rArmDecal.angle.maxX,
+    },
+    distance: rArmDecal.distance,
   };
 
   const rLegDecal = {
-    name: "rleg",
     position: {
       x: 0.676324468407385,
       y: -1.6816877063164857,
       z: -0.031156552116070307,
     },
     scale: { x: 1.3, y: 2.95, z: 1.3 },
+    angle: { maxX: 3.5, minX: -0.5, maxY: 1.5, minY: 1.5 },
+    distance: 2,
   };
 
   const lLegDecal = {
-    name: "lleg",
     position: {
       ...rLegDecal.position,
       x: -rLegDecal.position.x,
     },
     scale: rLegDecal.scale,
+    angle: {
+      ...rLegDecal.angle,
+      maxX: -rLegDecal.angle.minX,
+      minX: -rLegDecal.angle.maxX,
+    },
+    distance: rLegDecal.distance,
   };
-
-  // Limb Decal
-  const [selectedLimb, setSelectedLimb] = useState(null);
 
   // Tattoo Decal
   const [decal, setDecal] = useState({});
@@ -112,7 +130,7 @@ const PlacementForm = () => {
     loaded.current = true;
 
     context.setHeader("select placement of tattoo");
-    context.setNextStep("location");
+    context.setNextStep("placement/rarm");
     // TODO: Load Local Store to See Previous Step
   }, []);
 
@@ -124,6 +142,7 @@ const PlacementForm = () => {
       rotation,
       size
     );
+
     const decalMaterial = new THREE.MeshStandardMaterial({
       color: 0xf05d23,
       depthTest: true,
@@ -260,13 +279,21 @@ const PlacementForm = () => {
         onPointerOut={(event) => hover(false)}
         onClick={(event) => {
           // Set Orbit Control Target to Center of Decal
-          controls.current.target.set(
-            decalRef.current.geometry.boundingSphere.center.x,
-            decalRef.current.geometry.boundingSphere.center.y,
-            decalRef.current.geometry.boundingSphere.center.z
-          );
+          controls.current.target =
+            decalRef.current.geometry.boundingSphere.center;
+
+          controls.current.minAzimuthAngle = props.limb.angle.minX;
+          controls.current.maxAzimuthAngle = props.limb.angle.maxX;
+
+          controls.current.minPolarAngle = props.limb.angle.minY;
+          controls.current.maxPolarAngle = props.limb.angle.maxY;
+
+          controls.current.minDistance = props.limb.distance;
+          controls.current.maxDistance = props.limb.distance;
 
           controls.current.update();
+
+          console.log(controls.current);
         }}
       >
         <meshStandardMaterial
@@ -291,7 +318,7 @@ const PlacementForm = () => {
     }, [props.mesh]);
 
     const [hovered, hover] = useState(false);
-    const [clicked, click] = useState(false);
+    // const [clicked, click] = useState(false);
 
     const decalRef = useRef();
     //useHelper(decalRef, THREE.BoxHelper, "#FFFFFF");
@@ -329,12 +356,13 @@ const PlacementForm = () => {
 
         <OrbitControls
           ref={controls}
-          autoRotate={false}
           rotation={new THREE.Euler(0, 0, 5)}
           maxDistance={5}
-          minDistance={2}
-          maxAzimuthAngle={0.3}
-          minAzimuthAngle={3}
+          minDistance={5}
+          maxAzimuthAngle={0}
+          minAzimuthAngle={0}
+          maxPolarAngle={1.5}
+          minPolarAngle={1.5}
         />
 
         {/*
