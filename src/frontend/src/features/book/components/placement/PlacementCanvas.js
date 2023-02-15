@@ -1,7 +1,14 @@
 // #region Imports
 
 // Hooks
-import { useEffect, useRef, useState, Suspense, useMemo } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  Suspense,
+  useMemo,
+  useLayoutEffect,
+} from "react";
 import { useLocation, useOutletContext } from "react-router-dom";
 
 // Styles
@@ -10,7 +17,13 @@ import placementStyles from "../../assets/css/placement.css";
 // Three
 import * as THREE from "three";
 import { Canvas, useFrame, useLoader, useThree } from "@react-three/fiber";
-import { useGLTF, OrbitControls, useHelper } from "@react-three/drei";
+import {
+  useGLTF,
+  OrbitControls,
+  useHelper,
+  useProgress,
+  Html,
+} from "@react-three/drei";
 import { DecalGeometry } from "three/examples/jsm/geometries/DecalGeometry.js";
 
 // Model Component
@@ -34,7 +47,7 @@ const PlacementForm = () => {
   const controls = useRef();
 
   // Character Model Reference
-  const model = useRef();
+  const modelRef = useRef();
 
   // Orbit Point
   const [angle, setAngle] = useState({
@@ -230,58 +243,50 @@ const PlacementForm = () => {
     );
   };
 
-  const LimbDecal = ({ ...props }) => {
-    const position = new THREE.Vector3(
-      props.limb.position.x,
-      props.limb.position.y,
-      props.limb.position.z
-    );
+  const LimbDecal = ({ mesh, position, rotation, scale, ...props }) => {
+    const ref = useRef();
 
-    const scale = new THREE.Vector3(
-      props.limb.scale.x,
-      props.limb.scale.y,
-      props.limb.scale.z
-    );
+    const p = new THREE.Vector3(position.x, position.y, position.z);
+    const r = THREE.Euler.DEFAULT_ORDER;
+    const s = new THREE.Vector3(scale.x, scale.y, scale.z);
 
-    const decalGeometry = useMemo(() => {
-      return new DecalGeometry(
-        model.current,
-        position,
-        THREE.Euler.DEFAULT_ORDER,
-        scale
-      );
-    }, [model.current]);
+    useLayoutEffect(() => {
+      const parent = mesh.current || ref.current.parent;
+
+      if (parent) {
+        ref.current.geometry = new DecalGeometry(parent, p, r, s);
+        console.log(parent);
+      }
+    }, [mesh]);
 
     const [hovered, hover] = useState(false);
 
-    const decalRef = useRef();
-
     return (
       <mesh
-        ref={decalRef}
-        name={props.limb.name}
-        geometry={decalGeometry}
+        ref={ref}
         onPointerOver={(event) => hover(true)}
         onPointerOut={(event) => hover(false)}
         onClick={(event) => {
           // Set Orbit Control Target to Center of Decal
-          controls.current.target =
-            decalRef.current.geometry.boundingSphere.center;
+          controls.current.target = ref.current.geometry.boundingSphere.center;
 
-          controls.current.minAzimuthAngle = props.limb.angle.minX;
-          controls.current.maxAzimuthAngle = props.limb.angle.maxX;
+          controls.current.minAzimuthAngle = props.angle.minX;
+          controls.current.maxAzimuthAngle = props.angle.maxX;
 
-          controls.current.minPolarAngle = props.limb.angle.minY;
-          controls.current.maxPolarAngle = props.limb.angle.maxY;
+          controls.current.minPolarAngle = props.angle.minY;
+          controls.current.maxPolarAngle = props.angle.maxY;
 
-          controls.current.minDistance = props.limb.distance;
-          controls.current.maxDistance = props.limb.distance;
+          controls.current.minDistance = props.distance;
+          controls.current.maxDistance = props.distance;
 
           controls.current.update();
         }}
       >
+        <boxHelper object={ref.current} color={0xffff00} />
         <meshStandardMaterial
-          color={hovered ? 0xf05d23 : 0x493d08}
+          color={0xf05d23}
+          transparent={true}
+          opacity={hovered ? 1 : 0}
           depthTest={true}
           depthWrite={true}
           polygonOffset={true}
@@ -325,6 +330,11 @@ const PlacementForm = () => {
     );
   };
 
+  function Loader() {
+    const { active, progress, errors, item, loaded, total } = useProgress();
+    return <Html center>{progress} % loaded</Html>;
+  }
+
   return (
     <div id="placement-canvas" className="placement-form">
       <Canvas
@@ -349,22 +359,18 @@ const PlacementForm = () => {
           minPolarAngle={1.5}
         />
 
-        {/*
-          maxPolarAngle={1.5}
-          minPolarAngle={1.5}*/}
-
-        <Model reference={model} material={brownMaterial} scale={3.5} />
-
-        {model.current && <LimbDecal limb={bodyDecal} />}
-
-        {model.current && <LimbDecal limb={rArmDecal} />}
-
-        {model.current && <LimbDecal limb={lArmDecal} />}
-
-        {model.current && <LimbDecal limb={rLegDecal} />}
-
-        {model.current && <LimbDecal limb={lLegDecal} />}
+        <Suspense fallback={null}>
+          <Model ref={modelRef} material={brownMaterial} scale={3.5}>
+            <LimbDecal mesh={modelRef} {...bodyDecal} />
+            {/*<LimbDecal mesh={modelRef} {...rArmDecal} />
+            <LimbDecal mesh={modelRef} {...lArmDecal} />
+            <LimbDecal mesh={modelRef} {...rLegDecal} />
+      <LimbDecal mesh={modelRef} {...lLegDecal} />*/}
+          </Model>
+        </Suspense>
       </Canvas>
+
+      {modelRef.current && <button>HELLO</button>}
 
       {/*
       <label>w</label>
