@@ -18,12 +18,12 @@ import { MessageList } from "./features/messages";
 import { SettingsForm } from "./features/settings";
 
 import {
-  SelectType,
+  TypeForm,
   FlashForm,
   CustomForm,
   NoteForm,
   DescriptionForm,
-  PlacementForm,
+  PlacementCanvas,
 } from "./features/book";
 
 // Pages
@@ -89,13 +89,13 @@ function App() {
                 <Route index element={<Navigate to="type" />} />
                 <Route path="type">
                   <Route index element={<Navigate to="select" />} />
-                  <Route path="select" element={<SelectType />} />
+                  <Route path="select" element={<TypeForm />} />
                   <Route path="flash" element={<FlashForm />} />
                   <Route path="custom" element={<CustomForm />} />
                   <Route path="note" element={<NoteForm />} />
                   <Route path="description" element={<DescriptionForm />} />
                 </Route>
-                <Route path="placement" element={<PlacementForm />}>
+                <Route path="placement" element={<PlacementCanvas />}>
                   <Route path="*" />
                 </Route>
                 <Route path="location" element={<BookingList />} />

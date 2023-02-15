@@ -1,7 +1,7 @@
 // #region Imports
 
 import { useEffect } from "react";
-import BookProgressPoint from "./ProgressPoint";
+import ProgressPoint from "./ProgressPoint";
 import { Link } from "react-router-dom";
 
 // #endregion
@@ -24,11 +24,11 @@ const ProgressBar = ({ type, placement, location, datetime, confirm }) => {
       <div className="book-progress__line">
         <div className="book-progress__indicator"></div>
       </div>
-      <BookProgressPoint name="type" />
-      <BookProgressPoint name="placement" />
-      <BookProgressPoint name="location" />
-      <BookProgressPoint name="datetime" />
-      <BookProgressPoint name="confirm" />
+      <ProgressPoint name="type" />
+      <ProgressPoint name="placement" />
+      <ProgressPoint name="location" />
+      <ProgressPoint name="datetime" />
+      <ProgressPoint name="confirm" />
     </div>
   );
 };

@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useOutletContext } from "react-router-dom";
 
-import styles from "../assets/css/type.css";
+import styles from "../../assets/css/type.css";
 
-const SelectType = () => {
+const TypeForm = () => {
   let context = useOutletContext();
 
   useEffect(() => {
@@ -59,4 +59,4 @@ const SelectType = () => {
   );
 };
 
-export default SelectType;
+export default TypeForm;

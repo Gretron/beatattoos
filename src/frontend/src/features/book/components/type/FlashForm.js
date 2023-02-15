@@ -3,7 +3,7 @@ import { useOutletContext } from "react-router-dom";
 
 import FlashRadio from "./FlashRadio";
 
-import flash from "../assets/img/flash.jpg";
+import flash from "../../assets/img/flash.jpg";
 
 const FlashForm = () => {
   let context = useOutletContext();

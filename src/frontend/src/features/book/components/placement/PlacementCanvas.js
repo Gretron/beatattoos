@@ -5,13 +5,16 @@ import { useEffect, useRef, useState, Suspense, useMemo } from "react";
 import { useLocation, useOutletContext } from "react-router-dom";
 
 // Styles
-import placementStyles from "../assets/css/placement.css";
+import placementStyles from "../../assets/css/placement.css";
 
 // Three
 import * as THREE from "three";
 import { Canvas, useFrame, useLoader, useThree } from "@react-three/fiber";
 import { useGLTF, OrbitControls, useHelper } from "@react-three/drei";
 import { DecalGeometry } from "three/examples/jsm/geometries/DecalGeometry.js";
+
+// Model Component
+import Model from "./Model";
 
 // #endregion
 
@@ -30,6 +33,9 @@ const PlacementForm = () => {
   // Camera Controls
   const controls = useRef();
 
+  // Character Model Reference
+  const model = useRef();
+
   // Orbit Point
   const [angle, setAngle] = useState({
     maxX: 0,
@@ -37,9 +43,6 @@ const PlacementForm = () => {
     maxY: 1.5,
     minY: 1.5,
   });
-
-  // Character Model
-  const model = useRef();
 
   // Materials
   const brownMaterial = new THREE.MeshStandardMaterial();
@@ -57,7 +60,7 @@ const PlacementForm = () => {
     },
     scale: { x: 1.265, y: 2.44, z: 1.3 },
     angle: { maxX: Infinity, minX: 0, maxY: 1.5, minY: 1.5 },
-    distance: 3,
+    distance: 2,
   };
 
   const rArmDecal = {
@@ -93,7 +96,7 @@ const PlacementForm = () => {
     },
     scale: { x: 1.3, y: 2.95, z: 1.3 },
     angle: { maxX: 3.5, minX: -0.5, maxY: 1.5, minY: 1.5 },
-    distance: 2,
+    distance: 2.5,
   };
 
   const lLegDecal = {
@@ -192,57 +195,40 @@ const PlacementForm = () => {
     console.log(decal);
   }
 
-  function Model({ ...props }) {
-    const pointer = new THREE.Vector2();
+  const Decal = ({ ...props }) => {
+    const position = new THREE.Vector3(
+      props.position.x,
+      props.position.y,
+      props.position.z
+    );
 
-    function handlePointerOver(e) {
-      let container = document.getElementById("placement-canvas");
-      let rect = container.getBoundingClientRect();
+    const scale = new THREE.Vector3(
+      props.scale.x,
+      props.scale.y,
+      props.scale.z
+    );
 
-      pointer.x = ((e.clientX - rect.left) / container.offsetWidth) * 2 - 1;
-      pointer.y = -((e.clientY - rect.top) / container.offsetHeight) * 2 + 1;
-
-      var raycaster = new THREE.Raycaster();
-
-      raycaster.setFromCamera(pointer, camera);
-      const hits = raycaster.intersectObjects(scene.children);
-
-      if (!hits.length) return;
-
-      console.log(hits[0]);
-
-      const position = hits[0].point.clone();
-      const eye = position.clone();
-      eye.add(hits[0].face.normal);
-
-      const rotation = new THREE.Matrix4();
-      rotation.lookAt(eye, position, THREE.Object3D.DEFAULT_UP);
-      const euler = new THREE.Euler();
-      euler.setFromRotationMatrix(rotation);
-
-      drawDecal({
-        object: hits[0].object,
-        point: hits[0].point,
-        rotation: new THREE.Euler(0, 0, 0, "XYZ"),
-        size: new THREE.Vector3(1, 1, 1),
-      });
-    }
-
-    const { nodes } = useGLTF("/models/model.gltf");
-
-    // onClick={(event) => handlePointerOver(event)}
+    const decalGeometry = useMemo(() => {
+      return new DecalGeometry(
+        props.mesh,
+        position,
+        THREE.Euler.DEFAULT_ORDER,
+        scale
+      );
+    }, [props.mesh]);
 
     return (
-      <group {...props} dispose={null}>
-        <mesh
-          ref={model}
-          geometry={nodes["BaseMesh_Low_Res-Detailed_Male-Femalelwo"].geometry}
-          material={props.material}
-          rotation={[Math.PI / 2, 0, 0]}
+      <mesh geometry={decalGeometry}>
+        <meshStandardMaterial
+          color={props.color}
+          depthTest={true}
+          depthWrite={true}
+          polygonOffset={true}
+          polygonOffsetFactor={-4}
         />
-      </group>
+      </mesh>
     );
-  }
+  };
 
   const LimbDecal = ({ ...props }) => {
     const position = new THREE.Vector3(
@@ -292,8 +278,6 @@ const PlacementForm = () => {
           controls.current.maxDistance = props.limb.distance;
 
           controls.current.update();
-
-          console.log(controls.current);
         }}
       >
         <meshStandardMaterial
@@ -369,7 +353,7 @@ const PlacementForm = () => {
           maxPolarAngle={1.5}
           minPolarAngle={1.5}*/}
 
-        <Model material={brownMaterial} scale={3.5} />
+        <Model reference={model} material={brownMaterial} scale={3.5} />
 
         {model.current && <LimbDecal limb={bodyDecal} />}
 
@@ -382,6 +366,7 @@ const PlacementForm = () => {
         {model.current && <LimbDecal limb={lLegDecal} />}
       </Canvas>
 
+      {/*
       <label>w</label>
       <input
         type="range"
@@ -464,6 +449,7 @@ const PlacementForm = () => {
           ▼
         </button>
       </label>
+      */}
     </div>
   );
 };

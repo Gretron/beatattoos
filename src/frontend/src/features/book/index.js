@@ -4,21 +4,21 @@ import bookStyles from "./assets/css/book.css";
 // Components
 import ProgressBar from "./components/ProgressBar";
 
-import SelectType from "./components/SelectType";
-import FlashForm from "./components/FlashForm";
-import CustomForm from "./components/CustomForm";
-import NoteForm from "./components/NoteForm";
-import DescriptionForm from "./components/DescriptionForm";
+import TypeForm from "./components/type/TypeForm";
+import FlashForm from "./components/type/FlashForm";
+import CustomForm from "./components/type/CustomForm";
+import NoteForm from "./components/type/NoteForm";
+import DescriptionForm from "./components/type/DescriptionForm";
 
-import PlacementForm from "./components/PlacementForm";
+import PlacementCanvas from "./components/placement/PlacementCanvas";
 
 export {
   bookStyles,
   ProgressBar,
-  SelectType,
+  TypeForm,
   FlashForm,
   CustomForm,
   NoteForm,
   DescriptionForm,
-  PlacementForm,
+  PlacementCanvas,
 };
