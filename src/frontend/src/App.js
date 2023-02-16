@@ -96,7 +96,7 @@ function App() {
                   <Route path="description" element={<DescriptionForm />} />
                 </Route>
                 <Route path="placement" element={<PlacementCanvas />}>
-                  <Route path="*" />
+                  <Route path="*" element={<div></div>} />
                 </Route>
                 <Route path="location" element={<BookingList />} />
                 <Route path="datetime" element={<BookingList />} />

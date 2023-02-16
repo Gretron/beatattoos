@@ -23,13 +23,15 @@ import {
   OrbitControls,
   useHelper,
   useProgress,
-  Decal,
   Html,
 } from "@react-three/drei";
 import { DecalGeometry } from "three/examples/jsm/geometries/DecalGeometry.js";
 
+import { Decal } from "./Decal.tsx";
+
 // Model Component
 import Model from "./Model";
+import LimbDecal from "./LimbDecal";
 
 // #endregion
 
@@ -55,82 +57,73 @@ const PlacementForm = () => {
 
   const [modelLoaded, setModelLoaded] = useState(false);
 
-  // Orbit Point
-  const [angle, setAngle] = useState({
-    maxX: 0,
-    minX: 0,
-    maxY: 1.5,
-    minY: 1.5,
-  });
-
-  // Materials
-  const brownMaterial = new THREE.MeshStandardMaterial();
-  brownMaterial.color = new THREE.Color(0x493d08);
-
-  const orangeMaterial = new THREE.MeshBasicMaterial();
-  orangeMaterial.color = new THREE.Color(0xf05d23);
-
-  // Body Part Decals
-  const bodyDecal = {
-    position: {
-      x: 0,
-      y: 1.03,
-      z: 0.18034634277807615,
-    },
-    scale: { x: 1.265, y: 2.44, z: 1.3 },
+  // Limbs
+  const body = {
+    route: "body",
+    target: [0, 1.0324999736621976, 0.08649562485516048],
+    position: [0, 0, -0.295],
+    rotation: [0, 0, 0],
+    scale: [0.36, 1, 0.69],
     angle: { maxX: Infinity, minX: 0, maxY: 1.5, minY: 1.5 },
     distance: 2,
   };
 
-  const rArmDecal = {
-    position: {
-      x: 2.21,
-      y: 1.37388664109075326,
-      z: 0.19235529706892926,
-    },
-    scale: { x: 3.1, y: 2.2, z: 10 },
-    angle: { maxX: 3.5, minX: -0.5, maxY: 6, minY: 1.5 },
+  const rArm = {
+    route: "rarm",
+    target: [-1.5696918740868568, 1.2109748385846615, 0.04135896824300262],
+    position: [-0.483, 0, -0.365],
+    rotation: body.rotation,
+    scale: [0.605, 1, 0.57],
+    angle: { maxX: 0.5, minX: -3.5, maxY: 6, minY: 1 },
     distance: 2,
   };
 
-  const lArmDecal = {
-    position: {
-      ...rArmDecal.position,
-      x: -rArmDecal.position.x,
-    },
-    scale: rArmDecal.scale,
+  const lArm = {
+    route: "larm",
+    target: [-rArm.target[0], rArm.target[1], rArm.target[2]],
+    position: [-rArm.position[0], rArm.position[1], rArm.position[2]],
+    rotation: body.rotation,
+    scale: rArm.scale,
     angle: {
-      ...rArmDecal.angle,
-      maxX: -rArmDecal.angle.minX,
-      minX: -rArmDecal.angle.maxX,
+      ...rArm.angle,
+      maxX: -rArm.angle.minX,
+      minX: -rArm.angle.maxX,
     },
-    distance: rArmDecal.distance,
+    distance: rArm.distance,
   };
 
-  const rLegDecal = {
-    position: {
-      x: 0.676324468407385,
-      y: -1.6816877063164857,
-      z: -0.031156552116070307,
-    },
-    scale: { x: 1.3, y: 2.95, z: 1.3 },
-    angle: { maxX: 3.5, minX: -0.5, maxY: 1.5, minY: 1.5 },
+  const rLeg = {
+    route: "rleg",
+    target: [-0.5631728826556355, -1.649847905151546, -0.05354689061641656],
+    position: [-0.16, 0, 0.475],
+    rotation: body.rotation,
+    scale: [0.305, 1, 0.845],
+    angle: { maxX: 1, minX: -4, maxY: 1.5, minY: 1.5 },
     distance: 2.5,
   };
 
-  const lLegDecal = {
-    position: {
-      ...rLegDecal.position,
-      x: -rLegDecal.position.x,
-    },
-    scale: rLegDecal.scale,
+  const lLeg = {
+    route: "lleg",
+    target: [-rLeg.target[0], rLeg.target[1], rLeg.target[2]],
+    position: [-rLeg.position[0], rLeg.position[1], rLeg.position[2]],
+    rotation: body.rotation,
+    scale: rLeg.scale,
     angle: {
-      ...rLegDecal.angle,
-      maxX: -rLegDecal.angle.minX,
-      minX: -rLegDecal.angle.maxX,
+      ...rLeg.angle,
+      maxX: -rLeg.angle.minX,
+      minX: -rLeg.angle.maxX,
     },
-    distance: rLegDecal.distance,
+    distance: rLeg.distance,
   };
+
+  // Array of All Limb Values
+  const decals = [body, rArm, lArm, rLeg, lLeg];
+
+  const [initialControls, setInitialControls] = useState({
+    target: [0, 0, 0],
+    angle: { maxX: 0, minX: 0, maxY: 1.5, minY: 1.5 },
+    distance: 5,
+  });
 
   // Tattoo Decal
   const [decal, setDecal] = useState({});
@@ -151,10 +144,58 @@ const PlacementForm = () => {
     // Else Play Animation
     loaded.current = true;
 
-    context.setHeader("select placement of tattoo");
+    // Set Initial Control Target
+    decals.forEach((decal) => {
+      if (location.pathname.includes(decal.route)) {
+        setInitialControls(decal);
+      }
+    });
+
+    context.setHeader("select tattoo placement");
     context.setNextStep("placement/rarm");
     // TODO: Load Local Store to See Previous Step
   }, []);
+
+  useEffect(() => {
+    if (!controls.current) return;
+
+    let decalRoute = false;
+
+    decals.forEach((decal) => {
+      if (location.pathname.includes(decal.route)) {
+        setLimb(decal);
+        decalRoute = true;
+        return;
+      }
+    });
+
+    console.log(decalRoute);
+
+    if (!decalRoute) {
+      setLimb(initialControls);
+    }
+  }, [location]);
+
+  function setLimb(decal) {
+    const target = new THREE.Vector3(
+      decal.target[0],
+      decal.target[1],
+      decal.target[2]
+    );
+
+    controls.current.target = target;
+
+    controls.current.minAzimuthAngle = decal.angle.minX;
+    controls.current.maxAzimuthAngle = decal.angle.maxX;
+
+    controls.current.minPolarAngle = decal.angle.minY;
+    controls.current.maxPolarAngle = decal.angle.maxY;
+
+    controls.current.minDistance = decal.distance;
+    controls.current.maxDistance = decal.distance;
+
+    controls.current.update();
+  }
 
   function drawDecal({ object, point, rotation, size }) {
     const decalGeometry = new DecalGeometry(
@@ -194,119 +235,6 @@ const PlacementForm = () => {
     setBox(newBox);
   }
 
-  function setDecalSize(w, l, d) {
-    drawDecal({
-      object: decal.object,
-      point: decal.point,
-      rotation: decal.rotation,
-      size: new THREE.Vector3(w, l, d),
-    });
-  }
-
-  function setDecalPosition(x, y, z) {
-    drawDecal({
-      object: decal.object,
-      point: new THREE.Vector3(x, y, z),
-      rotation: decal.rotation,
-      size: decal.size,
-    });
-
-    console.log(decal);
-  }
-  /*
-  const Decal = ({ ...props }) => {
-    const position = new THREE.Vector3(
-      props.position.x,
-      props.position.y,
-      props.position.z
-    );
-
-    const scale = new THREE.Vector3(
-      props.scale.x,
-      props.scale.y,
-      props.scale.z
-    );
-
-    const decalGeometry = useMemo(() => {
-      return new DecalGeometry(
-        props.mesh,
-        position,
-        THREE.Euler.DEFAULT_ORDER,
-        scale
-      );
-    }, [props.mesh]);
-
-    return (
-      <mesh geometry={decalGeometry}>
-        <meshStandardMaterial
-          color={props.color}
-          depthTest={true}
-          depthWrite={true}
-          polygonOffset={true}
-          polygonOffsetFactor={-4}
-        />
-      </mesh>
-    );
-  };
-*/
-  const LimbDecal = ({ mesh, position, rotation, scale, loaded, ...props }) => {
-    const ref = useRef();
-
-    const p = new THREE.Vector3(position.x, position.y, position.z);
-    const r = THREE.Euler.DEFAULT_ORDER;
-    const s = new THREE.Vector3(scale.x, scale.y, scale.z);
-
-    useLayoutEffect(() => {
-      const parent = mesh.current;
-
-      if (parent) {
-        ref.current.geometry = new DecalGeometry(parent, p, r, s);
-        console.log(parent);
-      }
-    }, [loaded]);
-
-    const [hovered, hover] = useState(false);
-
-    return (
-      <mesh
-        ref={ref}
-        onPointerOver={(event) => hover(true)}
-        onPointerOut={(event) => hover(false)}
-        onClick={(event) => {
-          var geometry = ref.current.geometry;
-          geometry.computeBoundingBox();
-          var center = new THREE.Vector3();
-          geometry.boundingBox.getCenter(center);
-          mesh.localToWorld(center);
-
-          // Set Orbit Control Target to Center of Decal
-          controls.current.target = center;
-
-          controls.current.minAzimuthAngle = props.angle.minX;
-          controls.current.maxAzimuthAngle = props.angle.maxX;
-
-          controls.current.minPolarAngle = props.angle.minY;
-          controls.current.maxPolarAngle = props.angle.maxY;
-
-          controls.current.minDistance = props.distance;
-          controls.current.maxDistance = props.distance;
-
-          controls.current.update();
-        }}
-      >
-        <meshStandardMaterial
-          color={0xf05d23}
-          transparent={true}
-          opacity={hovered ? 1 : 0}
-          depthTest={true}
-          depthWrite={true}
-          polygonOffset={true}
-          polygonOffsetFactor={-4}
-        />
-      </mesh>
-    );
-  };
-
   const TattooDecal = ({ ...props }) => {
     const decalGeometry = useMemo(() => {
       return new DecalGeometry(
@@ -343,8 +271,16 @@ const PlacementForm = () => {
 
   function Loader() {
     const { active, progress, errors, item, loaded, total } = useProgress();
-    return <Html center>{progress} % loaded</Html>;
+    return (
+      <Html center>
+        <span className="loader"></span>
+      </Html>
+    );
   }
+
+  const [position, setPosition] = useState([0, 0, 0]);
+  const [scale, setScale] = useState([1, 1, 1]);
+  const [increment, setIncrement] = useState(0.01);
 
   return (
     <div id="placement-canvas" className="placement-form">
@@ -355,119 +291,175 @@ const PlacementForm = () => {
           setRenderer(gl);
         }}
       >
-        <pointLight position={[10, 10, 10]} />
-        <pointLight position={[10, 10, -10]} />
-        <ambientLight intensity={0.5} />
-
-        <OrbitControls
-          ref={controls}
-          rotation={new THREE.Euler(0, 0, 5)}
-          maxDistance={5}
-          minDistance={5}
-          maxAzimuthAngle={0}
-          minAzimuthAngle={0}
-          maxPolarAngle={1.5}
-          minPolarAngle={1.5}
-        />
-
         <Suspense fallback={<Loader />}>
-          <Model ref={modelRef} material={brownMaterial} scale={3.5}>
-            <Decal />
+          <pointLight position={[0, 5, 10]} />
+          <pointLight position={[0, 5, -10]} />
+          <ambientLight intensity={0.5} />
+
+          <OrbitControls
+            ref={controls}
+            target={initialControls.target}
+            maxDistance={initialControls.distance}
+            minDistance={initialControls.distance}
+            maxAzimuthAngle={initialControls.angle.maxX}
+            minAzimuthAngle={initialControls.angle.minX}
+            maxPolarAngle={initialControls.angle.maxY}
+            minPolarAngle={initialControls.angle.minY}
+            enablePan={false}
+            enableDamping={true}
+          />
+
+          <Model>
+            <LimbDecal limb={body} />
+            <LimbDecal limb={rArm} />
+            <LimbDecal limb={lArm} />
+            <LimbDecal limb={rLeg} />
+            <LimbDecal limb={lLeg} />
           </Model>
-          {/*<LimbDecal loaded={modelLoaded} mesh={modelRef} {...bodyDecal} />
-          <LimbDecal loaded={modelLoaded} mesh={modelRef} {...rArmDecal} />
-          <LimbDecal loaded={modelLoaded} mesh={modelRef} {...lArmDecal} />
-          <LimbDecal loaded={modelLoaded} mesh={modelRef} {...rLegDecal} />
-          <LimbDecal loaded={modelLoaded} mesh={modelRef} {...lLegDecal} />*/}
         </Suspense>
       </Canvas>
 
-      {modelLoaded && <button>HELLO</button>}
+      <div style={{ display: "flex" }}>
+        <div style={{ padding: "16px 8px" }}>
+          <button
+            className="outline--button"
+            style={{ display: "block", marginBottom: "8px" }}
+            onClick={() => {
+              console.log(scene.getObjectByName(decal.route));
+            }}
+          >
+            ▲ +X
+          </button>
+          <button
+            className="outline--button"
+            onClick={() => {
+              setPosition([position[0] - increment, position[1], position[2]]);
+              console.log("location", position);
+            }}
+          >
+            ▼ -X
+          </button>
+        </div>
 
-      {/*
-      <label>w</label>
-      <input
-        type="range"
-        min={0}
-        max={10}
-        step={0.1}
-        onChange={(event) =>
-          setDecalSize(event.target.value, decal.size.y, decal.size.z)
-        }
-      />
-      <label>l</label>
-      <input
-        type="range"
-        min={0}
-        max={10}
-        step={0.1}
-        onChange={(event) =>
-          setDecalSize(decal.size.x, event.target.value, decal.size.z)
-        }
-      />
-      <label>d</label>
-      <input
-        type="range"
-        min={0}
-        max={10}
-        step={0.1}
-        onChange={(event) =>
-          setDecalSize(decal.size.x, decal.size.y, event.target.value)
-        }
-      />
-      <br />
-      <label>
-        <div>x</div>
-        <button
-          onClick={(event) =>
-            setDecalPosition(decal.point.x + 0.05, decal.point.y, decal.point.z)
-          }
-        >
-          ▲
-        </button>
-        <button
-          onClick={(event) =>
-            setDecalPosition(decal.point.x - 0.05, decal.point.y, decal.point.z)
-          }
-        >
-          ▼
-        </button>
-      </label>
-      <label>
-        <div>y</div>
-        <button
-          onClick={(event) =>
-            setDecalPosition(decal.point.x, decal.point.y + 0.05, decal.point.z)
-          }
-        >
-          ▲
-        </button>
-        <button
-          onClick={(event) =>
-            setDecalPosition(decal.point.x, decal.point.y - 0.05, decal.point.z)
-          }
-        >
-          ▼
-        </button>
-      </label>
-      <label>
-        <div>z</div>
-        <button
-          onClick={(event) =>
-            setDecalPosition(decal.point.x, decal.point.y, decal.point.z + 0.05)
-          }
-        >
-          ▲
-        </button>
-        <button
-          onClick={(event) =>
-            setDecalPosition(decal.point.x, decal.point.y, decal.point.z - 0.05)
-          }
-        >
-          ▼
-        </button>
-      </label>
-      */}
+        <div style={{ padding: "16px 8px" }}>
+          <button
+            className="outline--button"
+            style={{ display: "block", marginBottom: "8px" }}
+            onClick={() => {
+              setPosition([position[0], position[1] + increment, position[2]]);
+              console.log("location", position);
+            }}
+          >
+            ▲ +Y
+          </button>
+          <button
+            className="outline--button"
+            onClick={() => {
+              setPosition([position[0], position[1] - increment, position[2]]);
+              console.log("location", position);
+            }}
+          >
+            ▼ -Y
+          </button>
+        </div>
+
+        <div style={{ padding: "16px 8px" }}>
+          <button
+            className="outline--button"
+            style={{ display: "block", marginBottom: "8px" }}
+            onClick={() => {
+              setPosition([position[0], position[1], position[2] + increment]);
+              console.log("location", position);
+            }}
+          >
+            ▲ +Z
+          </button>
+          <button
+            className="outline--button"
+            onClick={() => {
+              setPosition([position[0], position[1], position[2] - increment]);
+              console.log("location", position);
+            }}
+          >
+            ▼ -Z
+          </button>
+        </div>
+
+        <div style={{ padding: "16px 8px" }}>
+          <button
+            className="outline--button"
+            style={{ display: "block", marginBottom: "8px" }}
+            onClick={() => {
+              setScale([scale[0] + increment, scale[1], scale[2]]);
+              console.log("scale", scale);
+            }}
+          >
+            ▲ +W
+          </button>
+          <button
+            className="outline--button"
+            onClick={() => {
+              setScale([scale[0] - increment, scale[1], scale[2]]);
+              console.log("scale", scale);
+            }}
+          >
+            ▼ -W
+          </button>
+        </div>
+
+        <div style={{ padding: "16px 8px" }}>
+          <button
+            className="outline--button"
+            style={{ display: "block", marginBottom: "8px" }}
+            onClick={() => {
+              setScale([scale[0], scale[1] + increment, scale[2]]);
+              console.log("scale", scale);
+            }}
+          >
+            ▲ +L
+          </button>
+          <button
+            className="outline--button"
+            onClick={() => {
+              setScale([scale[0], scale[1] - increment, scale[2]]);
+              console.log("scale", scale);
+            }}
+          >
+            ▼ -L
+          </button>
+        </div>
+
+        <div style={{ padding: "16px 8px" }}>
+          <button
+            className="outline--button"
+            style={{ display: "block", marginBottom: "8px" }}
+            onClick={() => {
+              setScale([scale[0], scale[1], scale[2] + increment]);
+              console.log("scale", scale);
+            }}
+          >
+            ▲ +D
+          </button>
+          <button
+            className="outline--button"
+            onClick={() => {
+              setScale([scale[0], scale[1], scale[2] - increment]);
+              console.log("scale", scale);
+            }}
+          >
+            ▼ -D
+          </button>
+        </div>
+        <input
+          type="range"
+          min={0.005}
+          max={0.05}
+          step={0.0005}
+          onChange={(event) => {
+            setIncrement(parseFloat(event.target.value));
+          }}
+        />
+      </div>
     </div>
   );
 };

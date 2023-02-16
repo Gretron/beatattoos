@@ -24,7 +24,7 @@ function ScrollToTopOnMount() {
     // If Smooth Scroller Exists...
     if (sm) {
       // If Lower Than Top of Page...
-      if (sm.scrollTop() > 1) {
+      if (sm.scrollTop() > 2) {
         // Refresh Potentially Bugged ScrollTriggers
         const refresh = () => {
           sm.paused(false);
