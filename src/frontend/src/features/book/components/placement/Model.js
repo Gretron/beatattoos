@@ -18,16 +18,15 @@ const Model = forwardRef((props, ref) => {
   // onClick={(event) => handlePointerOver(event)
 
   return (
-    <group dispose={null}>
-      <mesh
-        ref={ref}
-        geometry={nodes["BaseMesh_Low_Res-Detailed_Male-Femalelwo"].geometry}
-        material={props.material}
-        rotation={[Math.PI / 2, 0, 0]}
-        scale={props.scale}
-      />
+    <mesh
+      ref={ref}
+      geometry={nodes["BaseMesh_Low_Res-Detailed_Male-Femalelwo"].geometry}
+      material={props.material}
+      rotation={[Math.PI / 2, 0, 0]}
+      scale={props.scale}
+    >
       {props.children}
-    </group>
+    </mesh>
   );
 });
 

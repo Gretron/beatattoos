@@ -8,6 +8,7 @@ import {
   Suspense,
   useMemo,
   useLayoutEffect,
+  useCallback,
 } from "react";
 import { useLocation, useOutletContext } from "react-router-dom";
 
@@ -22,6 +23,7 @@ import {
   OrbitControls,
   useHelper,
   useProgress,
+  Decal,
   Html,
 } from "@react-three/drei";
 import { DecalGeometry } from "three/examples/jsm/geometries/DecalGeometry.js";
@@ -47,7 +49,11 @@ const PlacementForm = () => {
   const controls = useRef();
 
   // Character Model Reference
-  const modelRef = useRef();
+  const modelRef = useCallback((node) => {
+    setModelLoaded(true);
+  }, []);
+
+  const [modelLoaded, setModelLoaded] = useState(false);
 
   // Orbit Point
   const [angle, setAngle] = useState({
@@ -207,7 +213,7 @@ const PlacementForm = () => {
 
     console.log(decal);
   }
-
+  /*
   const Decal = ({ ...props }) => {
     const position = new THREE.Vector3(
       props.position.x,
@@ -242,8 +248,8 @@ const PlacementForm = () => {
       </mesh>
     );
   };
-
-  const LimbDecal = ({ mesh, position, rotation, scale, ...props }) => {
+*/
+  const LimbDecal = ({ mesh, position, rotation, scale, loaded, ...props }) => {
     const ref = useRef();
 
     const p = new THREE.Vector3(position.x, position.y, position.z);
@@ -251,13 +257,13 @@ const PlacementForm = () => {
     const s = new THREE.Vector3(scale.x, scale.y, scale.z);
 
     useLayoutEffect(() => {
-      const parent = mesh.current || ref.current.parent;
+      const parent = mesh.current;
 
       if (parent) {
         ref.current.geometry = new DecalGeometry(parent, p, r, s);
         console.log(parent);
       }
-    }, [mesh]);
+    }, [loaded]);
 
     const [hovered, hover] = useState(false);
 
@@ -267,8 +273,14 @@ const PlacementForm = () => {
         onPointerOver={(event) => hover(true)}
         onPointerOut={(event) => hover(false)}
         onClick={(event) => {
+          var geometry = ref.current.geometry;
+          geometry.computeBoundingBox();
+          var center = new THREE.Vector3();
+          geometry.boundingBox.getCenter(center);
+          mesh.localToWorld(center);
+
           // Set Orbit Control Target to Center of Decal
-          controls.current.target = ref.current.geometry.boundingSphere.center;
+          controls.current.target = center;
 
           controls.current.minAzimuthAngle = props.angle.minX;
           controls.current.maxAzimuthAngle = props.angle.maxX;
@@ -282,7 +294,6 @@ const PlacementForm = () => {
           controls.current.update();
         }}
       >
-        <boxHelper object={ref.current} color={0xffff00} />
         <meshStandardMaterial
           color={0xf05d23}
           transparent={true}
@@ -359,18 +370,19 @@ const PlacementForm = () => {
           minPolarAngle={1.5}
         />
 
-        <Suspense fallback={null}>
+        <Suspense fallback={<Loader />}>
           <Model ref={modelRef} material={brownMaterial} scale={3.5}>
-            <LimbDecal mesh={modelRef} {...bodyDecal} />
-            {/*<LimbDecal mesh={modelRef} {...rArmDecal} />
-            <LimbDecal mesh={modelRef} {...lArmDecal} />
-            <LimbDecal mesh={modelRef} {...rLegDecal} />
-      <LimbDecal mesh={modelRef} {...lLegDecal} />*/}
+            <Decal />
           </Model>
+          {/*<LimbDecal loaded={modelLoaded} mesh={modelRef} {...bodyDecal} />
+          <LimbDecal loaded={modelLoaded} mesh={modelRef} {...rArmDecal} />
+          <LimbDecal loaded={modelLoaded} mesh={modelRef} {...lArmDecal} />
+          <LimbDecal loaded={modelLoaded} mesh={modelRef} {...rLegDecal} />
+          <LimbDecal loaded={modelLoaded} mesh={modelRef} {...lLegDecal} />*/}
         </Suspense>
       </Canvas>
 
-      {modelRef.current && <button>HELLO</button>}
+      {modelLoaded && <button>HELLO</button>}
 
       {/*
       <label>w</label>
