@@ -60,7 +60,7 @@ const PlacementForm = () => {
   // Limbs
   const body = {
     route: "body",
-    target: [0, 1.0324999736621976, 0.08649562485516048],
+    target: [0, 1.0324999736621976, 0.08649562485516048], // Control Target (XYZ)
     position: [0, 0, -0.295],
     rotation: [0, 0, 0],
     scale: [0.36, 1, 0.69],
