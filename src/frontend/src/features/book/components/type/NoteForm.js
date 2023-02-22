@@ -10,7 +10,7 @@ const NoteForm = () => {
     context.setPreviousStep("type/flash");
 
     return () => {
-      context.setPreviousStep("type/note");
+      localStorage.setItem("tattooType", "flash");
     };
   }, []);
 

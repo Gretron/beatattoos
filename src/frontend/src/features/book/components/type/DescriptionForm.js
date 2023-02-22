@@ -10,7 +10,7 @@ const DescriptionForm = () => {
     context.setPreviousStep("type/custom");
 
     return () => {
-      context.setPreviousStep("type/description");
+      localStorage.setItem("tattooType", "description");
     };
   }, []);
 
