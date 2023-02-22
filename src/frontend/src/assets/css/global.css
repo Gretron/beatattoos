@@ -163,6 +163,11 @@ a[disabled] .outline--button {
   border-color: var(--dune);
 }
 
+a[disabled] .orange--button {
+  color: var(--earth);
+  background: var(--dune);
+}
+
 .icon--button {
   border: transparent none;
   background: none;

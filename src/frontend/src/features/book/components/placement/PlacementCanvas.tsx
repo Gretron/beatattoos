@@ -91,11 +91,12 @@ const PlacementForm = () => {
     limbs.forEach((decal) => {
       if (location.pathname.includes(decal.route)) {
         setInitialControls(decal);
+        context.setPreviousStep("placement");
       }
     });
 
     context.setHeader("select tattoo placement");
-    context.setNextStep("placement/rarm");
+    context.setNextStep("");
     // TODO: Load Local Store to See Previous Step
   }, []);
 
@@ -120,8 +121,6 @@ const PlacementForm = () => {
   }, [location]);
 
   function setLimb(limb: Limb) {
-    console.log(limb);
-
     const target = new THREE.Vector3(
       limb.controls.target.x,
       limb.controls.target.y,
