@@ -33,27 +33,27 @@ const Book = () => {
   return (
     <div className="book">
       <ProgressBar />
-      <div className="book__top-navigation">
+      <div className="book__header-container">
+        <div className="book__header h1">{header}</div>
+        <Seperator className="book__seperator seperator--horizontal" />
+      </div>
+      <Outlet context={{ setHeader, setNextStep, setPreviousStep }} />
+      <div className="book__buttons">
         <Link
           className="book__previous-button"
           to={previousStep}
           disabled={previousStep === ""}
         >
-          ← previous
+          <button className="outline--button">previous</button>
         </Link>
-        <div className="book__header-container">
-          <div className="book__header h1">{header}</div>
-          <Seperator className="book__seperator seperator--horizontal" />
-        </div>
+        <Link
+          className="book__next-button"
+          to={nextStep}
+          disabled={nextStep === ""}
+        >
+          <button className="orange--button">next</button>
+        </Link>
       </div>
-      <Outlet context={{ setHeader, setNextStep, setPreviousStep }} />
-      <Link
-        className="book__next-button"
-        to={nextStep}
-        disabled={nextStep === ""}
-      >
-        <button className="outline--button">next</button>
-      </Link>
     </div>
   );
 };

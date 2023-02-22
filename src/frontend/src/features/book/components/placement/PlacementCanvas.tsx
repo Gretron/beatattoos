@@ -1,5 +1,7 @@
 // #region Imports
 
+import React from "react";
+
 // Hooks
 import {
   useEffect,
@@ -37,11 +39,10 @@ import Model from "./Model";
 import LimbDecal from "./LimbDecal";
 
 // Limb Constants
-import { full, body, rArm, lArm, rLeg, lLeg } from "../../data/constants.ts";
+import { full, body, rArm, lArm, rLeg, lLeg } from "../../data/constants";
 
 // Limb Type
-import { Limb } from "../../data/constants.ts";
-import React from "react";
+import { Limb } from "../../data/constants";
 
 // #endregion
 
@@ -59,6 +60,8 @@ const PlacementForm = () => {
 
   // Camera Controls
   const controls = useRef<any>();
+
+  const model = useRef<THREE.Mesh>();
 
   // Array of All Limb Values
   const limbs = [body, rArm, lArm, rLeg, lLeg];
@@ -244,15 +247,18 @@ const PlacementForm = () => {
             ref={controls}
             enablePan={false}
             enableDamping={true}
+            target={[
+              initialControls.controls.target.x,
+              initialControls.controls.target.y,
+              initialControls.controls.target.z,
+            ]}
+            maxDistance={initialControls.controls.distance}
+            minDistance={initialControls.controls.distance}
+            maxAzimuthAngle={initialControls.controls.angle.x.max}
+            minAzimuthAngle={initialControls.controls.angle.x.min}
+            maxPolarAngle={initialControls.controls.angle.y.max}
+            minPolarAngle={initialControls.controls.angle.y.min}
           />
-
-          {/*target={initialControls.target}
-            maxDistance={initialControls.distance}
-            minDistance={initialControls.distance}
-            maxAzimuthAngle={initialControls.angle.maxX}
-            minAzimuthAngle={initialControls.angle.minX}
-            maxPolarAngle={initialControls.angle.maxY}
-            minPolarAngle={initialControls.angle.minY} */}
 
           <Model>
             <LimbDecal limb={body} />

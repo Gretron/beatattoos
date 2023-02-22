@@ -92,8 +92,17 @@
   width: min(32px, 8vw);
 }
 
+.book__buttons {
+  display: flex;
+  justify-content: space-between;
+
+  margin-top: 1rem;
+}
+
+/*
 .book__next-button {
   align-self: flex-end;
 
   margin-top: 2rem;
 }
+*/

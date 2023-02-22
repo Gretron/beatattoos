@@ -8,6 +8,10 @@
   isolation: isolate;
 }
 
+.booker__header {
+  background: red;
+}
+
 .loader {
   width: 48px;
   height: 48px;
