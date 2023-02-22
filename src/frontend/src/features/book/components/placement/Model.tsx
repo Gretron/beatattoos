@@ -9,18 +9,18 @@ interface ModelProps {
   children?: ReactNode;
 }
 
-type Ref = THREE.Mesh;
+type ModelRef = THREE.Mesh;
 
 /**
  * Character Model
  * @param {object} props - Properties of Component
  */
-const Model = forwardRef<Ref, ModelProps>((props, ref) => {
+const Model = forwardRef<ModelRef, ModelProps>((props, ref) => {
   const { children } = props;
 
   const pointer = new THREE.Vector2();
 
-  const nodes = useGLTF("/models/model.gltf")["nodes"];
+  const nodes: THREE.BufferGeometry[] = useGLTF("/models/model.gltf")["nodes"];
 
   // onClick={(event) => handlePointerOver(event)
 
