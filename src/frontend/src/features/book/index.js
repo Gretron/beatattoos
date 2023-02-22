@@ -10,7 +10,7 @@ import CustomForm from "./components/type/CustomForm";
 import NoteForm from "./components/type/NoteForm";
 import DescriptionForm from "./components/type/DescriptionForm";
 
-import PlacementCanvas from "./components/placement/PlacementCanvas";
+import PlacementCanvas from "./components/placement/PlacementCanvas.tsx";
 
 export {
   bookStyles,

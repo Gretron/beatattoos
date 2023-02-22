@@ -9,11 +9,12 @@ import {
   useMemo,
   useLayoutEffect,
   useCallback,
+  Ref,
 } from "react";
 import { useLocation, useOutletContext } from "react-router-dom";
 
 // Styles
-import placementStyles from "../../assets/css/placement.css";
+import "../../assets/css/placement.css";
 
 // Three
 import * as THREE from "three";
@@ -25,110 +26,56 @@ import {
   useProgress,
   Html,
 } from "@react-three/drei";
+
+import * as DREI from "@react-three/drei";
 import { DecalGeometry } from "three/examples/jsm/geometries/DecalGeometry.js";
 
-import { Decal } from "./Decal.tsx";
+import { Decal } from "./Decal";
 
-// Model Component
+// 3D Components
 import Model from "./Model";
 import LimbDecal from "./LimbDecal";
+
+// Limb Constants
+import { body, rArm, lArm, rLeg, lLeg } from "../../data/constants.ts";
+
+// Limb Type
+import { Limb } from "../../data/constants.ts";
+import React from "react";
 
 // #endregion
 
 const PlacementForm = () => {
   // Router Outlet Context
-  let context = useOutletContext();
+  let context = useOutletContext<any>();
 
   // Site Address
   let location = useLocation();
 
   // Core Three Components
-  const [renderer, setRenderer] = useState(null);
-  const [scene, setScene] = useState(null);
-  const [camera, setCamera] = useState(null);
+  const [renderer, setRenderer] = useState<THREE.WebGLRenderer>();
+  const [scene, setScene] = useState<THREE.Scene>();
+  const [camera, setCamera] = useState<THREE.Camera>();
 
   // Camera Controls
-  const controls = useRef();
-
-  // Character Model Reference
-  const modelRef = useCallback((node) => {
-    setModelLoaded(true);
-  }, []);
-
-  const [modelLoaded, setModelLoaded] = useState(false);
-
-  // Limbs
-  const body = {
-    route: "body",
-    target: [0, 1.0324999736621976, 0.08649562485516048], // Control Target (XYZ)
-    position: [0, 0, -0.295],
-    rotation: [0, 0, 0],
-    scale: [0.36, 1, 0.69],
-    angle: { maxX: Infinity, minX: 0, maxY: 1.5, minY: 1.5 },
-    distance: 2,
-  };
-
-  const rArm = {
-    route: "rarm",
-    target: [-1.5696918740868568, 1.2109748385846615, 0.04135896824300262],
-    position: [-0.483, 0, -0.365],
-    rotation: body.rotation,
-    scale: [0.605, 1, 0.57],
-    angle: { maxX: 0.5, minX: -3.5, maxY: 6, minY: 1 },
-    distance: 2,
-  };
-
-  const lArm = {
-    route: "larm",
-    target: [-rArm.target[0], rArm.target[1], rArm.target[2]],
-    position: [-rArm.position[0], rArm.position[1], rArm.position[2]],
-    rotation: body.rotation,
-    scale: rArm.scale,
-    angle: {
-      ...rArm.angle,
-      maxX: -rArm.angle.minX,
-      minX: -rArm.angle.maxX,
-    },
-    distance: rArm.distance,
-  };
-
-  const rLeg = {
-    route: "rleg",
-    target: [-0.5631728826556355, -1.649847905151546, -0.05354689061641656],
-    position: [-0.16, 0, 0.475],
-    rotation: body.rotation,
-    scale: [0.305, 1, 0.845],
-    angle: { maxX: 1, minX: -4, maxY: 1.5, minY: 1.5 },
-    distance: 2.5,
-  };
-
-  const lLeg = {
-    route: "lleg",
-    target: [-rLeg.target[0], rLeg.target[1], rLeg.target[2]],
-    position: [-rLeg.position[0], rLeg.position[1], rLeg.position[2]],
-    rotation: body.rotation,
-    scale: rLeg.scale,
-    angle: {
-      ...rLeg.angle,
-      maxX: -rLeg.angle.minX,
-      minX: -rLeg.angle.maxX,
-    },
-    distance: rLeg.distance,
-  };
+  const controls = useRef<any>();
 
   // Array of All Limb Values
   const decals = [body, rArm, lArm, rLeg, lLeg];
 
-  const [initialControls, setInitialControls] = useState({
+  const [initialControls, setInitialControls] = useState<Limb>();
+  /*
+  {
     target: [0, 0, 0],
     angle: { maxX: 0, minX: 0, maxY: 1.5, minY: 1.5 },
     distance: 5,
-  });
+  }
+  */
 
   // Tattoo Decal
-  const [decal, setDecal] = useState({});
-  const [decalMesh, setDecalMesh] = useState(null);
-  const [box, setBox] = useState(null);
+  const [decal, setDecal] = useState<any>();
+  const [decalMesh, setDecalMesh] = useState<THREE.Object3D>();
+  const [box, setBox] = useState<THREE.Object3D>();
 
   // Component Loaded Flag
   const loaded = useRef(false);
@@ -172,32 +119,34 @@ const PlacementForm = () => {
     console.log(decalRoute);
 
     if (!decalRoute) {
-      setLimb(initialControls);
+      //setLimb(initialControls);
     }
   }, [location]);
 
-  function setLimb(decal) {
+  function setLimb(limb: Limb) {
     const target = new THREE.Vector3(
-      decal.target[0],
-      decal.target[1],
-      decal.target[2]
+      limb.controls.target.x,
+      limb.controls.target.y,
+      limb.controls.target.z
     );
 
     controls.current.target = target;
 
-    controls.current.minAzimuthAngle = decal.angle.minX;
-    controls.current.maxAzimuthAngle = decal.angle.maxX;
+    controls.current.minAzimuthAngle = limb.controls.angle.x.min;
+    controls.current.maxAzimuthAngle = limb.controls.angle.x.max;
 
-    controls.current.minPolarAngle = decal.angle.minY;
-    controls.current.maxPolarAngle = decal.angle.maxY;
+    controls.current.minPolarAngle = limb.controls.angle.y.min;
+    controls.current.maxPolarAngle = limb.controls.angle.y.max;
 
-    controls.current.minDistance = decal.distance;
-    controls.current.maxDistance = decal.distance;
+    controls.current.minDistance = limb.controls.distance;
+    controls.current.maxDistance = limb.controls.distance;
 
     controls.current.update();
   }
 
   function drawDecal({ object, point, rotation, size }) {
+    if (!scene) return;
+
     const decalGeometry = new DecalGeometry(
       object,
       point,
@@ -217,7 +166,7 @@ const PlacementForm = () => {
     const newDecal = new THREE.Mesh(decalGeometry, decalMaterial);
     newDecal.receiveShadow = true;
 
-    scene.remove(decalMesh);
+    scene.remove(decalMesh!);
     scene.add(newDecal);
 
     setDecalMesh(newDecal);
@@ -229,7 +178,7 @@ const PlacementForm = () => {
     });
 
     const newBox = new THREE.BoxHelper(newDecal, 0xffff00);
-    scene.remove(box);
+    scene.remove(box!);
     scene.add(newBox);
 
     setBox(newBox);
@@ -240,7 +189,7 @@ const PlacementForm = () => {
       return new DecalGeometry(
         props.mesh,
         props.position,
-        THREE.Euler.DEFAULT_ORDER,
+        new THREE.Euler(),
         props.scale
       );
     }, [props.mesh]);
@@ -248,7 +197,7 @@ const PlacementForm = () => {
     const [hovered, hover] = useState(false);
     // const [clicked, click] = useState(false);
 
-    const decalRef = useRef();
+    const decalRef = useRef<THREE.Mesh>(null!);
     //useHelper(decalRef, THREE.BoxHelper, "#FFFFFF");
 
     return (
@@ -298,16 +247,17 @@ const PlacementForm = () => {
 
           <OrbitControls
             ref={controls}
-            target={initialControls.target}
+            enablePan={false}
+            enableDamping={true}
+          />
+
+          {/*target={initialControls.target}
             maxDistance={initialControls.distance}
             minDistance={initialControls.distance}
             maxAzimuthAngle={initialControls.angle.maxX}
             minAzimuthAngle={initialControls.angle.minX}
             maxPolarAngle={initialControls.angle.maxY}
-            minPolarAngle={initialControls.angle.minY}
-            enablePan={false}
-            enableDamping={true}
-          />
+            minPolarAngle={initialControls.angle.minY} */}
 
           <Model>
             <LimbDecal limb={body} />
@@ -325,7 +275,7 @@ const PlacementForm = () => {
             className="outline--button"
             style={{ display: "block", marginBottom: "8px" }}
             onClick={() => {
-              console.log(scene.getObjectByName(decal.route));
+              console.log(scene!.getObjectByName(decal.route));
             }}
           >
             ▲ +X

@@ -8,7 +8,7 @@ import { forwardRef } from "react";
  * Character Model
  * @param {object} props - Properties of Component
  */
-const Model = forwardRef((props, ref) => {
+const Model = (props) => {
   const { children } = props;
 
   const pointer = new THREE.Vector2();
@@ -19,7 +19,6 @@ const Model = forwardRef((props, ref) => {
 
   return (
     <mesh
-      ref={ref}
       geometry={nodes["BaseMesh_Low_Res-Detailed_Male-Femalelwo"].geometry}
       rotation={[Math.PI / 2, 0, 0]}
       scale={3.5}
@@ -28,7 +27,7 @@ const Model = forwardRef((props, ref) => {
       {children}
     </mesh>
   );
-});
+};
 
 useGLTF.preload("/models/model.gltf");
 

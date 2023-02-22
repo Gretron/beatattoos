@@ -20,9 +20,9 @@ const LimbDecal = ({ limb, reference }) => {
 
   return (
     <Decal
-      position={limb.position}
-      rotation={limb.rotation}
-      scale={limb.scale}
+      position={Object.values(limb.decal.position)}
+      rotation={Object.values(limb.decal.rotation)}
+      scale={Object.values(limb.decal.scale)}
       onPointerEnter={() => hover(true)}
       onPointerLeave={() => hover(false)}
       onClick={() => navigate(limb.route)}
