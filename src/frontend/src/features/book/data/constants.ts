@@ -39,9 +39,9 @@ export interface Limb {
 export const full: Limb = {
   route: "",
   controls: {
-    target: { x: 0, y: 1.0324999736621976, z: 0.08649562485516048 },
-    angle: { x: { max: Infinity, min: 0 }, y: { max: 1.5, min: 1.5 } },
-    distance: 2,
+    target: { x: 0, y: 0, z: 0 },
+    angle: { x: { max: 0, min: 0 }, y: { max: 1.5, min: 1.5 } },
+    distance: 5,
   },
 };
 

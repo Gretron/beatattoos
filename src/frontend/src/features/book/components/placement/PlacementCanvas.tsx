@@ -37,7 +37,7 @@ import Model from "./Model";
 import LimbDecal from "./LimbDecal";
 
 // Limb Constants
-import { body, rArm, lArm, rLeg, lLeg } from "../../data/constants.ts";
+import { full, body, rArm, lArm, rLeg, lLeg } from "../../data/constants.ts";
 
 // Limb Type
 import { Limb } from "../../data/constants.ts";
@@ -61,16 +61,9 @@ const PlacementForm = () => {
   const controls = useRef<any>();
 
   // Array of All Limb Values
-  const decals = [body, rArm, lArm, rLeg, lLeg];
+  const limbs = [body, rArm, lArm, rLeg, lLeg];
 
-  const [initialControls, setInitialControls] = useState<Limb>();
-  /*
-  {
-    target: [0, 0, 0],
-    angle: { maxX: 0, minX: 0, maxY: 1.5, minY: 1.5 },
-    distance: 5,
-  }
-  */
+  const [initialControls, setInitialControls] = useState<Limb>(full);
 
   // Tattoo Decal
   const [decal, setDecal] = useState<any>();
@@ -92,7 +85,7 @@ const PlacementForm = () => {
     loaded.current = true;
 
     // Set Initial Control Target
-    decals.forEach((decal) => {
+    limbs.forEach((decal) => {
       if (location.pathname.includes(decal.route)) {
         setInitialControls(decal);
       }
@@ -108,9 +101,9 @@ const PlacementForm = () => {
 
     let decalRoute = false;
 
-    decals.forEach((decal) => {
-      if (location.pathname.includes(decal.route)) {
-        setLimb(decal);
+    limbs.forEach((limb) => {
+      if (location.pathname.includes(limb.route)) {
+        setLimb(limb);
         decalRoute = true;
         return;
       }
@@ -119,11 +112,13 @@ const PlacementForm = () => {
     console.log(decalRoute);
 
     if (!decalRoute) {
-      //setLimb(initialControls);
+      setLimb(full);
     }
   }, [location]);
 
   function setLimb(limb: Limb) {
+    console.log(limb);
+
     const target = new THREE.Vector3(
       limb.controls.target.x,
       limb.controls.target.y,
