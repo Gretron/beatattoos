@@ -17,8 +17,10 @@ import { Limb } from "../../data/constants";
  * Decal for Limbs on Model
  * @param {object} limb - Decal Data
  */
-const LimbDecal = ({ limb }) => {
+const LimbDecal = (props) => {
   const navigate = useNavigate();
+
+  const { limb, disabled } = props;
 
   const [hovered, hover] = useState(false);
 
@@ -37,10 +39,10 @@ const LimbDecal = ({ limb }) => {
       scale={[limb.decal.scale.x, limb.decal.scale.y, limb.decal.scale.z]}
       onPointerEnter={() => hover(true)}
       onPointerLeave={() => hover(false)}
-      onClick={() => navigate(limb.route)}
+      onClick={disabled ? () => {} : () => navigate(limb.route)}
     >
       <meshStandardMaterial
-        color={hovered ? 0xf05d23 : 0x493d08}
+        color={hovered && !disabled ? 0xf05d23 : 0x493d08}
         depthTest={true}
         depthWrite={true}
         polygonOffset={true}

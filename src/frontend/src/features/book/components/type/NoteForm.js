@@ -1,5 +1,13 @@
+// #region Imports
+
+// Hooks
 import { useEffect } from "react";
 import { useOutletContext } from "react-router-dom";
+
+// Tattoo Types
+import { TattooType } from "../../data/constants";
+
+// #endregion
 
 const NoteForm = () => {
   let context = useOutletContext();
@@ -10,7 +18,8 @@ const NoteForm = () => {
     context.setPreviousStep("type/flash");
 
     return () => {
-      localStorage.setItem("tattooType", "flash");
+      // Set Cookie for Tattoo Type on Exit
+      localStorage.setItem("tattooType", TattooType.Flash);
     };
   }, []);
 

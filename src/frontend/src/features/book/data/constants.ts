@@ -1,3 +1,9 @@
+// Tattoo Type Enum
+export const TattooType = {
+  Flash: "flash",
+  Custom: "custom",
+};
+
 // #region Placement Limb Data
 
 interface Vector3 {

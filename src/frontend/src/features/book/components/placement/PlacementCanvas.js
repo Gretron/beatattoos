@@ -3,16 +3,7 @@
 import React from "react";
 
 // Hooks
-import {
-  useEffect,
-  useRef,
-  useState,
-  Suspense,
-  useMemo,
-  useLayoutEffect,
-  useCallback,
-  Ref,
-} from "react";
+import { useEffect, useRef, useState, Suspense, useMemo } from "react";
 import { useLocation, useOutletContext } from "react-router-dom";
 
 // Styles
@@ -20,23 +11,18 @@ import "../../assets/css/placement.css";
 
 // Three
 import * as THREE from "three";
-import { Canvas, useFrame, useLoader, useThree } from "@react-three/fiber";
-import {
-  useGLTF,
-  OrbitControls,
-  useHelper,
-  useProgress,
-  Html,
-} from "@react-three/drei";
-
+import * as FIBER from "@react-three/fiber";
 import * as DREI from "@react-three/drei";
+import { Canvas, useFrame, useLoader, useThree } from "@react-three/fiber";
+import { OrbitControls, useProgress, Html } from "@react-three/drei";
 import { DecalGeometry } from "three/examples/jsm/geometries/DecalGeometry.js";
-
-import { Decal } from "./Decal";
 
 // 3D Components
 import Model from "./Model";
 import LimbDecal from "./LimbDecal";
+
+// Tattoo Types
+import { TattooType } from "../../data/constants";
 
 // Limb Constants
 import { full, body, rArm, lArm, rLeg, lLeg } from "../../data/constants";
@@ -50,19 +36,20 @@ const PlacementForm = () => {
   // Site Address
   let location = useLocation();
 
-  // Core Three Components
+  // 3D Components
   const [renderer, setRenderer] = useState();
   const [scene, setScene] = useState();
   const [camera, setCamera] = useState();
-
-  // Camera Controls
   const controls = useRef();
-
   const model = useRef();
 
-  // Array of All Limb Values
+  // Array of All Limb Data
   const limbs = [body, rArm, lArm, rLeg, lLeg];
 
+  // Limb Selected Flag
+  const [limbSelected, setLimbSelected] = useState(false);
+
+  // Initial Controls Value
   const [initialControls, setInitialControls] = useState(full);
 
   // Tattoo Decal
@@ -84,36 +71,64 @@ const PlacementForm = () => {
     // Else Play Animation
     loaded.current = true;
 
+    let isLimbRoute = false;
+
     // Set Initial Control Target
-    limbs.forEach((decal) => {
-      if (location.pathname.includes(decal.route)) {
-        setInitialControls(decal);
+    limbs.forEach((limb) => {
+      if (location.pathname.includes(limb.route)) {
+        setInitialControls(limb);
+        setLimbSelected(true);
+
+        isLimbRoute = true;
         context.setPreviousStep("placement");
+
+        return;
       }
     });
 
     context.setHeader("select tattoo placement");
     context.setNextStep("");
-    // TODO: Load Local Store to See Previous Step
+
+    if (!isLimbRoute) {
+      const tattooType = localStorage.getItem("tattooType");
+
+      if (tattooType === TattooType.Flash) {
+        context.setPreviousStep("type/note");
+      } else if (tattooType === TattooType.Custom) {
+        context.setPreviousStep("type/description");
+      }
+    }
   }, []);
 
+  // On Location Change
   useEffect(() => {
     if (!controls.current) return;
 
-    let decalRoute = false;
+    let isLimbRoute = false;
 
     limbs.forEach((limb) => {
       if (location.pathname.includes(limb.route)) {
         setLimb(limb);
-        decalRoute = true;
+        setLimbSelected(true);
+
+        isLimbRoute = true;
+        context.setPreviousStep("placement");
+
         return;
       }
     });
 
-    console.log(decalRoute);
-
-    if (!decalRoute) {
+    if (!isLimbRoute) {
       setLimb(full);
+      setLimbSelected(false);
+
+      const tattooType = localStorage.getItem("tattooType");
+
+      if (tattooType === TattooType.Flash) {
+        context.setPreviousStep("type/note");
+      } else if (tattooType === TattooType.Custom) {
+        context.setPreviousStep("type/description");
+      }
     }
   }, [location]);
 
@@ -256,12 +271,15 @@ const PlacementForm = () => {
             minPolarAngle={initialControls.controls.angle.y.min}
           />
 
-          <Model>
-            <LimbDecal limb={body} />
-            <LimbDecal limb={rArm} />
-            <LimbDecal limb={lArm} />
-            <LimbDecal limb={rLeg} />
-            <LimbDecal limb={lLeg} />
+          <Model ref={model}>
+            {limbs &&
+              limbs.map((limb) => (
+                <LimbDecal
+                  key={limb.route}
+                  limb={limb}
+                  disabled={limbSelected}
+                />
+              ))}
           </Model>
         </Suspense>
       </Canvas>
