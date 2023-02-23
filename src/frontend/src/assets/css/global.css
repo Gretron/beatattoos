@@ -161,11 +161,15 @@ body {
 a[disabled] .outline--button {
   color: var(--dune);
   border-color: var(--dune);
+
+  transition: 0s;
 }
 
 a[disabled] .orange--button {
   color: var(--earth);
   background: var(--dune);
+
+  transition: 0s;
 }
 
 .icon--button {
