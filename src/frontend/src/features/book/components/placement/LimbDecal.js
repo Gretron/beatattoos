@@ -13,15 +13,11 @@ import { Limb } from "../../data/constants";
 
 // #endregion
 
-type LimbDecalProps = {
-  limb: Limb;
-};
-
 /**
  * Decal for Limbs on Model
  * @param {object} limb - Decal Data
  */
-const LimbDecal = ({ limb }: LimbDecalProps) => {
+const LimbDecal = ({ limb }) => {
   const navigate = useNavigate();
 
   const [hovered, hover] = useState(false);
@@ -29,16 +25,16 @@ const LimbDecal = ({ limb }: LimbDecalProps) => {
   return (
     <Decal
       position={[
-        limb.decal!.position.x,
-        limb.decal!.position.y,
-        limb.decal!.position.z,
+        limb.decal.position.x,
+        limb.decal.position.y,
+        limb.decal.position.z,
       ]}
       rotation={[
-        limb.decal!.rotation.x,
-        limb.decal!.rotation.y,
-        limb.decal!.rotation.z,
+        limb.decal.rotation.x,
+        limb.decal.rotation.y,
+        limb.decal.rotation.z,
       ]}
-      scale={[limb.decal!.scale.x, limb.decal!.scale.y, limb.decal!.scale.z]}
+      scale={[limb.decal.scale.x, limb.decal.scale.y, limb.decal.scale.z]}
       onPointerEnter={() => hover(true)}
       onPointerLeave={() => hover(false)}
       onClick={() => navigate(limb.route)}

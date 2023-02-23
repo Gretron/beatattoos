@@ -5,22 +5,16 @@ import { useGLTF, OrbitControls, useHelper } from "@react-three/drei";
 import { ReactNode, forwardRef } from "react";
 import React from "react";
 
-interface ModelProps {
-  children?: ReactNode;
-}
-
-type ModelRef = THREE.Mesh;
-
 /**
  * Character Model
  * @param {object} props - Properties of Component
  */
-const Model = forwardRef<ModelRef, ModelProps>((props, ref) => {
+const Model = forwardRef((props, ref) => {
   const { children } = props;
 
   const pointer = new THREE.Vector2();
 
-  const nodes: THREE.BufferGeometry[] = useGLTF("/models/model.gltf")["nodes"];
+  const nodes = useGLTF("/models/model.gltf")["nodes"];
 
   // onClick={(event) => handlePointerOver(event)
 

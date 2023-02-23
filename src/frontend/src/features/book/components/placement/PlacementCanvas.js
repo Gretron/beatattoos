@@ -41,37 +41,34 @@ import LimbDecal from "./LimbDecal";
 // Limb Constants
 import { full, body, rArm, lArm, rLeg, lLeg } from "../../data/constants";
 
-// Limb Type
-import { Limb } from "../../data/constants";
-
 // #endregion
 
 const PlacementForm = () => {
   // Router Outlet Context
-  let context = useOutletContext<any>();
+  let context = useOutletContext();
 
   // Site Address
   let location = useLocation();
 
   // Core Three Components
-  const [renderer, setRenderer] = useState<THREE.WebGLRenderer>();
-  const [scene, setScene] = useState<THREE.Scene>();
-  const [camera, setCamera] = useState<THREE.Camera>();
+  const [renderer, setRenderer] = useState();
+  const [scene, setScene] = useState();
+  const [camera, setCamera] = useState();
 
   // Camera Controls
-  const controls = useRef<any>();
+  const controls = useRef();
 
-  const model = useRef<THREE.Mesh>();
+  const model = useRef();
 
   // Array of All Limb Values
   const limbs = [body, rArm, lArm, rLeg, lLeg];
 
-  const [initialControls, setInitialControls] = useState<Limb>(full);
+  const [initialControls, setInitialControls] = useState(full);
 
   // Tattoo Decal
-  const [decal, setDecal] = useState<any>();
-  const [decalMesh, setDecalMesh] = useState<THREE.Object3D>();
-  const [box, setBox] = useState<THREE.Object3D>();
+  const [decal, setDecal] = useState();
+  const [decalMesh, setDecalMesh] = useState();
+  const [box, setBox] = useState();
 
   // Component Loaded Flag
   const loaded = useRef(false);
@@ -120,7 +117,7 @@ const PlacementForm = () => {
     }
   }, [location]);
 
-  function setLimb(limb: Limb) {
+  function setLimb(limb) {
     const target = new THREE.Vector3(
       limb.controls.target.x,
       limb.controls.target.y,
@@ -163,7 +160,7 @@ const PlacementForm = () => {
     const newDecal = new THREE.Mesh(decalGeometry, decalMaterial);
     newDecal.receiveShadow = true;
 
-    scene.remove(decalMesh!);
+    scene.remove(decalMesh);
     scene.add(newDecal);
 
     setDecalMesh(newDecal);
@@ -175,7 +172,7 @@ const PlacementForm = () => {
     });
 
     const newBox = new THREE.BoxHelper(newDecal, 0xffff00);
-    scene.remove(box!);
+    scene.remove(box);
     scene.add(newBox);
 
     setBox(newBox);
@@ -194,7 +191,7 @@ const PlacementForm = () => {
     const [hovered, hover] = useState(false);
     // const [clicked, click] = useState(false);
 
-    const decalRef = useRef<THREE.Mesh>(null!);
+    const decalRef = useRef();
     //useHelper(decalRef, THREE.BoxHelper, "#FFFFFF");
 
     return (
@@ -275,7 +272,7 @@ const PlacementForm = () => {
             className="outline--button"
             style={{ display: "block", marginBottom: "8px" }}
             onClick={() => {
-              console.log(scene!.getObjectByName(decal.route));
+              console.log(scene.getObjectByName(decal.route));
             }}
           >
             ▲ +X
