@@ -103,6 +103,7 @@ const PlacementForm = () => {
   // On Location Change
   useEffect(() => {
     if (!controls.current) return;
+    scene.remove(decalMesh);
 
     let isLimbRoute = false;
 
@@ -132,6 +133,10 @@ const PlacementForm = () => {
     }
   }, [location]);
 
+  /**
+   * To Focus Limb Decal with Controls
+   * @param {object} limb - Limb to Focus
+   */
   function setLimb(limb) {
     const target = new THREE.Vector3(
       limb.controls.target.x,
@@ -153,23 +158,33 @@ const PlacementForm = () => {
     controls.current.update();
   }
 
-  function drawDecal({ object, point, rotation, size }) {
+  let cnv = document.createElement("canvas");
+  cnv.width = 500;
+  cnv.height = 500;
+  let ctx = cnv.getContext("2d");
+
+  //ctx.drawImage();
+
+  ctx.fillStyle = "#FFFFFF";
+  ctx.beginPath();
+  ctx.arc(250, 250, 250, 0, 2 * Math.PI);
+  ctx.fill();
+
+  function drawDecal(mesh, position, rotation, size) {
     if (!scene) return;
 
-    const decalGeometry = new DecalGeometry(
-      object,
-      point,
-      /*euler,*/
-      rotation,
-      size
-    );
+    const decalGeometry = new DecalGeometry(mesh, position, rotation, size);
+
+    //ctx.fillRect(0, 0, 250, 250);
+    let canvasTexture = new THREE.CanvasTexture(ctx.canvas);
 
     const decalMaterial = new THREE.MeshStandardMaterial({
       color: 0xf05d23,
       depthTest: true,
       depthWrite: true,
       polygonOffset: true,
-      polygonOffsetFactor: -4,
+      polygonOffsetFactor: -10,
+      transparent: true,
     });
 
     const newDecal = new THREE.Mesh(decalGeometry, decalMaterial);
@@ -180,55 +195,25 @@ const PlacementForm = () => {
 
     setDecalMesh(newDecal);
     setDecal({
-      object: object,
-      point: point,
+      object: mesh,
+      point: position,
       rotation: rotation,
       size: size,
     });
 
+    /*
     const newBox = new THREE.BoxHelper(newDecal, 0xffff00);
     scene.remove(box);
     scene.add(newBox);
 
     setBox(newBox);
+    */
   }
 
-  const TattooDecal = ({ ...props }) => {
-    const decalGeometry = useMemo(() => {
-      return new DecalGeometry(
-        props.mesh,
-        props.position,
-        new THREE.Euler(),
-        props.scale
-      );
-    }, [props.mesh]);
-
-    const [hovered, hover] = useState(false);
-    // const [clicked, click] = useState(false);
-
-    const decalRef = useRef();
-    //useHelper(decalRef, THREE.BoxHelper, "#FFFFFF");
-
-    return (
-      <mesh
-        ref={decalRef}
-        geometry={decalGeometry}
-        onPointerOver={(event) => hover(true)}
-        onPointerOut={(event) => hover(false)}
-      >
-        <meshStandardMaterial
-          color={hovered ? 0xf05d23 : 0x493d08}
-          depthTest={true}
-          depthWrite={true}
-          polygonOffset={true}
-          polygonOffsetFactor={-4}
-        />
-      </mesh>
-    );
-  };
-
+  /**
+   * Loading Feedback Component for 3D Components
+   */
   function Loader() {
-    const { active, progress, errors, item, loaded, total } = useProgress();
     return (
       <Html center>
         <span className="loader"></span>
@@ -258,6 +243,7 @@ const PlacementForm = () => {
             ref={controls}
             enablePan={false}
             enableDamping={true}
+            rotateSpeed={0.75}
             target={[
               initialControls.controls.target.x,
               initialControls.controls.target.y,
@@ -271,7 +257,7 @@ const PlacementForm = () => {
             minPolarAngle={initialControls.controls.angle.y.min}
           />
 
-          <Model ref={model}>
+          <Model disabled={!limbSelected} clickHandler={drawDecal}>
             {limbs &&
               limbs.map((limb) => (
                 <LimbDecal

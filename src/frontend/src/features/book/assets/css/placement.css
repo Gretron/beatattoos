@@ -6,6 +6,8 @@
 
   overflow: hidden;
   isolation: isolate;
+
+  pointer-events: none;
 }
 
 .booker__header {
