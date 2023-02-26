@@ -32,24 +32,26 @@ const Model = (props) => {
 
     if (!hits.length) return;
 
-    console.log(hits[0]);
-
     const position = hits[0].point.clone();
     const eye = position.clone();
-    eye.add(hits[0].face.normal);
+    const normal = hits[0].face.normal;
+    const normalMatrix = new THREE.Matrix3().getNormalMatrix(
+      hits[0].object.matrixWorld
+    );
+    normal.applyMatrix3(normalMatrix).normalize();
+    eye.add(normal);
 
     const rotation = new THREE.Matrix4();
-    rotation.lookAt(eye, position, THREE.Object3D.DEFAULT_UP);
+    rotation.lookAt(eye, position, new THREE.Vector3(0, 0, -1));
     const euler = new THREE.Euler();
     euler.setFromRotationMatrix(rotation);
-
-    console.log(euler);
 
     clickHandler(
       ref.current,
       position,
       euler,
-      new THREE.Vector3(0.25, 0.25, 0.25)
+      new THREE.Vector3(0.25, 0.25, 0.25),
+      eye
     );
   };
 

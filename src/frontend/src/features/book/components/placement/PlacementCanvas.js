@@ -26,6 +26,7 @@ import { TattooType } from "../../data/constants";
 
 // Limb Constants
 import { full, body, rArm, lArm, rLeg, lLeg } from "../../data/constants";
+import { Vector3 } from "three";
 
 // #endregion
 
@@ -170,14 +171,24 @@ const PlacementForm = () => {
   ctx.arc(250, 250, 250, 0, 2 * Math.PI);
   ctx.fill();
 
-  function drawDecal(mesh, position, rotation, size) {
+  let canvasTexture = new THREE.CanvasTexture(cnv);
+
+  let decalMaterial = new THREE.MeshPhongMaterial({
+    map: canvasTexture,
+    transparent: true,
+    depthTest: true,
+    depthWrite: false,
+    polygonOffset: true,
+    polygonOffsetFactor: -10,
+    wireframe: false,
+  });
+
+  function drawDecal(mesh, position, rotation, size, normal) {
     if (!scene) return;
 
     const decalGeometry = new DecalGeometry(mesh, position, rotation, size);
 
-    //ctx.fillRect(0, 0, 250, 250);
-    let canvasTexture = new THREE.CanvasTexture(ctx.canvas);
-
+    /*
     const decalMaterial = new THREE.MeshStandardMaterial({
       color: 0xf05d23,
       depthTest: true,
@@ -185,7 +196,9 @@ const PlacementForm = () => {
       polygonOffset: true,
       polygonOffsetFactor: -10,
       transparent: true,
+      map: canvasTexture,
     });
+    */
 
     const newDecal = new THREE.Mesh(decalGeometry, decalMaterial);
     newDecal.receiveShadow = true;
@@ -201,13 +214,15 @@ const PlacementForm = () => {
       size: size,
     });
 
-    /*
-    const newBox = new THREE.BoxHelper(newDecal, 0xffff00);
-    scene.remove(box);
-    scene.add(newBox);
+    const material = new THREE.LineBasicMaterial({ color: 0x0000ff });
+    const geometry = new THREE.BufferGeometry().setFromPoints(points);
 
-    setBox(newBox);
-    */
+    const points = [];
+    points.push(position);
+    points.push(normal);
+
+    const line = new THREE.Line(geometry, material);
+    //scene.add(line);
   }
 
   /**
