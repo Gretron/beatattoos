@@ -16,6 +16,8 @@
   flex-grow: 0;
 
   position: relative;
+  
+  margin: 2rem 0;
 }
 
 .book-progress__line {
