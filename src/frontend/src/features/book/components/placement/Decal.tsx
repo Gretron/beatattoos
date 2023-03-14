@@ -108,9 +108,9 @@ export function Decal({
   return (
     <mesh
       ref={ref}
-      onPointerEnter={onPointerEnter ? () => onPointerEnter() : () => {}}
-      onPointerLeave={onPointerLeave ? () => onPointerLeave() : () => {}}
-      onClick={onClick ? () => onClick() : () => {}}
+      onPointerEnter={onPointerEnter ? () => onPointerEnter() : undefined}
+      onPointerLeave={onPointerLeave ? () => onPointerLeave() : undefined}
+      onClick={onClick ? () => onClick() : undefined}
     >
       {children || (
         <meshStandardMaterial

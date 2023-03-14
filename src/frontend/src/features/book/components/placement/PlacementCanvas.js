@@ -13,7 +13,7 @@ import "../../assets/css/placement.css";
 import * as THREE from "three";
 import * as FIBER from "@react-three/fiber";
 import * as DREI from "@react-three/drei";
-import { Canvas, useFrame, useLoader, useThree } from "@react-three/fiber";
+import { Canvas, useLoader, useThree } from "@react-three/fiber";
 import { OrbitControls, useProgress, Html } from "@react-three/drei";
 import { DecalGeometry } from "three/examples/jsm/geometries/DecalGeometry.js";
 
@@ -273,14 +273,14 @@ const PlacementForm = () => {
           />
 
           <Model disabled={!limbSelected} clickHandler={drawDecal}>
-            {limbs &&
-              limbs.map((limb) => (
-                <LimbDecal
-                  key={limb.route}
-                  limb={limb}
-                  disabled={limbSelected}
-                />
-              ))}
+            {limbs.map((limb) => (
+              <LimbDecal
+                key={limb.route}
+                limb={limb}
+                limbSelected={limbSelected}
+                disabled={limbSelected}
+              />
+            ))}
           </Model>
         </Suspense>
       </Canvas>

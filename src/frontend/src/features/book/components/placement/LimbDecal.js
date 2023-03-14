@@ -4,7 +4,7 @@
 import { useState, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
-import { Canvas, useFrame, useLoader, useThree } from "@react-three/fiber";
+import { Canvas, useLoader, useThree } from "@react-three/fiber";
 import { Html } from "@react-three/drei";
 
 // Components
@@ -22,11 +22,8 @@ import { Limb } from "../../data/constants";
  */
 const LimbDecal = (props) => {
   const navigate = useNavigate();
-
   const [rotation, setRotation] = useState([0, 0, 0]);
-
-  const { limb, disabled } = props;
-
+  const { limbSelected, limb, disabled } = props;
   const [hovered, hover] = useState(false);
 
   /*
@@ -46,9 +43,9 @@ const LimbDecal = (props) => {
       ]}
       rotation={rotation}
       scale={[limb.decal.scale.x, limb.decal.scale.y, limb.decal.scale.z]}
-      onPointerEnter={() => hover(true)}
-      onPointerLeave={() => hover(false)}
-      onClick={disabled ? () => {} : () => navigate(limb.route)}
+      onPointerEnter={limbSelected ? undefined : () => hover(true)}
+      onPointerLeave={limbSelected ? undefined : () => hover(false)}
+      onClick={disabled ? undefined : () => navigate(limb.route)}
     >
       {/*!disabled && (
         <Html

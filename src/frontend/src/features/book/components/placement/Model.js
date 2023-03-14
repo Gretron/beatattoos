@@ -1,6 +1,6 @@
 // Three
 import * as THREE from "three";
-import { Canvas, useFrame, useLoader, useThree } from "@react-three/fiber";
+import { Canvas, useLoader, useThree } from "@react-three/fiber";
 import { useGLTF, OrbitControls, useHelper } from "@react-three/drei";
 import { useRef } from "react";
 
@@ -14,11 +14,6 @@ const Model = (props) => {
   const { disabled, clickHandler, children } = props;
 
   const nodes = useGLTF("/models/model.gltf")["nodes"];
-
-  //useFrame(({ scene, raycaster }) => {
-  //if (raycaster.intersectObjects(scene.children).length > 0)
-  //console.log(raycaster.intersectObjects(scene.children));
-  //});
 
   const raycaster = useThree((state) => state.raycaster);
   const scene = useThree((state) => state.scene);
